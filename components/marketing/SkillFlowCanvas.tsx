@@ -12,36 +12,41 @@ if (typeof window !== "undefined") {
 
 export function SkillFlowCanvas({ className }: { className?: string }) {
   const containerRef = React.useRef<HTMLDivElement>(null);
-  const particle1Ref = React.useRef<SVGCircleElement>(null);
-  const particle2Ref = React.useRef<SVGCircleElement>(null);
-  const particle3Ref = React.useRef<SVGCircleElement>(null);
 
   React.useEffect(() => {
     if (typeof window === "undefined" || !containerRef.current) return;
     const isReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (isReducedMotion) return;
 
-    const ctx = gsap.context(() => {
-      // Animate flowing pulses along the path
-      const tl = gsap.timeline({ repeat: -1 });
+    let ctx: gsap.Context | null = null;
+    try {
+      ctx = gsap.context(() => {
+        // SVG path line dash continuous energy flow
+        gsap.to(".skill-flow-path", {
+          strokeDashoffset: -60,
+          duration: 3,
+          repeat: -1,
+          ease: "linear",
+        });
 
-      tl.to([particle1Ref.current, particle2Ref.current, particle3Ref.current], {
-        duration: 2.2,
-        ease: "power1.inOut",
-        stagger: 0.4,
-        motionPath: undefined, // using keyframes for SVG cx/cy or strokeDashoffset
-      });
+        // Pulsing SVG energy nodes
+        gsap.to(".skill-flow-node-pulse", {
+          scale: 1.25,
+          transformOrigin: "center center",
+          duration: 1.6,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          stagger: 0.3,
+        });
+      }, containerRef);
+    } catch (err) {
+      console.warn("SkillFlowCanvas animation safe fallback:", err);
+    }
 
-      // SVG path line dash flow
-      gsap.to(".skill-flow-path", {
-        strokeDashoffset: -60,
-        duration: 3,
-        repeat: -1,
-        ease: "linear",
-      });
-    }, containerRef);
-
-    return () => ctx.revert();
+    return () => {
+      ctx?.revert();
+    };
   }, []);
 
   return (
@@ -120,15 +125,15 @@ export function SkillFlowCanvas({ className }: { className?: string }) {
           />
 
           {/* Node 1: Origin Candidate */}
-          <circle cx="50" cy="50" r="14" fill="#4FA87D" fillOpacity="0.2" stroke="#4FA87D" strokeWidth="2" />
+          <circle cx="50" cy="50" r="14" fill="#4FA87D" fillOpacity="0.2" stroke="#4FA87D" strokeWidth="2" className="skill-flow-node-pulse" />
           <circle cx="50" cy="50" r="6" fill="#4FA87D" />
 
           {/* Node 2: Central AI Automation Core */}
-          <circle cx="400" cy="50" r="20" fill="#E5A93B" fillOpacity="0.25" stroke="#E5A93B" strokeWidth="2.5" />
+          <circle cx="400" cy="50" r="20" fill="#E5A93B" fillOpacity="0.25" stroke="#E5A93B" strokeWidth="2.5" className="skill-flow-node-pulse" />
           <circle cx="400" cy="50" r="8" fill="#E5A93B" />
 
           {/* Node 3: Target Outcome */}
-          <circle cx="750" cy="50" r="14" fill="#216849" fillOpacity="0.2" stroke="#216849" strokeWidth="2" />
+          <circle cx="750" cy="50" r="14" fill="#216849" fillOpacity="0.2" stroke="#216849" strokeWidth="2" className="skill-flow-node-pulse" />
           <circle cx="750" cy="50" r="6" fill="#216849" />
         </svg>
 

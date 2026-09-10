@@ -146,34 +146,45 @@ export function PinnedJourneyStorytelling() {
   const [activeChapterIndex, setActiveChapterIndex] = React.useState(0);
 
   React.useEffect(() => {
-    if (typeof window === "undefined" || !containerRef.current || !pinTargetRef.current) return;
+    if (typeof window === "undefined" || !containerRef.current) return;
     const isReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (isReducedMotion) return;
 
-    const ctx = gsap.context(() => {
-      // Pin the visual card while scrolling through narrative markers
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top top+=80",
-        end: "bottom bottom",
-        pin: pinTargetRef.current,
-        pinSpacing: false,
-      });
+    let ctx: gsap.Context | null = null;
+    try {
+      ctx = gsap.context(() => {
+        // Pin the visual card only on desktop where pinTargetRef is visible
+        if (pinTargetRef.current && window.innerWidth >= 1024) {
+          ScrollTrigger.create({
+            trigger: containerRef.current,
+            start: "top top+=80",
+            end: "bottom bottom",
+            pin: pinTargetRef.current,
+            pinSpacing: false,
+          });
+        }
 
-      // Track chapters as they scroll through viewport
-      const markers = gsap.utils.toArray<HTMLElement>(".story-chapter-marker");
-      markers.forEach((marker, index) => {
-        ScrollTrigger.create({
-          trigger: marker,
-          start: "top 45%",
-          end: "bottom 45%",
-          onEnter: () => setActiveChapterIndex(index),
-          onEnterBack: () => setActiveChapterIndex(index),
-        });
-      });
-    }, containerRef);
+        // Track chapters as they scroll through viewport
+        const markers = gsap.utils.toArray<HTMLElement>(".story-chapter-marker");
+        if (markers && markers.length > 0) {
+          markers.forEach((marker, index) => {
+            ScrollTrigger.create({
+              trigger: marker,
+              start: "top 45%",
+              end: "bottom 45%",
+              onEnter: () => setActiveChapterIndex(index),
+              onEnterBack: () => setActiveChapterIndex(index),
+            });
+          });
+        }
+      }, containerRef);
+    } catch (err) {
+      console.warn("PinnedJourneyStorytelling animation safe fallback:", err);
+    }
 
-    return () => ctx.revert();
+    return () => {
+      ctx?.revert();
+    };
   }, []);
 
   const activeChapter = CHAPTERS[activeChapterIndex];

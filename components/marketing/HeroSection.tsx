@@ -34,73 +34,80 @@ export function HeroSection({
     const isReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (isReducedMotion) return;
 
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    let ctx: gsap.Context | null = null;
+    try {
+      ctx = gsap.context(() => {
+        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      tl.from(".hero-pill", {
-        opacity: 0,
-        y: -16,
-        duration: 0.6,
-      })
-        .from(
-          ".hero-headline",
-          {
-            opacity: 0,
-            y: 28,
-            duration: 0.8,
-          },
-          "-=0.3"
-        )
-        .from(
-          ".hero-subtext",
-          {
-            opacity: 0,
-            y: 20,
-            duration: 0.6,
-          },
-          "-=0.4"
-        )
-        .from(
-          ".hero-ctas",
-          {
-            opacity: 0,
-            y: 16,
-            duration: 0.5,
-          },
-          "-=0.3"
-        )
-        .from(
-          ".hero-trust",
-          {
-            opacity: 0,
-            y: 12,
-            duration: 0.5,
-          },
-          "-=0.2"
-        )
-        .from(
-          ".hero-3d-wrapper",
-          {
-            opacity: 0,
-            scale: 0.94,
-            duration: 1.0,
-            ease: "power2.out",
-          },
-          "-=0.8"
-        )
-        .from(
-          ".hero-stat-card",
-          {
-            opacity: 0,
-            y: 24,
-            stagger: 0.08,
-            duration: 0.6,
-          },
-          "-=0.5"
-        );
-    }, heroRef);
+        tl.from(".hero-pill", {
+          opacity: 0,
+          y: -16,
+          duration: 0.6,
+        })
+          .from(
+            ".hero-headline",
+            {
+              opacity: 0,
+              y: 28,
+              duration: 0.8,
+            },
+            "-=0.3"
+          )
+          .from(
+            ".hero-subtext",
+            {
+              opacity: 0,
+              y: 20,
+              duration: 0.6,
+            },
+            "-=0.4"
+          )
+          .from(
+            ".hero-ctas",
+            {
+              opacity: 0,
+              y: 16,
+              duration: 0.5,
+            },
+            "-=0.3"
+          )
+          .from(
+            ".hero-trust",
+            {
+              opacity: 0,
+              y: 12,
+              duration: 0.5,
+            },
+            "-=0.2"
+          )
+          .from(
+            ".hero-3d-wrapper",
+            {
+              opacity: 0,
+              scale: 0.94,
+              duration: 1.0,
+              ease: "power2.out",
+            },
+            "-=0.8"
+          )
+          .from(
+            ".hero-stat-card",
+            {
+              opacity: 0,
+              y: 24,
+              stagger: 0.08,
+              duration: 0.6,
+            },
+            "-=0.5"
+          );
+      }, heroRef);
+    } catch (err) {
+      console.warn("HeroSection animation safe fallback:", err);
+    }
 
-    return () => ctx.revert();
+    return () => {
+      ctx?.revert();
+    };
   }, []);
 
   return (
