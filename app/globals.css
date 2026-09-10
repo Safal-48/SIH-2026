@@ -4,34 +4,34 @@
 
 @layer base {
   :root {
-    /* Base Surfaces - Ivory / Warm Off-white */
-    --background: 44 40% 98%;
-    --foreground: 160 50% 10%;
+    /* Base Surfaces - Deep Ayurvedic Herbal Forest Green */
+    --background: 160 70% 5%;
+    --foreground: 44 40% 96%;
 
-    /* Primary - Deep Herbal Green */
-    --primary: 155 56% 19%;
-    --primary-foreground: 44 40% 98%;
+    /* Primary - Vibrant Herbal Emerald Jade */
+    --primary: 151 45% 48%;
+    --primary-foreground: 160 70% 5%;
 
     /* Secondary - Ayurvedic Earth / Sandalwood */
-    --secondary: 24 50% 40%;
+    --secondary: 25 45% 52%;
     --secondary-foreground: 44 40% 98%;
 
     /* Accent - Warm Ayurvedic Saffron Gold */
-    --accent: 36 92% 46%;
-    --accent-foreground: 160 62% 9%;
+    --accent: 38 92% 50%;
+    --accent-foreground: 160 70% 5%;
 
-    /* Card & Popover */
-    --card: 44 35% 99%;
-    --card-foreground: 160 50% 10%;
-    --popover: 44 35% 99%;
-    --popover-foreground: 160 50% 10%;
+    /* Card & Popover - Glassmorphic Forest Green Surfaces */
+    --card: 158 55% 8.5%;
+    --card-foreground: 44 40% 96%;
+    --popover: 158 55% 8.5%;
+    --popover-foreground: 44 40% 96%;
 
     /* Muted & Borders */
-    --muted: 44 20% 92%;
-    --muted-foreground: 155 20% 38%;
-    --border: 44 25% 88%;
-    --input: 44 25% 88%;
-    --ring: 155 56% 25%;
+    --muted: 156 32% 14%;
+    --muted-foreground: 147 25% 65%;
+    --border: 156 30% 18%;
+    --input: 156 30% 18%;
+    --ring: 151 45% 50%;
 
     /* Destructive */
     --destructive: 0 72% 51%;
@@ -117,19 +117,19 @@
   }
 }
 
-/* Glassmorphism tuned for government & healthcare grade serenity */
+/* Glassmorphism tuned for Ayurvedic emerald sanctuary */
 .glass-surface {
-  background: rgba(253, 252, 247, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(19, 62, 43, 0.08);
+  background: rgba(10, 28, 19, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(74, 150, 110, 0.2);
 }
 
 .dark .glass-surface {
-  background: rgba(10, 26, 18, 0.75);
+  background: rgba(10, 28, 19, 0.82);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(74, 150, 110, 0.15);
+  border: 1px solid rgba(74, 150, 110, 0.22);
 }
 
 /* Subtle botanical border glow */

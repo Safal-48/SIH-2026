@@ -288,10 +288,11 @@ export function AyushAtmosphereBackground3D({ className }: { className?: string 
         className
       )}
     >
-      {/* 1. Organic Ambient Prana Glow Auras */}
-      <div className="absolute -top-[10%] -left-[10%] w-[50vw] h-[50vw] max-w-[650px] max-h-[650px] rounded-full bg-gradient-to-br from-emerald-500/15 via-primary/12 to-transparent blur-[110px] animate-aurora-1" />
-      <div className="absolute top-[25%] -right-[10%] w-[55vw] h-[55vw] max-w-[700px] max-h-[700px] rounded-full bg-gradient-to-bl from-amber-400/18 via-accent/14 to-transparent blur-[120px] animate-aurora-2" />
-      <div className="absolute -bottom-[15%] left-[20%] w-[45vw] h-[45vw] max-w-[600px] max-h-[600px] rounded-full bg-gradient-to-tr from-saffron-500/14 via-earth-500/10 to-transparent blur-[110px] animate-aurora-3" />
+      {/* 1. Organic Ambient Herbal Emerald Glow Auras */}
+      <div className="absolute -top-[12%] -left-[10%] w-[55vw] h-[55vw] max-w-[700px] max-h-[700px] rounded-full bg-gradient-to-br from-emerald-500/22 via-herbal-500/16 to-transparent blur-[120px] animate-aurora-1" />
+      <div className="absolute top-[20%] -right-[12%] w-[60vw] h-[60vw] max-w-[750px] max-h-[750px] rounded-full bg-gradient-to-bl from-emerald-400/18 via-accent/15 to-transparent blur-[130px] animate-aurora-2" />
+      <div className="absolute -bottom-[15%] left-[15%] w-[50vw] h-[50vw] max-w-[650px] max-h-[650px] rounded-full bg-gradient-to-tr from-emerald-600/22 via-herbal-700/18 to-transparent blur-[120px] animate-aurora-3" />
+      <div className="absolute bottom-[20%] -right-[10%] w-[45vw] h-[45vw] max-w-[600px] max-h-[600px] rounded-full bg-gradient-to-tl from-teal-600/18 via-herbal-900/15 to-transparent blur-[110px] animate-aurora-4" />
 
       {/* 2. Slow-Rotating Sacred Vedic Sri Yantra Watermark */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[840px] h-[840px] opacity-[0.035] dark:opacity-[0.065] animate-spin-extremely-slow pointer-events-none">

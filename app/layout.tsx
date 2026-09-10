@@ -47,7 +47,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={plusJakartaSans.variable}>
+    <html lang="en" className={`${plusJakartaSans.variable} dark`}>
       <body className="min-h-screen bg-background text-foreground flex flex-col font-sans selection:bg-accent/25 selection:text-foreground relative">
         <AyushAtmosphereBackground3D />
         <div className="relative z-10 flex flex-col min-h-screen">
