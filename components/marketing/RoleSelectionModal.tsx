@@ -37,16 +37,14 @@ export function RoleSelectionModal({
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
         {Object.values(ROLE_DEFINITIONS).map((role) => {
-          const targetUrl = initialAction === "login" 
-            ? `/login?role=${role.role}` 
-            : `/register?role=${role.role}`;
+          const targetUrl = role.baseRoute;
 
           return (
             <Link
               key={role.role}
               href={targetUrl}
               onClick={onClose}
-              className="p-4 rounded-xl border border-border bg-card/60 hover:bg-muted/60 hover:border-primary/40 transition-all flex flex-col justify-between group"
+              className="p-4 rounded-xl border border-border bg-card/80 hover:bg-muted/80 hover:border-accent/40 transition-all flex flex-col justify-between group ayur-3d-card"
             >
               <div>
                 <div className="flex items-center justify-between mb-2">
@@ -65,9 +63,9 @@ export function RoleSelectionModal({
                 </p>
               </div>
 
-              <div className="mt-3 pt-2 border-t border-border/40 flex items-center justify-between text-xs font-semibold text-primary">
-                <span>{initialAction === "login" ? "Sign In to Gateway" : "Register with Role"}</span>
-                <ArrowRight className="h-3.5 w-3.5 text-accent group-hover:translate-x-1 transition-transform" />
+              <div className="mt-3 pt-2 border-t border-border/40 flex items-center justify-between text-xs font-semibold text-primary group-hover:text-accent">
+                <span>Launch {role.title} Portal</span>
+                <ArrowRight className="h-3.5 w-3.5 text-accent group-hover:translate-x-1.5 transition-transform" />
               </div>
             </Link>
           );

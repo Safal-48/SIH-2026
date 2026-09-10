@@ -170,6 +170,44 @@ export function HeroSection({
               </MagneticButton>
             </div>
 
+            {/* Dedicated Stakeholder Portals Quick Jump */}
+            <div className="pt-2 space-y-2">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-accent flex items-center gap-1.5">
+                <Sparkles className="h-3 w-3 text-accent animate-spin-slow" />
+                <span>Direct Stakeholder Portals (Live & Functional):</span>
+              </span>
+              <div className="flex flex-wrap gap-2">
+                <a
+                  href="/student"
+                  className="px-3.5 py-2 rounded-xl bg-card/90 hover:bg-card border border-primary/40 hover:border-primary text-xs font-semibold text-foreground flex items-center gap-2 shadow-sm hover:scale-105 hover:shadow-md transition-all ayur-3d-card"
+                >
+                  <span>🎓</span>
+                  <span>For Students</span>
+                </a>
+                <a
+                  href="/industry"
+                  className="px-3.5 py-2 rounded-xl bg-card/90 hover:bg-card border border-accent/40 hover:border-accent text-xs font-semibold text-foreground flex items-center gap-2 shadow-sm hover:scale-105 hover:shadow-md transition-all ayur-3d-card"
+                >
+                  <span>🏥</span>
+                  <span>For Industry & Pharma</span>
+                </a>
+                <a
+                  href="/institution"
+                  className="px-3.5 py-2 rounded-xl bg-card/90 hover:bg-card border border-emerald-500/40 hover:border-emerald-500 text-xs font-semibold text-foreground flex items-center gap-2 shadow-sm hover:scale-105 hover:shadow-md transition-all ayur-3d-card"
+                >
+                  <span>🏫</span>
+                  <span>For Institutions</span>
+                </a>
+                <a
+                  href="/academician"
+                  className="px-3.5 py-2 rounded-xl bg-card/90 hover:bg-card border border-secondary/40 hover:border-secondary text-xs font-semibold text-foreground flex items-center gap-2 shadow-sm hover:scale-105 hover:shadow-md transition-all ayur-3d-card"
+                >
+                  <span>👨‍🏫</span>
+                  <span>For Faculty</span>
+                </a>
+              </div>
+            </div>
+
             {/* Trust Indicators */}
             <div className="hero-trust pt-8 flex flex-wrap items-center gap-y-2 gap-x-6 text-xs text-muted-foreground border-t border-border/50">
               <span className="inline-flex items-center gap-1.5">

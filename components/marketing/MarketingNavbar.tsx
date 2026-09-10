@@ -26,11 +26,11 @@ export function MarketingNavbar({ onOpenRoleModal }: MarketingNavbarProps) {
 
   const navLinks = [
     { label: "Home", href: "/#hero" },
-    { label: "How It Works", href: "/#how-it-works" },
+    { label: "For Students", href: "/student" },
+    { label: "For Industry", href: "/industry" },
+    { label: "For Institutions", href: "/institution" },
+    { label: "For Faculty", href: "/academician" },
     { label: "Smart Automation", href: "/automation" },
-    { label: "For Students", href: "/#student-journey" },
-    { label: "For Institutions", href: "/#ecosystem" },
-    { label: "For Industry", href: "/#ecosystem" },
     { label: "Opportunities", href: "/#opportunities" },
   ];
 

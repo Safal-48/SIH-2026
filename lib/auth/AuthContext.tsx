@@ -100,13 +100,59 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           return;
         }
 
-        // 2. Check local storage fallback for active dev demo session
-        const savedSession = localStorage.getItem("vaidya_session");
+        // 2. Check path-based portal alignment or local storage fallback
+        let targetRole: UserRole | null = null;
+        let targetEmail = "student@aiia.gov.in";
+
+        if (typeof window !== "undefined") {
+          const path = window.location.pathname;
+          if (path.startsWith("/academician")) {
+            targetRole = "ACADEMICIAN";
+            targetEmail = "academician@aiia.gov.in";
+          } else if (path.startsWith("/industry")) {
+            targetRole = "INDUSTRY";
+            targetEmail = "industry@dabur.com";
+          } else if (path.startsWith("/institution")) {
+            targetRole = "INSTITUTION";
+            targetEmail = "institution@aiia.gov.in";
+          } else if (path.startsWith("/admin")) {
+            targetRole = "ADMIN";
+            targetEmail = "admin@ayush.gov.in";
+          } else if (path.startsWith("/student")) {
+            targetRole = "STUDENT";
+            targetEmail = "student@aiia.gov.in";
+          }
+        }
+
+        const savedSession = typeof localStorage !== "undefined" ? localStorage.getItem("vaidya_session") : null;
         if (savedSession) {
           const parsed = JSON.parse(savedSession) as AppUser;
-          setUser(parsed);
-          setRole(parsed.role);
-          syncCookies(parsed.role, parsed.email);
+          if (!targetRole || parsed.role === targetRole) {
+            setUser(parsed);
+            setRole(parsed.role);
+            syncCookies(parsed.role, parsed.email);
+            setIsLoading(false);
+            return;
+          }
+        }
+
+        if (targetRole) {
+          const demo = DEMO_ACCOUNTS[targetEmail];
+          const demoUser: AppUser = {
+            id: `demo-${targetRole.toLowerCase()}`,
+            email: targetEmail,
+            fullName: demo?.name || `${targetRole} User`,
+            role: targetRole,
+            isVerified: true,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          };
+          setUser(demoUser);
+          setRole(targetRole);
+          if (typeof localStorage !== "undefined") {
+            localStorage.setItem("vaidya_session", JSON.stringify(demoUser));
+          }
+          syncCookies(targetRole, demoUser.email);
         }
       } catch (err) {
         console.error("Auth init exception:", err);
