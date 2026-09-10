@@ -53,9 +53,21 @@ function SacredAyushRings() {
         <meshStandardMaterial
           color="#E5A93B"
           emissive="#E5A93B"
-          emissiveIntensity={0.6}
+          emissiveIntensity={0.7}
           roughness={0.2}
           metalness={0.8}
+        />
+      </mesh>
+
+      {/* Outer Ethereal Resonance Ring */}
+      <mesh rotation={[Math.PI / 6, Math.PI / 4, 0]}>
+        <torusGeometry args={[2.5, 0.012, 16, 100]} />
+        <meshStandardMaterial
+          color="#E5A93B"
+          emissive="#E5A93B"
+          emissiveIntensity={0.35}
+          transparent
+          opacity={0.55}
         />
       </mesh>
 
@@ -92,7 +104,7 @@ function BotanicalKnowledgeNodes() {
 
   // Ayurvedic discipline node coordinates
   const nodes = useMemo(() => [
-    { pos: [0, 0, 0] as [number, number, number], color: "#E5A93B", size: 0.35 }, // Prana core
+    { pos: [0, 0, 0] as [number, number, number], color: "#E5A93B", size: 0.38 }, // Prana core
     { pos: [-1.6, 1.0, 0.4] as [number, number, number], color: "#4FA87D", size: 0.22 }, // Dravyaguna
     { pos: [1.5, 1.1, -0.3] as [number, number, number], color: "#4FA87D", size: 0.24 }, // Panchakarma
     { pos: [0.3, -1.6, 0.5] as [number, number, number], color: "#C26D30", size: 0.22 }, // Rasashastra
@@ -128,17 +140,28 @@ function BotanicalKnowledgeNodes() {
 
   return (
     <group ref={groupRef}>
+      {/* Central Prana Light */}
+      <pointLight position={[0, 0, 0]} intensity={1.8} color="#E5A93B" distance={3.5} decay={2} />
+
       {nodes.map((node, i) => (
-        <mesh key={i} position={node.pos}>
-          <sphereGeometry args={[node.size, 32, 32]} />
-          <meshStandardMaterial
-            color={node.color}
-            emissive={node.color}
-            emissiveIntensity={i === 0 ? 0.8 : 0.4}
-            roughness={0.15}
-            metalness={0.7}
-          />
-        </mesh>
+        <group key={i} position={node.pos}>
+          <mesh>
+            <sphereGeometry args={[node.size, 32, 32]} />
+            <meshStandardMaterial
+              color={node.color}
+              emissive={node.color}
+              emissiveIntensity={i === 0 ? 0.9 : 0.45}
+              roughness={0.15}
+              metalness={0.7}
+            />
+          </mesh>
+          {i === 0 && (
+            <mesh scale={1.3}>
+              <icosahedronGeometry args={[node.size, 1]} />
+              <meshBasicMaterial color="#E5A93B" wireframe transparent opacity={0.3} />
+            </mesh>
+          )}
+        </group>
       ))}
 
       <lineSegments>

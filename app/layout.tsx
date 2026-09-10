@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+import dynamic from "next/dynamic";
 import { siteConfig } from "@/config/site";
 import { AuthProvider } from "@/lib/auth/AuthContext";
 
@@ -9,6 +10,14 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-sans",
   display: "swap",
 });
+
+const AyushAtmosphereBackground3D = dynamic(
+  () =>
+    import("@/components/three/AyushAtmosphereBackground3D").then(
+      (m) => m.AyushAtmosphereBackground3D
+    ),
+  { ssr: false }
+);
 
 export const metadata: Metadata = {
   title: siteConfig.title,
@@ -39,8 +48,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={plusJakartaSans.variable}>
-      <body className="min-h-screen bg-background text-foreground flex flex-col font-sans selection:bg-accent/25 selection:text-foreground">
-        <AuthProvider>{children}</AuthProvider>
+      <body className="min-h-screen bg-background text-foreground flex flex-col font-sans selection:bg-accent/25 selection:text-foreground relative">
+        <AyushAtmosphereBackground3D />
+        <div className="relative z-10 flex flex-col min-h-screen">
+          <AuthProvider>{children}</AuthProvider>
+        </div>
       </body>
     </html>
   );
