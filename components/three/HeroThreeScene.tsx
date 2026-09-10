@@ -1,10 +1,8 @@
 "use client";
 
-import React, { useRef, useMemo, useState, useEffect, Suspense } from "react";
+import React, { useRef, useMemo, useState, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Float } from "@react-three/drei";
 import * as THREE from "three";
-import { CanvasFallback } from "./CanvasFallback";
 import { cn } from "@/lib/utils/cn";
 
 // 1. Interactive Camera Parallax Rig
@@ -13,9 +11,8 @@ function CameraRig() {
   const vec = useMemo(() => new THREE.Vector3(), []);
 
   useFrame(() => {
-    // Smoothly interpolate camera position based on normalized mouse pointer
     camera.position.lerp(
-      vec.set(pointer.x * 0.8, pointer.y * 0.5, 5.5),
+      vec.set(pointer.x * 0.9, pointer.y * 0.6, 5.2),
       0.05
     );
     camera.lookAt(0, 0, 0);
@@ -24,7 +21,7 @@ function CameraRig() {
   return null;
 }
 
-// 2. Procedural Ayurvedic Sacred Geometry Rings
+// 2. Bold, Radiant Sacred Ayush Torus Rings
 function SacredAyushRings() {
   const outerRingRef = useRef<THREE.Mesh>(null);
   const middleRingRef = useRef<THREE.Mesh>(null);
@@ -32,86 +29,73 @@ function SacredAyushRings() {
 
   useFrame((state, delta) => {
     if (outerRingRef.current) {
-      outerRingRef.current.rotation.z += delta * 0.1;
-      outerRingRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.2;
+      outerRingRef.current.rotation.z += delta * 0.12;
+      outerRingRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.35) * 0.25;
     }
     if (middleRingRef.current) {
-      middleRingRef.current.rotation.z -= delta * 0.15;
-      middleRingRef.current.rotation.y = Math.cos(state.clock.elapsedTime * 0.25) * 0.2;
+      middleRingRef.current.rotation.z -= delta * 0.16;
+      middleRingRef.current.rotation.y = Math.cos(state.clock.elapsedTime * 0.3) * 0.22;
     }
     if (innerRingRef.current) {
-      innerRingRef.current.rotation.x += delta * 0.08;
-      innerRingRef.current.rotation.y += delta * 0.12;
+      innerRingRef.current.rotation.x += delta * 0.1;
+      innerRingRef.current.rotation.y += delta * 0.14;
     }
   });
 
   return (
     <group>
-      {/* Outer Golden Prana Ring */}
+      {/* Outer Golden Prana Sun Ring */}
       <mesh ref={outerRingRef}>
-        <torusGeometry args={[2.2, 0.02, 16, 100]} />
+        <torusGeometry args={[2.2, 0.065, 24, 100]} />
         <meshStandardMaterial
           color="#E5A93B"
           emissive="#E5A93B"
-          emissiveIntensity={0.7}
-          roughness={0.2}
+          emissiveIntensity={0.65}
+          roughness={0.25}
           metalness={0.8}
         />
       </mesh>
 
-      {/* Outer Ethereal Resonance Ring */}
-      <mesh rotation={[Math.PI / 6, Math.PI / 4, 0]}>
-        <torusGeometry args={[2.5, 0.012, 16, 100]} />
-        <meshStandardMaterial
-          color="#E5A93B"
-          emissive="#E5A93B"
-          emissiveIntensity={0.35}
-          transparent
-          opacity={0.55}
-        />
-      </mesh>
-
-      {/* Middle Herbal Green Orbit */}
+      {/* Middle Panchakarma Herbal Emerald Orbit */}
       <mesh ref={middleRingRef} rotation={[Math.PI / 4, 0, 0]}>
-        <torusGeometry args={[1.7, 0.018, 16, 80]} />
+        <torusGeometry args={[1.7, 0.055, 20, 80]} />
         <meshStandardMaterial
           color="#4FA87D"
           emissive="#216849"
-          emissiveIntensity={0.5}
+          emissiveIntensity={0.55}
           roughness={0.3}
-          metalness={0.6}
+          metalness={0.7}
         />
       </mesh>
 
-      {/* Inner Sandalwood Core Ring */}
+      {/* Inner Rasashastra Sandalwood Orbit */}
       <mesh ref={innerRingRef} rotation={[0, Math.PI / 3, 0]}>
-        <torusGeometry args={[1.2, 0.015, 16, 60]} />
+        <torusGeometry args={[1.2, 0.045, 16, 60]} />
         <meshStandardMaterial
           color="#C26D30"
           emissive="#C26D30"
-          emissiveIntensity={0.4}
-          roughness={0.2}
-          metalness={0.5}
+          emissiveIntensity={0.5}
+          roughness={0.3}
+          metalness={0.6}
         />
       </mesh>
     </group>
   );
 }
 
-// 3. Botanical Knowledge Nodes & Interconnects
+// 3. Central Ayush Knowledge Core and Orbiting Discipline Spheres
 function BotanicalKnowledgeNodes() {
   const groupRef = useRef<THREE.Group>(null);
 
-  // Ayurvedic discipline node coordinates
   const nodes = useMemo(() => [
-    { pos: [0, 0, 0] as [number, number, number], color: "#E5A93B", size: 0.38 }, // Prana core
-    { pos: [-1.6, 1.0, 0.4] as [number, number, number], color: "#4FA87D", size: 0.22 }, // Dravyaguna
-    { pos: [1.5, 1.1, -0.3] as [number, number, number], color: "#4FA87D", size: 0.24 }, // Panchakarma
-    { pos: [0.3, -1.6, 0.5] as [number, number, number], color: "#C26D30", size: 0.22 }, // Rasashastra
-    { pos: [-1.4, -0.9, -0.4] as [number, number, number], color: "#216849", size: 0.2 }, // Kayachikitsa
-    { pos: [1.6, -0.7, 0.6] as [number, number, number], color: "#E5A93B", size: 0.2 }, // Nadi Pariksha
-    { pos: [0, 1.8, -0.3] as [number, number, number], color: "#4FA87D", size: 0.22 }, // Research/GCP
-    { pos: [-0.8, 1.5, 0.6] as [number, number, number], color: "#E5A93B", size: 0.16 }, // Digital Standards
+    { name: "Prana Core", pos: [0, 0, 0] as [number, number, number], color: "#E5A93B", size: 0.42 },
+    { name: "Dravyaguna", pos: [-1.6, 1.0, 0.4] as [number, number, number], color: "#4FA87D", size: 0.24 },
+    { name: "Panchakarma", pos: [1.5, 1.1, -0.3] as [number, number, number], color: "#4FA87D", size: 0.25 },
+    { name: "Rasashastra", pos: [0.3, -1.6, 0.5] as [number, number, number], color: "#C26D30", size: 0.23 },
+    { name: "Kayachikitsa", pos: [-1.4, -0.9, -0.4] as [number, number, number], color: "#216849", size: 0.22 },
+    { name: "Nadi Pariksha", pos: [1.6, -0.7, 0.6] as [number, number, number], color: "#E5A93B", size: 0.22 },
+    { name: "Clinical Trials", pos: [0, 1.8, -0.3] as [number, number, number], color: "#4FA87D", size: 0.23 },
+    { name: "Passport Attest", pos: [-0.8, 1.5, 0.6] as [number, number, number], color: "#E5A93B", size: 0.18 },
   ], []);
 
   const linePositions = useMemo(() => {
@@ -133,15 +117,15 @@ function BotanicalKnowledgeNodes() {
 
   useFrame((state, delta) => {
     if (groupRef.current) {
-      groupRef.current.rotation.y += delta * 0.08;
+      groupRef.current.rotation.y += delta * 0.09;
       groupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.08;
     }
   });
 
   return (
     <group ref={groupRef}>
-      {/* Central Prana Light */}
-      <pointLight position={[0, 0, 0]} intensity={1.8} color="#E5A93B" distance={3.5} decay={2} />
+      {/* Central Radiant Glow Light */}
+      <pointLight position={[0, 0, 0]} intensity={2.2} color="#E5A93B" distance={4} decay={2} />
 
       {nodes.map((node, i) => (
         <group key={i} position={node.pos}>
@@ -150,15 +134,15 @@ function BotanicalKnowledgeNodes() {
             <meshStandardMaterial
               color={node.color}
               emissive={node.color}
-              emissiveIntensity={i === 0 ? 0.9 : 0.45}
-              roughness={0.15}
+              emissiveIntensity={i === 0 ? 0.95 : 0.55}
+              roughness={0.2}
               metalness={0.7}
             />
           </mesh>
           {i === 0 && (
-            <mesh scale={1.3}>
+            <mesh scale={1.32}>
               <icosahedronGeometry args={[node.size, 1]} />
-              <meshBasicMaterial color="#E5A93B" wireframe transparent opacity={0.3} />
+              <meshBasicMaterial color="#E5A93B" wireframe transparent opacity={0.4} />
             </mesh>
           )}
         </group>
@@ -166,30 +150,28 @@ function BotanicalKnowledgeNodes() {
 
       <lineSegments>
         <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            args={[linePositions, 3]}
-          />
+          <bufferAttribute attach="attributes-position" args={[linePositions, 3]} />
         </bufferGeometry>
-        <lineBasicMaterial color="#4FA87D" transparent opacity={0.35} />
+        <lineBasicMaterial color="#4FA87D" transparent opacity={0.45} />
       </lineSegments>
     </group>
   );
 }
 
-// 4. Floating Golden Prana & Botanical Particles
-function HeroParticles({ count = 220 }: { count?: number }) {
+// 4. Floating High-Contrast Prana Particles
+function HeroParticles({ count = 180 }: { count?: number }) {
   const pointsRef = useRef<THREE.Points>(null);
 
   const [positions, colors] = useMemo(() => {
     const pos = new Float32Array(count * 3);
     const col = new Float32Array(count * 3);
 
-    const saffron = new THREE.Color("#E5A93B");
-    const herbal = new THREE.Color("#4FA87D");
+    const gold = new THREE.Color("#E5A93B");
+    const emerald = new THREE.Color("#4FA87D");
+    const sandalwood = new THREE.Color("#C26D30");
 
     for (let i = 0; i < count; i++) {
-      const r = (Math.random() * 3.5 + 0.5);
+      const r = Math.random() * 3.6 + 0.6;
       const theta = Math.random() * 2 * Math.PI;
       const phi = Math.acos(2 * Math.random() - 1);
 
@@ -197,11 +179,11 @@ function HeroParticles({ count = 220 }: { count?: number }) {
       pos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
       pos[i * 3 + 2] = r * Math.cos(phi);
 
-      // Interpolate between saffron gold and herbal green
-      const mixedColor = saffron.clone().lerp(herbal, Math.random());
-      col[i * 3] = mixedColor.r;
-      col[i * 3 + 1] = mixedColor.g;
-      col[i * 3 + 2] = mixedColor.b;
+      const rand = Math.random();
+      const c = rand < 0.45 ? gold : rand < 0.8 ? emerald : sandalwood;
+      col[i * 3] = c.r;
+      col[i * 3 + 1] = c.g;
+      col[i * 3 + 2] = c.b;
     }
 
     return [pos, col];
@@ -209,8 +191,8 @@ function HeroParticles({ count = 220 }: { count?: number }) {
 
   useFrame((state, delta) => {
     if (pointsRef.current) {
-      pointsRef.current.rotation.y += delta * 0.04;
-      pointsRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.2) * 0.04;
+      pointsRef.current.rotation.y += delta * 0.05;
+      pointsRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.25) * 0.05;
     }
   });
 
@@ -221,31 +203,30 @@ function HeroParticles({ count = 220 }: { count?: number }) {
         <bufferAttribute attach="attributes-color" args={[colors, 3]} />
       </bufferGeometry>
       <pointsMaterial
-        size={0.045}
+        size={0.065}
         vertexColors
         transparent
-        opacity={0.8}
-        blending={THREE.AdditiveBlending}
+        opacity={0.85}
         depthWrite={false}
       />
     </points>
   );
 }
 
-// 5. Subtle Floating Ayurvedic Elements (Rasashastra & Botanical Crystals)
+// 5. Floating Ayurvedic Dhatu Crystals
 function FloatingAyushCrystals() {
   const crystalGroupRef = useRef<THREE.Group>(null);
 
   const crystals = useMemo(() => [
-    { pos: [-2.1, 1.8, -0.6] as [number, number, number], rot: [0.4, 0.2, 0.1], scale: 0.18, color: "#E5A93B", type: "octa" },
-    { pos: [2.2, -1.6, 0.4] as [number, number, number], rot: [0.1, 0.5, 0.3], scale: 0.16, color: "#4FA87D", type: "ico" },
-    { pos: [-1.9, -1.5, 0.8] as [number, number, number], rot: [0.3, 0.1, 0.6], scale: 0.15, color: "#C26D30", type: "octa" },
-    { pos: [2.0, 1.7, -0.4] as [number, number, number], rot: [0.5, 0.3, 0.2], scale: 0.17, color: "#E5A93B", type: "ico" },
+    { pos: [-2.2, 1.9, -0.6] as [number, number, number], rot: [0.4, 0.2, 0.1], scale: 0.2, color: "#E5A93B", type: "octa" },
+    { pos: [2.3, -1.7, 0.4] as [number, number, number], rot: [0.1, 0.5, 0.3], scale: 0.18, color: "#4FA87D", type: "ico" },
+    { pos: [-2.0, -1.6, 0.8] as [number, number, number], rot: [0.3, 0.1, 0.6], scale: 0.17, color: "#C26D30", type: "octa" },
+    { pos: [2.1, 1.8, -0.4] as [number, number, number], rot: [0.5, 0.3, 0.2], scale: 0.19, color: "#E5A93B", type: "ico" },
   ], []);
 
   useFrame((state, delta) => {
     if (crystalGroupRef.current) {
-      crystalGroupRef.current.rotation.y += delta * 0.05;
+      crystalGroupRef.current.rotation.y += delta * 0.06;
       crystalGroupRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.2) * 0.04;
     }
   });
@@ -262,10 +243,9 @@ function FloatingAyushCrystals() {
           <meshStandardMaterial
             color={c.color}
             emissive={c.color}
-            emissiveIntensity={0.5}
+            emissiveIntensity={0.6}
             roughness={0.2}
             metalness={0.7}
-            wireframe={false}
           />
         </mesh>
       ))}
@@ -273,54 +253,59 @@ function FloatingAyushCrystals() {
   );
 }
 
-// Main 3D Hero Canvas Component
+// 6. Native Three.js Floating Container (Zero external dependencies)
+function FloatingSceneContainer({ children }: { children: React.ReactNode }) {
+  const groupRef = useRef<THREE.Group>(null);
+
+  useFrame((state) => {
+    if (groupRef.current) {
+      groupRef.current.position.y = Math.sin(state.clock.elapsedTime * 1.3) * 0.12;
+      groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.35) * 0.07;
+    }
+  });
+
+  return <group ref={groupRef}>{children}</group>;
+}
+
+// Main 3D Hero Scene
 export function HeroThreeScene({ className }: { className?: string }) {
   const [mounted, setMounted] = useState(false);
-  const [hasWebGL, setHasWebGL] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    setIsMobile(window.innerWidth < 768);
-
-    try {
-      const canvas = document.createElement("canvas");
-      const gl =
-        canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-      if (!gl) setHasWebGL(false);
-    } catch {
-      setHasWebGL(false);
-    }
   }, []);
 
-  if (!mounted || !hasWebGL) {
-    return <CanvasFallback className={className} title="Ayurveda Intelligence Core" />;
+  if (!mounted) {
+    return (
+      <div className={cn("w-full h-full min-h-[480px] flex items-center justify-center rounded-3xl bg-card/60 backdrop-blur-md border border-accent/30 p-8", className)}>
+        <div className="w-16 h-16 rounded-full border-2 border-primary border-t-accent animate-spin" />
+      </div>
+    );
   }
 
   return (
-    <div className={cn("relative w-full h-full min-h-[460px] lg:min-h-[580px]", className)}>
-      <Suspense fallback={<CanvasFallback className={className} title="Initializing 3D Core..." />}>
-        <Canvas
-          camera={{ position: [0, 0, 5.5], fov: 45 }}
-          dpr={isMobile ? [1, 1.2] : [1, 2]}
-          gl={{ antialias: true, alpha: true }}
-        >
-          <ambientLight intensity={0.9} />
-          <directionalLight position={[5, 6, 4]} intensity={1.4} color="#FFFDF7" />
-          <pointLight position={[-4, -3, -2]} intensity={0.8} color="#4FA87D" />
-          <pointLight position={[3, -2, 3]} intensity={0.9} color="#E5A93B" />
+    <div className={cn("relative w-full h-[480px] sm:h-[520px] lg:h-[580px] flex items-center justify-center select-none", className)}>
+      <Canvas
+        camera={{ position: [0, 0, 5.2], fov: 45 }}
+        dpr={[1, 1.5]}
+        gl={{ antialias: true, alpha: true }}
+        className="w-full h-full"
+      >
+        <ambientLight intensity={1.1} />
+        <directionalLight position={[5, 6, 4]} intensity={1.6} color="#FFFDF7" />
+        <pointLight position={[-4, -3, -2]} intensity={1.0} color="#4FA87D" />
+        <pointLight position={[3, -2, 3]} intensity={1.1} color="#E5A93B" />
 
-          <CameraRig />
+        <CameraRig />
 
-          <Float speed={1.8} rotationIntensity={0.25} floatIntensity={0.5}>
-            <SacredAyushRings />
-            <BotanicalKnowledgeNodes />
-            <FloatingAyushCrystals />
-          </Float>
+        <FloatingSceneContainer>
+          <SacredAyushRings />
+          <BotanicalKnowledgeNodes />
+          <FloatingAyushCrystals />
+        </FloatingSceneContainer>
 
-          <HeroParticles count={isMobile ? 90 : 220} />
-        </Canvas>
-      </Suspense>
+        <HeroParticles count={140} />
+      </Canvas>
     </div>
   );
 }

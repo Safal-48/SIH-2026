@@ -11,10 +11,10 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   display: "swap",
 });
 
-const AyushAtmosphereBackground3D = dynamic(
+const AnimatedAyushBackground = dynamic(
   () =>
-    import("@/components/three/AyushAtmosphereBackground3D").then(
-      (m) => m.AyushAtmosphereBackground3D
+    import("@/components/ui/AnimatedAyushBackground").then(
+      (m) => m.AnimatedAyushBackground
     ),
   { ssr: false }
 );
@@ -49,7 +49,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={plusJakartaSans.variable}>
       <body className="min-h-screen bg-background text-foreground flex flex-col font-sans selection:bg-accent/25 selection:text-foreground relative">
-        <AyushAtmosphereBackground3D />
+        <AnimatedAyushBackground />
         <div className="relative z-10 flex flex-col min-h-screen">
           <AuthProvider>{children}</AuthProvider>
         </div>

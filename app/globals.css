@@ -169,6 +169,52 @@
   background: radial-gradient(circle, rgba(229, 169, 59, 0.15) 0%, rgba(79, 168, 125, 0.08) 50%, transparent 70%);
 }
 
+/* Animated Aurora Waves for Full-Site Living Background */
+@keyframes aurora1 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate3d(80px, 60px, 0) scale(1.18) rotate(15deg); }
+}
+
+@keyframes aurora2 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate3d(-70px, 80px, 0) scale(1.15) rotate(-15deg); }
+}
+
+@keyframes aurora3 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate3d(60px, -70px, 0) scale(1.22) rotate(10deg); }
+}
+
+@keyframes aurora4 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate3d(-80px, -50px, 0) scale(1.12) rotate(-10deg); }
+}
+
+@keyframes spinExtremelySlow {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.animate-aurora-1 {
+  animation: aurora1 18s ease-in-out infinite;
+}
+
+.animate-aurora-2 {
+  animation: aurora2 22s ease-in-out infinite;
+}
+
+.animate-aurora-3 {
+  animation: aurora3 25s ease-in-out infinite;
+}
+
+.animate-aurora-4 {
+  animation: aurora4 20s ease-in-out infinite;
+}
+
+.animate-spin-extremely-slow {
+  animation: spinExtremelySlow 140s linear infinite;
+}
+
 /* Responsive typography utilities */
 .text-display {
   @apply text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight;

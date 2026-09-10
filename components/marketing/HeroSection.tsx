@@ -189,14 +189,14 @@ export function HeroSection({
 
           {/* Right Hero Column: 3D Scene */}
           <div className="lg:col-span-5 relative flex items-center justify-center">
-            <div className="hero-3d-wrapper relative w-full max-w-[520px] mx-auto">
+            <div className="hero-3d-wrapper relative w-full h-[480px] sm:h-[520px] lg:h-[580px] max-w-[540px] mx-auto flex items-center justify-center">
               {/* 3D Radiant Ambient Aura */}
-              <div className="absolute -inset-4 bg-gradient-to-tr from-accent/20 via-primary/15 to-transparent rounded-full blur-3xl -z-10 animate-pulse-subtle" />
+              <div className="absolute inset-4 bg-gradient-to-tr from-accent/25 via-primary/20 to-transparent rounded-full blur-3xl -z-10 animate-pulse-subtle" />
 
-              <HeroThreeScene />
+              <HeroThreeScene className="w-full h-full" />
 
               {/* Floating Accent Badge 1 */}
-              <div className="ayur-3d-card ayur-glow absolute -top-3 -right-2 p-3 rounded-2xl bg-card/90 backdrop-blur-md border border-accent/40 shadow-xl text-xs font-semibold flex items-center gap-2.5">
+              <div className="ayur-3d-card ayur-glow absolute top-4 -right-1 sm:right-2 p-3 rounded-2xl bg-card/90 backdrop-blur-md border border-accent/40 shadow-xl text-xs font-semibold flex items-center gap-2.5 z-20">
                 <div className="w-8 h-8 rounded-xl bg-accent/20 text-accent flex items-center justify-center font-bold">
                   🌿
                 </div>
@@ -207,7 +207,7 @@ export function HeroSection({
               </div>
 
               {/* Floating Accent Badge 2 */}
-              <div className="ayur-3d-card emerald-glow absolute -bottom-4 -left-2 p-3 rounded-2xl bg-card/90 backdrop-blur-md border border-primary/40 shadow-xl text-xs font-semibold flex items-center gap-2.5">
+              <div className="ayur-3d-card emerald-glow absolute bottom-4 -left-1 sm:left-2 p-3 rounded-2xl bg-card/90 backdrop-blur-md border border-primary/40 shadow-xl text-xs font-semibold flex items-center gap-2.5 z-20">
                 <div className="w-8 h-8 rounded-xl bg-primary/20 text-primary flex items-center justify-center font-bold">
                   ✦
                 </div>
