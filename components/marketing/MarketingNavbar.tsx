@@ -57,7 +57,7 @@ export function MarketingNavbar({ onOpenRoleModal }: MarketingNavbarProps) {
               Architecture Explorer
             </Link>
             <Badge variant="gold" size="sm" className="bg-accent/20 text-accent border-accent/40">
-              SIH Smart Automation
+              Ayush Smart Automation
             </Badge>
           </div>
         </div>

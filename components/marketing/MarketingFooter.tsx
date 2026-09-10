@@ -178,7 +178,7 @@ export function MarketingFooter() {
             © {new Date().getFullYear()} Vaidya Setu • Ministry of Ayush Government of India Initiative.
           </p>
           <div className="flex items-center gap-4">
-            <span>Smart Automation SIH 2026</span>
+            <span>National Ayush Grid • Ministry of Ayush</span>
             <span>•</span>
             <span>All India Institute of Ayurveda</span>
           </div>

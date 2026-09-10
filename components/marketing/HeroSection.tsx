@@ -120,7 +120,7 @@ export function HeroSection({
             {/* Category Pill */}
             <div className="hero-pill inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/15 border border-accent/30 text-accent-foreground text-xs font-semibold uppercase tracking-wider shadow-sm">
               <Sparkles className="h-3.5 w-3.5 text-accent animate-pulse" />
-              <span>Smart India Hackathon • Ministry of Ayush</span>
+              <span>National Ayush Mission • Ministry of Ayush</span>
             </div>
 
             {/* Editorial Headline */}

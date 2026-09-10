@@ -113,7 +113,7 @@ export function AutomationSection() {
                       <h4 className="text-xl font-bold text-foreground">
                         Vaidya Setu Smart Automation Engine
                       </h4>
-                      <Badge variant="gold" size="sm">SIH Core</Badge>
+                      <Badge variant="gold" size="sm">Ayush Core</Badge>
                     </div>
                     <p className="text-xs text-muted-foreground mt-1">
                       Runs real-time weighted vector scoring across clinical competencies, geographical mobility, and industry skill demand.

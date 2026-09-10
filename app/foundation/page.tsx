@@ -409,7 +409,7 @@ export default function FoundationExplorerPage() {
                     Modeled after the complete lifecycle: Assess → Map → Gap → Learn → Practice → Verify → Match → Apply → Experience → Career
                   </p>
                 </div>
-                <Badge variant="gold">SIH 2026 Core Flow</Badge>
+                <Badge variant="gold">National Ayush Core Flow</Badge>
               </div>
 
               <Timeline steps={studentJourneySteps} orientation="vertical" />

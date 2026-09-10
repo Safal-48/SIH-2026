@@ -1,6 +1,6 @@
 /**
  * Vaidya Setu - Smart Automation Engine & Master Pipeline Service
- * Ministry of Ayush | Smart India Hackathon 2026
+ * Ministry of Ayush | National Ayush Grid
  *
  * Orchestrates the 6 Core Smart Automation Engines:
  * 1. Skill Gap Engine

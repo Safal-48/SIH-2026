@@ -105,7 +105,7 @@ function AutomationPageContent() {
 
           <div className="flex items-center gap-2">
             <span className="text-xs text-muted-foreground hidden md:inline">
-              SIH-2026 Core Architecture Story
+              National Ayush Core Architecture Story
             </span>
           </div>
         </div>

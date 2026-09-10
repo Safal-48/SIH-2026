@@ -28,7 +28,7 @@ export function Navbar() {
           <div className="flex items-center gap-3 text-[11px] text-herbal-300">
             <span className="hidden md:inline">Smart Automation Portal</span>
             <Badge variant="gold" size="sm" className="bg-accent/20 text-accent border-accent/40">
-              SIH 2026 Edition
+              National Edition
             </Badge>
           </div>
         </div>
