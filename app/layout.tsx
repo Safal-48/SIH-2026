@@ -1,0 +1,47 @@
+import type { Metadata } from "next";
+import { Plus_Jakarta_Sans } from "next/font/google";
+import "./globals.css";
+import { siteConfig } from "@/config/site";
+import { AuthProvider } from "@/lib/auth/AuthContext";
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  title: siteConfig.title,
+  description: siteConfig.description,
+  keywords: [
+    "Ayurveda",
+    "Ministry of Ayush",
+    "All India Institute of Ayurveda",
+    "AIIA",
+    "Skill Mapping",
+    "Internships",
+    "Placements",
+    "BAMS",
+    "MD Ayurveda",
+    "Panchakarma",
+    "Competency Passport",
+  ],
+  authors: [{ name: "Ministry of Ayush / AIIA" }],
+  icons: {
+    icon: "/favicon.ico",
+  },
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en" className={plusJakartaSans.variable}>
+      <body className="min-h-screen bg-background text-foreground flex flex-col font-sans selection:bg-accent/25 selection:text-foreground">
+        <AuthProvider>{children}</AuthProvider>
+      </body>
+    </html>
+  );
+}

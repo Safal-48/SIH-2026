@@ -1,0 +1,200 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Base Surfaces - Ivory / Warm Off-white */
+    --background: 44 40% 98%;
+    --foreground: 160 50% 10%;
+
+    /* Primary - Deep Herbal Green */
+    --primary: 155 56% 19%;
+    --primary-foreground: 44 40% 98%;
+
+    /* Secondary - Ayurvedic Earth / Sandalwood */
+    --secondary: 24 50% 40%;
+    --secondary-foreground: 44 40% 98%;
+
+    /* Accent - Warm Ayurvedic Saffron Gold */
+    --accent: 36 92% 46%;
+    --accent-foreground: 160 62% 9%;
+
+    /* Card & Popover */
+    --card: 44 35% 99%;
+    --card-foreground: 160 50% 10%;
+    --popover: 44 35% 99%;
+    --popover-foreground: 160 50% 10%;
+
+    /* Muted & Borders */
+    --muted: 44 20% 92%;
+    --muted-foreground: 155 20% 38%;
+    --border: 44 25% 88%;
+    --input: 44 25% 88%;
+    --ring: 155 56% 25%;
+
+    /* Destructive */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --radius: 0.75rem;
+
+    /* Semantic Herbal Gradients */
+    --herbal-50: 145 45% 96%;
+    --herbal-100: 145 40% 90%;
+    --herbal-200: 147 36% 80%;
+    --herbal-300: 149 34% 64%;
+    --herbal-400: 151 38% 46%;
+    --herbal-500: 153 48% 32%;
+    --herbal-600: 154 52% 25%;
+    --herbal-700: 155 56% 19%;
+    --herbal-800: 156 58% 14%;
+    --herbal-900: 158 62% 9%;
+    --herbal-950: 160 70% 5%;
+
+    --earth-50: 28 45% 97%;
+    --earth-100: 28 42% 92%;
+    --earth-200: 27 40% 82%;
+    --earth-300: 26 38% 68%;
+    --earth-400: 25 42% 52%;
+    --earth-500: 24 50% 40%;
+    --earth-600: 23 52% 33%;
+    --earth-700: 22 54% 26%;
+    --earth-800: 21 56% 20%;
+    --earth-900: 20 58% 14%;
+
+    --saffron-50: 45 100% 96%;
+    --saffron-100: 43 96% 88%;
+    --saffron-200: 41 94% 76%;
+    --saffron-300: 39 92% 62%;
+    --saffron-400: 37 90% 51%;
+    --saffron-500: 36 92% 46%;
+    --saffron-600: 34 94% 38%;
+    --saffron-700: 31 92% 30%;
+    --saffron-800: 28 90% 23%;
+    --saffron-900: 25 88% 17%;
+  }
+
+  .dark {
+    /* Dark Mode - Deep Forest / Charcoal Green */
+    --background: 160 70% 5%;
+    --foreground: 44 40% 96%;
+
+    --primary: 151 38% 46%;
+    --primary-foreground: 160 70% 5%;
+
+    --secondary: 25 42% 52%;
+    --secondary-foreground: 44 40% 98%;
+
+    --accent: 37 90% 51%;
+    --accent-foreground: 160 70% 5%;
+
+    --card: 158 55% 8%;
+    --card-foreground: 44 40% 96%;
+    --popover: 158 55% 8%;
+    --popover-foreground: 44 40% 96%;
+
+    --muted: 156 30% 14%;
+    --muted-foreground: 147 25% 65%;
+    --border: 156 30% 18%;
+    --input: 156 30% 18%;
+    --ring: 151 38% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-accent/25 selection:text-foreground;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  /* Accessibility focus styles */
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent/80 ring-offset-2 ring-offset-background;
+  }
+}
+
+/* Glassmorphism tuned for government & healthcare grade serenity */
+.glass-surface {
+  background: rgba(253, 252, 247, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(19, 62, 43, 0.08);
+}
+
+.dark .glass-surface {
+  background: rgba(10, 26, 18, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(74, 150, 110, 0.15);
+}
+
+/* Subtle botanical border glow */
+.ayur-glow {
+  box-shadow: 0 0 24px -6px rgba(229, 169, 59, 0.18);
+}
+
+/* Responsive typography utilities */
+.text-display {
+  @apply text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight;
+}
+
+.text-h1 {
+  @apply text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight;
+}
+
+.text-h2 {
+  @apply text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight;
+}
+
+.text-h3 {
+  @apply text-xl sm:text-2xl font-semibold tracking-tight;
+}
+
+.text-body-lead {
+  @apply text-lg sm:text-xl text-muted-foreground leading-relaxed;
+}
+
+.text-caption {
+  @apply text-xs font-medium uppercase tracking-wider text-muted-foreground;
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Official Print & PDF Transcript Optimization */
+@media print {
+  aside,
+  header,
+  footer,
+  .print\\:hidden {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 11pt !important;
+  }
+
+  .card,
+  [class*="rounded-3xl"],
+  [class*="rounded-2xl"] {
+    box-shadow: none !important;
+    border-color: #cbd5e1 !important;
+    break-inside: avoid;
+  }
+}
+
