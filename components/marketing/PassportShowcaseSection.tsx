@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/layout/SectionHeading";
 import { RevealOnScroll } from "@/components/animations/RevealOnScroll";
+import { Card3DTilt } from "@/components/animations/Card3DTilt";
 
 export function PassportShowcaseSection() {
   const competencies = [
@@ -38,9 +39,16 @@ export function PassportShowcaseSection() {
 
         <div className="mt-16 max-w-4xl mx-auto">
           <RevealOnScroll direction="up" distance={30}>
-            {/* 3D Perspective Card Container */}
-            <div className="relative rounded-3xl p-1 bg-gradient-to-b from-accent/40 via-primary/30 to-border shadow-2xl transition-transform duration-500 hover:scale-[1.01]">
-              <div className="rounded-[22px] bg-gradient-to-b from-card via-card to-background p-6 sm:p-10 border border-border space-y-8">
+            <Card3DTilt maxTilt={5} glareColor="gold" className="w-full">
+              {/* 3D Perspective Card Container */}
+              <div className="relative rounded-3xl p-1 bg-gradient-to-b from-accent/50 via-primary/30 to-border shadow-2xl transition-all duration-300 ayur-3d-card">
+                {/* 3D Floating Holographic Security Seal */}
+                <div className="absolute -top-4 -right-2 sm:-right-4 px-3.5 py-1.5 rounded-2xl bg-gradient-to-r from-accent via-amber-300 to-accent text-background text-[11px] font-black uppercase tracking-wider shadow-xl flex items-center gap-1.5 z-40 border border-amber-200/60 shimmer-gold-border">
+                  <Sparkles className="h-3.5 w-3.5 text-primary-950 animate-spin-slow" />
+                  <span className="text-primary-950 font-extrabold">3D Tamper-Proof Seal • SHA-256</span>
+                </div>
+
+                <div className="rounded-[22px] bg-gradient-to-b from-card via-card to-background p-6 sm:p-10 border border-border space-y-8 relative overflow-hidden">
                 {/* Passport Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border/80">
                   <div className="flex items-center gap-3">
@@ -161,6 +169,7 @@ export function PassportShowcaseSection() {
                 </div>
               </div>
             </div>
+          </Card3DTilt>
           </RevealOnScroll>
         </div>
       </div>

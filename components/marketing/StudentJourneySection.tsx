@@ -14,6 +14,7 @@ import {
   ArrowDown,
 } from "lucide-react";
 import { Card } from "@/components/cards/Card";
+import { Card3DTilt } from "@/components/animations/Card3DTilt";
 import { Badge } from "@/components/ui/Badge";
 import { SectionHeading } from "@/components/layout/SectionHeading";
 import { RevealOnScroll } from "@/components/animations/RevealOnScroll";
@@ -159,46 +160,48 @@ export function StudentJourneySection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredStages.map((stage, idx) => (
             <RevealOnScroll key={stage.id} delay={idx * 0.05}>
-              <Card
-                variant="interactive"
-                className="p-6 h-full flex flex-col justify-between border-border/80 group"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="w-8 h-8 rounded-full bg-accent/15 text-accent font-bold text-xs flex items-center justify-center border border-accent/25">
-                      0{stage.id}
+              <Card3DTilt maxTilt={6} glareColor="gold" className="h-full">
+                <Card
+                  variant="interactive"
+                  className="p-6 h-full flex flex-col justify-between border-border/80 group ayur-3d-card"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="w-8 h-8 rounded-full bg-accent/15 text-accent font-bold text-xs flex items-center justify-center border border-accent/25">
+                        0{stage.id}
+                      </div>
+                      <Badge variant="outline" size="sm">
+                        {stage.category}
+                      </Badge>
                     </div>
-                    <Badge variant="outline" size="sm">
-                      {stage.category}
-                    </Badge>
+
+                    <div className="flex items-center gap-2.5 mb-1.5">
+                      <div className="p-2 rounded-xl bg-background border border-border shrink-0">
+                        {stage.icon}
+                      </div>
+                      <div>
+                        <h4 className="text-base font-bold text-foreground group-hover:text-primary transition-colors">
+                          {stage.title}
+                        </h4>
+                        <p className="text-[11px] text-primary/80 font-medium">
+                          {stage.sanskritSub}
+                        </p>
+                      </div>
+                    </div>
+
+                    <p className="text-xs text-muted-foreground leading-relaxed mt-3 mb-4">
+                      {stage.description}
+                    </p>
                   </div>
 
-                  <div className="flex items-center gap-2.5 mb-1.5">
-                    <div className="p-2 rounded-xl bg-background border border-border shrink-0">
-                      {stage.icon}
-                    </div>
-                    <div>
-                      <h4 className="text-base font-bold text-foreground group-hover:text-primary transition-colors">
-                        {stage.title}
-                      </h4>
-                      <p className="text-[11px] text-primary/80 font-medium">
-                        {stage.sanskritSub}
-                      </p>
-                    </div>
+                  <div className="pt-3 border-t border-border/50 flex items-center justify-between text-[11px]">
+                    <span className="text-muted-foreground">Deliverable:</span>
+                    <span className="font-semibold text-foreground bg-muted px-2 py-0.5 rounded">
+                      {stage.outputArtifact}
+                    </span>
                   </div>
-
-                  <p className="text-xs text-muted-foreground leading-relaxed mt-3 mb-4">
-                    {stage.description}
-                  </p>
-                </div>
-
-                <div className="pt-3 border-t border-border/50 flex items-center justify-between text-[11px]">
-                  <span className="text-muted-foreground">Deliverable:</span>
-                  <span className="font-semibold text-foreground bg-muted px-2 py-0.5 rounded">
-                    {stage.outputArtifact}
-                  </span>
-                </div>
-              </Card>
+                </Card>
+              </Card3DTilt>
             </RevealOnScroll>
           ))}
         </div>

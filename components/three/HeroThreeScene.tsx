@@ -83,6 +83,68 @@ function SacredAyushRings() {
   );
 }
 
+// 2.5 Stylized 3D Orbiting Ayurveda Leaves (Tulsi & Neem botanical vortex)
+function OrbitingAyurvedaLeaves({ count = 10 }: { count?: number }) {
+  const leavesGroupRef = useRef<THREE.Group>(null);
+
+  const leafGeometry = useMemo(() => {
+    const shape = new THREE.Shape();
+    shape.moveTo(0, -0.3);
+    shape.bezierCurveTo(0.2, -0.1, 0.2, 0.15, 0, 0.35);
+    shape.bezierCurveTo(-0.2, 0.15, -0.2, -0.1, 0, -0.3);
+    return new THREE.ShapeGeometry(shape);
+  }, []);
+
+  const leaves = useMemo(() => {
+    return Array.from({ length: count }, (_, i) => {
+      const angle = (i / count) * Math.PI * 2;
+      const radius = 2.4 + (i % 3) * 0.3;
+      return {
+        initialAngle: angle,
+        radius,
+        speed: 0.2 + (i % 2) * 0.1,
+        yOffset: (Math.sin(angle * 2) * 0.5),
+        color: i % 2 === 0 ? "#4FA87D" : "#E5A93B",
+        scale: 0.28 + (i % 3) * 0.05,
+      };
+    });
+  }, [count]);
+
+  useFrame((state, delta) => {
+    if (!leavesGroupRef.current) return;
+    const t = state.clock.elapsedTime;
+    leavesGroupRef.current.children.forEach((mesh, idx) => {
+      const l = leaves[idx];
+      if (!l) return;
+      const currentAngle = l.initialAngle + t * l.speed * 0.4;
+      mesh.position.x = Math.cos(currentAngle) * l.radius;
+      mesh.position.z = Math.sin(currentAngle) * l.radius;
+      mesh.position.y = l.yOffset + Math.sin(t * 1.5 + idx) * 0.15;
+      mesh.rotation.y = -currentAngle + Math.PI / 2;
+      mesh.rotation.x = Math.sin(t * 2 + idx) * 0.4;
+    });
+  });
+
+  return (
+    <group ref={leavesGroupRef}>
+      {leaves.map((l, idx) => (
+        <mesh key={idx} geometry={leafGeometry} scale={l.scale}>
+          <meshStandardMaterial
+            color={l.color}
+            emissive={l.color}
+            emissiveIntensity={0.35}
+            roughness={0.3}
+            metalness={0.4}
+            side={THREE.DoubleSide}
+            transparent
+            opacity={0.85}
+          />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
 // 3. Central Ayush Knowledge Core and Orbiting Discipline Spheres
 function BotanicalKnowledgeNodes() {
   const groupRef = useRef<THREE.Group>(null);
@@ -301,6 +363,7 @@ export function HeroThreeScene({ className }: { className?: string }) {
         <FloatingSceneContainer>
           <SacredAyushRings />
           <BotanicalKnowledgeNodes />
+          <OrbitingAyurvedaLeaves count={12} />
           <FloatingAyushCrystals />
         </FloatingSceneContainer>
 

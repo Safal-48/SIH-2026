@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { motion, useInView } from "framer-motion";
+import dynamic from "next/dynamic";
 import {
   Sparkles,
   CheckCircle2,
@@ -12,6 +13,7 @@ import {
   BookOpen,
   Clock,
   ShieldCheck,
+  Box,
 } from "lucide-react";
 import { Card } from "@/components/cards/Card";
 import { Badge } from "@/components/ui/Badge";
@@ -20,9 +22,22 @@ import { SectionHeading } from "@/components/layout/SectionHeading";
 import { RevealOnScroll } from "@/components/animations/RevealOnScroll";
 import { cn } from "@/lib/utils/cn";
 
+const TridoshaBalance3D = dynamic(
+  () => import("@/components/three/TridoshaBalance3D").then((m) => m.TridoshaBalance3D),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="h-[420px] flex items-center justify-center rounded-2xl bg-card/60 border border-border">
+        <div className="w-10 h-10 border-2 border-primary border-t-accent rounded-full animate-spin" />
+      </div>
+    ),
+  }
+);
+
 export function SkillGapPreviewSection() {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: "-80px" });
+  const [activeTab, setActiveTab] = React.useState<"DNA" | "TRIDOSHA">("DNA");
 
   const careerFits = [
     { label: "Clinical Practice (Super-Specialty)", value: 84, color: "from-primary to-herbal-500" },
@@ -143,8 +158,51 @@ export function SkillGapPreviewSection() {
               </div>
             </div>
 
-            {/* Grid Content: Career Fit & Gaps */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            {/* View Mode Switcher: Career DNA vs 3D Tridosha */}
+            <div className="flex flex-wrap items-center justify-between gap-3 pb-2">
+              <div className="inline-flex items-center p-1 rounded-2xl bg-muted/60 border border-border">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("DNA")}
+                  className={cn(
+                    "px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5",
+                    activeTab === "DNA"
+                      ? "bg-primary text-primary-foreground shadow-sm scale-105"
+                      : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  <BrainCircuit className="h-3.5 w-3.5" />
+                  <span>Career DNA Vectors</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("TRIDOSHA")}
+                  className={cn(
+                    "px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5",
+                    activeTab === "TRIDOSHA"
+                      ? "bg-accent text-accent-foreground shadow-md shadow-accent/25 scale-105"
+                      : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  <Box className="h-3.5 w-3.5 text-accent" />
+                  <span>Interactive 3D Tridosha Equilibrium</span>
+                </button>
+              </div>
+
+              <div className="text-xs text-muted-foreground hidden sm:flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span>Real-Time Biosystem Mapping Active</span>
+              </div>
+            </div>
+
+            {/* View Content */}
+            {activeTab === "TRIDOSHA" ? (
+              <div className="pt-2">
+                <TridoshaBalance3D />
+              </div>
+            ) : (
+              /* Grid Content: Career Fit & Gaps */
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
               {/* Left Column: Career Fit Bars & Strengths (7 Cols) */}
               <div className="lg:col-span-7 space-y-6">
                 <div>
@@ -264,9 +322,10 @@ export function SkillGapPreviewSection() {
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
-    </section>
+    </div>
+  </section>
   );
 }
