@@ -8,7 +8,7 @@ interface CanvasFallbackProps {
 
 export function CanvasFallback({
   className,
-  title = "Vaidya Setu Botanical Network",
+  title = "Ayu-Setu Botanical Network",
 }: CanvasFallbackProps) {
   return (
     <div

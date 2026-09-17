@@ -533,6 +533,289 @@ export const AYUSH_QUESTION_BANK: DiagnosticQuestion[] = [
     relatedSkillName: "Ayurvedic Pharmacology (Dravyaguna Anupana)",
     gapIndicatorIfIncorrect: "Selecting pharmacologically synergistic Anupanas based on Dosha dynamics",
   },
+
+  // -----------------------------------------------------------------------
+  // ADDITIONAL NCISM CALIBRATED ITEMS (Complete 15-Question Core Battery)
+  // -----------------------------------------------------------------------
+  {
+    id: "q-clin-03",
+    archetype: "CASE_VIGNETTE",
+    domain: "DIAGNOSTICS",
+    careerTrackFocus: ["Clinical Practice", "Teaching"],
+    minAcademicYear: ["2nd Year", "3rd Year", "Final Year", "Intern", "Postgraduate"],
+    title: "Radial Pulse Differential in Acute Hyperacidity (Amlapitta)",
+    sanskritTopic: "Nadi Gati Pariksha (Manduka vs Sarpa)",
+    patientVitals: {
+      ageGender: "34-year-old Male",
+      prakriti: "Pitta-Vata",
+      chiefComplaint: "Severe retrosternal burning (Vidaha), acid eructations, and sleeplessness.",
+      nadiPulse: "Manduka Gati (Jumping/bounding under middle finger)",
+      agniDigestiveState: "Teekshnagni with Vidagdha Ajeerna",
+    },
+    questionPrompt: "Upon examining the right radial pulse, you feel a jumping, rapid, bounding sensation under your second finger (middle finger). Which Nadi Gati is pathognomonic of this Pitta aggravation?",
+    options: [
+      {
+        id: "opt-1",
+        text: "Hamsa Gati (Slow, graceful swan-like pulse under ring finger)",
+        isCorrect: false,
+        scoreContribution: 0,
+        clinicalRationale: "Hamsa Gati is characteristic of Kapha Dosha, not acute Pitta.",
+      },
+      {
+        id: "opt-2",
+        text: "Manduka Gati (Frog-like bounding/jumping pulse under middle finger)",
+        isCorrect: true,
+        scoreContribution: 10,
+        clinicalRationale: "Classical texts describe: 'मण्डूकवद् भ्रमति पित्तेन' - Pitta pulse jumps distinctly like a frog.",
+      },
+      {
+        id: "opt-3",
+        text: "Sarpa Gati (Slithering snake-like pulse under index finger)",
+        isCorrect: false,
+        scoreContribution: 0,
+        clinicalRationale: "Sarpa Gati represents Vata Dosha.",
+      },
+      {
+        id: "opt-4",
+        text: "Kaka Gati (Chaotic irregular pulse indicating impending collapse)",
+        isCorrect: false,
+        scoreContribution: 0,
+        clinicalRationale: "Kaka Gati represents terminal Sannipata or Arishta.",
+      },
+    ],
+    relatedSkillName: "Nadi Pulse Diagnostics (Nadi Pariksha)",
+    gapIndicatorIfIncorrect: "Distinguishing Doshic pulse velocities (Gati) under respective finger placements",
+  },
+
+  {
+    id: "q-panch-03",
+    archetype: "CASE_VIGNETTE",
+    domain: "PATIENT_SAFETY",
+    careerTrackFocus: ["Panchakarma & Wellness", "Clinical Practice"],
+    minAcademicYear: ["3rd Year", "Final Year", "Intern", "Postgraduate"],
+    title: "Vamana Bio-purification Endpoint Criteria (Pitta-Anta)",
+    sanskritTopic: "Vamana Samyak Yoga & Vega Pariksha",
+    patientVitals: {
+      ageGender: "42-year-old Female",
+      prakriti: "Kapha-Pitta",
+      chiefComplaint: "Bronchial congestion, Tamaka Shwasa, and recurrent urticaria undergoing therapeutic Vamana.",
+      nadiPulse: "Drutam, Shithila",
+      agniDigestiveState: "Koshtha Shuddhi in progress",
+    },
+    questionPrompt: "During Vamana induction with Madanaphala Yoga, the patient has completed 6 bouts (Vegas) of thick mucus expulsion. What classical endpoint sign confirms that Vamana must be safely halted?",
+    options: [
+      {
+        id: "opt-1",
+        text: "Continue administering emetic decoctions until frank red blood appears in vomitus.",
+        isCorrect: false,
+        scoreContribution: 0,
+        clinicalRationale: "Severe clinical complication. Blood vomiting (Rakta-chhardi) is a life-threatening Atiyoga sign.",
+      },
+      {
+        id: "opt-2",
+        text: "Appearance of Pitta (yellowish-greenish bitter liquid) marks the classical successful endpoint (Pitta-Anta); halt emesis immediately and begin Dhumapana.",
+        isCorrect: true,
+        scoreContribution: 10,
+        clinicalRationale: "Charaka Siddhisthana explicitly commands: 'कफपित्तानिलानां तु प्रादुर्भावो यथाक्रमम्... पित्तान्तं वमनम्'. Pitta emergence signals total Kapha clearance.",
+      },
+      {
+        id: "opt-3",
+        text: "Halt only when the patient loses consciousness from dehydration.",
+        isCorrect: false,
+        scoreContribution: 0,
+        clinicalRationale: "Extreme clinical malpractice.",
+      },
+      {
+        id: "opt-4",
+        text: "Immediately feed the patient a heavy cold meal of yogurt and rice.",
+        isCorrect: false,
+        scoreContribution: 0,
+        clinicalRationale: "Violates Samsarjana Krama protocol, extinguishing the delicate Mandagni post-shodhana.",
+      },
+    ],
+    relatedSkillName: "Vamana Purificatory Safety (Shodhana Antiki)",
+    gapIndicatorIfIncorrect: "Identifying physiological endpoints (Pitta-anta) to avoid Atiyoga complications",
+  },
+
+  {
+    id: "q-pharm-02",
+    archetype: "MCQ",
+    domain: "THERAPEUTICS",
+    careerTrackFocus: ["Herbal Pharma", "Research", "Clinical Practice"],
+    minAcademicYear: ["2nd Year", "3rd Year", "Final Year", "Intern", "Postgraduate"],
+    title: "Bhasma Quality Verification: Apunarbhava & Varitara",
+    sanskritTopic: "Rasashastra Bhasma Pariksha",
+    questionPrompt: "In the standardized preparation of Swarna Makshika Bhasma, what does the classical 'Varitara' test demonstrate?",
+    options: [
+      {
+        id: "opt-1",
+        text: "The Bhasma dissolves instantly like sugar in boiling water.",
+        isCorrect: false,
+        scoreContribution: 0,
+        clinicalRationale: "Metallic Bhasmas are insoluble in water; Varitara measures surface tension floating, not solubility.",
+      },
+      {
+        id: "opt-2",
+        text: "Particles are so microscopically fine and light that a pinch floats smoothly across the surface of calm water without sinking.",
+        isCorrect: true,
+        scoreContribution: 10,
+        clinicalRationale: "Varitara ('वारितर') proves sub-micron particle reduction and low bulk density suitable for biological absorption.",
+      },
+      {
+        id: "opt-3",
+        text: "The Bhasma changes water into gold within 5 minutes.",
+        isCorrect: false,
+        scoreContribution: 0,
+        clinicalRationale: "Mythological misconception unrelated to pharmacopeial standards.",
+      },
+      {
+        id: "opt-4",
+        text: "The Bhasma sinks to the bottom like lead shot.",
+        isCorrect: false,
+        scoreContribution: 0,
+        clinicalRationale: "Sinking denotes coarse, incompletely incinerated particles (Apakva).",
+      },
+    ],
+    relatedSkillName: "Herbal & Mineral Quality Assurance",
+    gapIndicatorIfIncorrect: "Classical and physical testing criteria for metallic bhasma nanostructure evaluation",
+  },
+
+  {
+    id: "q-res-03",
+    archetype: "MCQ",
+    domain: "RESEARCH_ETHICS",
+    careerTrackFocus: ["Research", "Teaching", "Government"],
+    minAcademicYear: ["2nd Year", "3rd Year", "Final Year", "Intern", "Postgraduate"],
+    title: "CTRI Prospective Registration and Blinding Herbal Trials",
+    sanskritTopic: "CTRI & Anusandhana Vidhana",
+    questionPrompt: "Why is prospective registration with the Clinical Trials Registry of India (CTRI) legally mandatory before recruiting the first participant in an Ayush trial?",
+    options: [
+      {
+        id: "opt-1",
+        text: "To eliminate the requirement for Institutional Ethics Committee approval.",
+        isCorrect: false,
+        scoreContribution: 0,
+        clinicalRationale: "Ethics approval is an absolute prerequisite to obtain CTRI registration.",
+      },
+      {
+        id: "opt-2",
+        text: "To ensure research transparency, prevent outcome reporting bias/suppression of negative results, and ensure international journal publication eligibility.",
+        isCorrect: true,
+        scoreContribution: 10,
+        clinicalRationale: "ICMJE and ICMR mandate prospective registration to prevent scientific concealment and ensure public accountability.",
+      },
+      {
+        id: "opt-3",
+        text: "To pay commercial licensing fees to private pharmaceutical companies.",
+        isCorrect: false,
+        scoreContribution: 0,
+        clinicalRationale: "CTRI is a non-profit scientific registry hosted by ICMR-NIMS.",
+      },
+      {
+        id: "opt-4",
+        text: "To automatically patent classical texts in the investigator's name.",
+        isCorrect: false,
+        scoreContribution: 0,
+        clinicalRationale: "Classical formulas are in the public domain and cannot be privately copyrighted.",
+      },
+    ],
+    relatedSkillName: "Clinical Trial Governance & CTRI",
+    gapIndicatorIfIncorrect: "Regulatory registration requirements and outcome reporting transparency in clinical trials",
+  },
+
+  {
+    id: "q-comm-03",
+    archetype: "SCENARIO",
+    domain: "COMMUNICATION",
+    careerTrackFocus: ["Clinical Practice", "Government"],
+    minAcademicYear: ["1st Year", "2nd Year", "3rd Year", "Final Year", "Intern", "Postgraduate"],
+    title: "Informed Consent Protocol in Free Ayush Clinical Camps",
+    sanskritTopic: "Rogi Adhikara & Samstha Samiti",
+    caseScenario: "During a free rural health camp organized by an Ayush institute, an investigator wants to photograph a patient with severe Vyanga (facial hyperpigmentation) for a medical social media post.",
+    questionPrompt: "What is your mandatory medico-legal ethical obligation regarding patient consent?",
+    options: [
+      {
+        id: "opt-1",
+        text: "Take photos without asking since the patient received free consultation.",
+        isCorrect: false,
+        scoreContribution: 0,
+        clinicalRationale: "Severe violation of patient confidentiality and medical ethics.",
+      },
+      {
+        id: "opt-2",
+        text: "Obtain specific written/vernacular consent explaining the exact educational purpose, ensure face/eyes are de-identified if possible, and honor their absolute right to decline without affecting their care.",
+        isCorrect: true,
+        scoreContribution: 10,
+        clinicalRationale: "Complies with NCISM Medical Ethics Regulations and patient data privacy standards.",
+      },
+      {
+        id: "opt-3",
+        text: "Publish photos with the patient's full home address to prove authenticity.",
+        isCorrect: false,
+        scoreContribution: 0,
+        clinicalRationale: "Critical breach of privacy placing the patient at social risk.",
+      },
+      {
+        id: "opt-4",
+        text: "Delete medical records to avoid taking responsibility.",
+        isCorrect: false,
+        scoreContribution: 0,
+        clinicalRationale: "Illegal document destruction.",
+      },
+    ],
+    relatedSkillName: "Medical Ethics & Consent (Rogi Adhikara)",
+    gapIndicatorIfIncorrect: "Patient confidentiality protocols and informed audio-visual consent procedures",
+  },
+
+  {
+    id: "q-clin-04",
+    archetype: "CASE_VIGNETTE",
+    domain: "DIAGNOSTICS",
+    careerTrackFocus: ["Clinical Practice", "Teaching"],
+    minAcademicYear: ["3rd Year", "Final Year", "Intern", "Postgraduate"],
+    title: "Pathognomonic Stool Sign in Shakhashrita Kamala",
+    sanskritTopic: "Kamala Bheda Nidana (Shakhashrita vs Koshthashrita)",
+    patientVitals: {
+      ageGender: "50-year-old Female",
+      prakriti: "Pitta-Kaphaja",
+      chiefComplaint: "Deep yellow sclera, generalized pruritus, and clay-colored pale stool for 1 week.",
+      nadiPulse: "Manda, Snigdha",
+      agniDigestiveState: "Agnimandya with obstructive pathology",
+    },
+    questionPrompt: "In obstructive jaundice (Shakhashrita Kamala), Acharya Charaka describes pale clay-colored stool. What is the classical Sanskrit term and pathological mechanism for this sign?",
+    options: [
+      {
+        id: "opt-1",
+        text: "Haridra Purisha; bile is over-secreted into the bowel lumen.",
+        isCorrect: false,
+        scoreContribution: 0,
+        clinicalRationale: "Yellow stool occurs when bile freely reaches the gut in Koshthashrita Kamala.",
+      },
+      {
+        id: "opt-2",
+        text: "Tila-Pishta-Nibha Purisha; Kapha obstructs the biliary channels (Margavarodha), preventing Pitta from reaching the digestive tract and forcing it into Shakha (tissues).",
+        isCorrect: true,
+        scoreContribution: 10,
+        clinicalRationale: "Charaka Chikitsa 16: 'तिलपिष्टनिभं वर्चः' - absence of bile pigment in stool due to channel blockage.",
+      },
+      {
+        id: "opt-3",
+        text: "Krishna Purisha; excessive iron intake in diet.",
+        isCorrect: false,
+        scoreContribution: 0,
+        clinicalRationale: "Does not explain the biliary obstructive pathology.",
+      },
+      {
+        id: "opt-4",
+        text: "Rakta Purisha; acute lower GI ulceration.",
+        isCorrect: false,
+        scoreContribution: 0,
+        clinicalRationale: "Corresponds to hemorrhoid or colitis, not obstructive jaundice.",
+      },
+    ],
+    relatedSkillName: "Differential Diagnosis (Kamala Nidana)",
+    gapIndicatorIfIncorrect: "Recognizing obstructive jaundice pathogenesis (Margavarodha) and Tila-pishta-nibha stool",
+  },
 ];
 
 // =========================================================================
@@ -589,8 +872,8 @@ export function generatePersonalizedAssessment(
   // Sort by highest relevance score
   scoredQuestions.sort((a, b) => b.relevanceScore - a.relevanceScore);
 
-  // Return top 6-8 calibrated questions covering MCQs, Scenarios, and Case Vignettes
-  return scoredQuestions.map((sq) => sq.question);
+  // Return top 15 calibrated questions covering MCQs, Scenarios, and Case Vignettes
+  return scoredQuestions.slice(0, 15).map((sq) => sq.question);
 }
 
 // =========================================================================

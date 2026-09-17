@@ -23,7 +23,7 @@ export function StepCareerGoal({ data, onChange, errors }: StepCareerGoalProps) 
   const handleToggleInterest = (id: CareerGoalOption) => {
     let nextInterests: CareerGoalOption[];
     if (selectedInterests.includes(id)) {
-      // Don't allow deselecting if it is the only one or if it is the primary goal
+    
       nextInterests = selectedInterests.filter((item) => item !== id);
       if (primaryGoal === id && nextInterests.length > 0) {
         onChange({
@@ -40,7 +40,7 @@ export function StepCareerGoal({ data, onChange, errors }: StepCareerGoalProps) 
 
   const handleSetPrimary = (e: React.MouseEvent, id: CareerGoalOption) => {
     e.stopPropagation();
-    // Ensure it is also in interests
+   
     const nextInterests = selectedInterests.includes(id)
       ? selectedInterests
       : [...selectedInterests, id];
@@ -59,7 +59,7 @@ export function StepCareerGoal({ data, onChange, errors }: StepCareerGoalProps) 
           <Target className="h-3.5 w-3.5" /> Stage 03: Career Pathways & Ambition
         </div>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground font-sans">
+          <h2 className="text-xl sm:text-2xl font-heading font-extrabold tracking-tight text-foreground">
             Where do you see your Ayurvedic journey leading?
           </h2>
           <Badge variant="gold" size="sm">
@@ -153,7 +153,7 @@ export function StepCareerGoal({ data, onChange, errors }: StepCareerGoalProps) 
                 <h4 className="text-sm font-bold text-foreground group-hover:text-primary transition-colors">
                   {goal.title}
                 </h4>
-                <p className="text-[11px] font-serif italic text-accent mt-0.5">
+                <p className="text-[11px] font-sans font-medium italic text-accent tracking-wide mt-0.5">
                   {goal.sanskrit}
                 </p>
 

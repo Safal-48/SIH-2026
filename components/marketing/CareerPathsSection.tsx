@@ -138,7 +138,7 @@ export function CareerPathsSection() {
   };
 
   return (
-    <section id="career-paths" className="py-24 border-b border-border/60 bg-background">
+    <section id="career-paths" className="py-24 border-b border-border/40 bg-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           badge="Ayurveda Career DNA"

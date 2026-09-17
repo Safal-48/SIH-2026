@@ -100,12 +100,14 @@ export function StudentSidebar({
         <div className="p-4 border-b border-border/80 flex items-center justify-between">
           {!isCollapsed ? (
             <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-herbal-800 text-white font-serif font-bold text-lg flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
-                वै
-              </div>
+              <img
+                src="/images/ayu-setu-emblem.png"
+                alt="Ayu-Setu Emblem"
+                className="w-9 h-9 rounded-full object-cover bg-[#efe1c8] ring-1 ring-amber-500/50 shadow-md group-hover:scale-105 transition-transform shrink-0"
+              />
               <div className="min-w-0">
                 <span className="font-bold text-sm text-foreground tracking-tight block">
-                  Vaidya Setu
+                  Ayu-Setu
                 </span>
                 <span className="text-[10px] text-muted-foreground uppercase tracking-widest block -mt-0.5">
                   Scholar Console
@@ -113,9 +115,11 @@ export function StudentSidebar({
               </div>
             </Link>
           ) : (
-            <div className="w-9 h-9 mx-auto rounded-xl bg-gradient-to-br from-primary to-herbal-800 text-white font-serif font-bold text-lg flex items-center justify-center shadow-md">
-              वै
-            </div>
+            <img
+              src="/images/ayu-setu-emblem.png"
+              alt="Ayu-Setu Emblem"
+              className="w-9 h-9 mx-auto rounded-full object-cover bg-[#efe1c8] ring-1 ring-amber-500/50 shadow-md shrink-0"
+            />
           )}
 
           <button
@@ -232,10 +236,12 @@ export function StudentSidebar({
       {/* ========================================================================= */}
       <div className="md:hidden sticky top-0 z-30 flex items-center justify-between px-4 py-3 bg-background/95 backdrop-blur-md border-b border-border">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-herbal-800 text-white font-serif font-bold text-sm flex items-center justify-center">
-            वै
-          </div>
-          <span className="font-bold text-sm text-foreground">Vaidya Setu</span>
+          <img
+            src="/images/ayu-setu-emblem.png"
+            alt="Ayu-Setu Emblem"
+            className="w-8 h-8 rounded-full object-cover bg-[#efe1c8] ring-1 ring-amber-500/50 shrink-0"
+          />
+          <span className="font-bold text-sm text-foreground">Ayu-Setu</span>
         </Link>
 
         <div className="flex items-center gap-2">
@@ -263,11 +269,13 @@ export function StudentSidebar({
               {/* Drawer Header */}
               <div className="flex items-center justify-between pb-4 border-b border-border">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-herbal-800 text-white font-serif font-bold text-sm flex items-center justify-center">
-                    वै
-                  </div>
+                  <img
+                    src="/images/ayu-setu-emblem.png"
+                    alt="Ayu-Setu Emblem"
+                    className="w-8 h-8 rounded-full object-cover bg-[#efe1c8] ring-1 ring-amber-500/50 shrink-0"
+                  />
                   <div>
-                    <h4 className="text-sm font-bold text-foreground">Vaidya Setu</h4>
+                    <h4 className="text-sm font-bold text-foreground">Ayu-Setu</h4>
                     <p className="text-[10px] text-muted-foreground">Scholar Command Center</p>
                   </div>
                 </div>

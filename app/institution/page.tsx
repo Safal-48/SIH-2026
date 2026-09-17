@@ -29,6 +29,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/cards/Card";
 import { useAuth } from "@/hooks/useAuth";
 import { ROLE_DEFINITIONS } from "@/types/roles";
+import { EcosystemRoleSwitcher } from "@/components/layout/EcosystemRoleSwitcher";
 
 import {
   InstitutionPortalService,
@@ -44,6 +45,7 @@ import { SkillHeatmapWidget } from "@/components/institution/SkillHeatmapWidget"
 import { SkillGapRecommendationWidget } from "@/components/institution/SkillGapRecommendationWidget";
 import { AcademiaIndustryFeedbackLoop } from "@/components/institution/AcademiaIndustryFeedbackLoop";
 import { CreateResearchWorkshopModal } from "@/components/institution/CreateResearchWorkshopModal";
+import { SkillDemandService } from "@/lib/services/skillDemandService";
 
 type InstitutionTabType = "heatmap" | "cohort" | "mous" | "interventions" | "accreditation";
 
@@ -159,9 +161,14 @@ function InstitutionPortalContent() {
           <div className="flex items-center gap-3">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors"
+              className="inline-flex items-center gap-2 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors group"
             >
-              <Home className="h-4 w-4" /> Vaidya Setu Hub
+              <img
+                src="/images/ayu-setu-emblem.png"
+                alt="Ayu-Setu"
+                className="h-5 w-5 rounded-full object-cover bg-[#efe1c8] ring-1 ring-amber-400/50 group-hover:scale-105 transition-transform shrink-0"
+              />
+              <span>Ayu-Setu Hub</span>
             </Link>
             <span className="text-muted-foreground text-xs">/</span>
             <span className="text-xs font-bold text-foreground">Institution Dashboard</span>
@@ -171,6 +178,7 @@ function InstitutionPortalContent() {
           </div>
 
           <div className="flex items-center gap-3">
+            <EcosystemRoleSwitcher />
             <span className="text-xs text-muted-foreground hidden md:inline">
               Institute Code: <strong className="font-mono text-foreground">{profile.code}</strong>
             </span>
@@ -309,6 +317,88 @@ function InstitutionPortalContent() {
                 topSkillGap={topSkillGap}
                 onOpenWorkshopModal={() => setShowWorkshopModal(true)}
               />
+
+              {/* 2.5 Industry Demand vs Student Skill Supply Telemetry Table (SIH Major Differentiator) */}
+              <Card variant="default" className="p-6 space-y-4 border-border">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-border">
+                  <div className="space-y-0.5">
+                    <div className="flex items-center gap-2">
+                      <span className="text-amber-500 font-bold">📊</span>
+                      <h3 className="text-base font-bold text-foreground">
+                        Industry Demand vs. Student Skill Supply Telemetry
+                      </h3>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      Decision-support engine mapping real-time corporate Ayush demand benchmarks against cohort mastery to prescribe institutional interventions.
+                    </p>
+                  </div>
+                  <Badge variant="gold" size="sm" className="font-mono">
+                    NCISM Criterion IV Telemetry
+                  </Badge>
+                </div>
+
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs border-collapse">
+                    <thead>
+                      <tr className="border-b border-border text-muted-foreground">
+                        <th className="py-2.5 px-3 font-semibold">Competency Domain</th>
+                        <th className="py-2.5 px-3 font-semibold">Industry Demand</th>
+                        <th className="py-2.5 px-3 font-semibold">Student Supply</th>
+                        <th className="py-2.5 px-3 font-semibold">Deficit Gap</th>
+                        <th className="py-2.5 px-3 font-semibold">YoY Growth</th>
+                        <th className="py-2.5 px-3 font-semibold">Recommended Institutional Action</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-border/60">
+                      {SkillDemandService.getDemandVsSupplyData().map((item) => (
+                        <tr key={item.id} className="hover:bg-muted/30 transition-colors">
+                          <td className="py-3 px-3">
+                            <span className="font-bold text-foreground block">{item.skillName}</span>
+                            <span className="text-[10px] text-muted-foreground">{item.category}</span>
+                          </td>
+                          <td className="py-3 px-3">
+                            <span className="font-bold text-foreground font-mono">{item.industryDemandPercent}%</span>
+                            <span className="text-[10px] text-muted-foreground block truncate max-w-[140px]">
+                              {item.topDemandingEmployers[0]}
+                            </span>
+                          </td>
+                          <td className="py-3 px-3">
+                            <span className="font-bold text-primary font-mono">{item.studentSupplyPercent}%</span>
+                            <span className="text-[10px] text-muted-foreground block">Cohort Average</span>
+                          </td>
+                          <td className="py-3 px-3">
+                            <Badge
+                              variant={item.gapPercent > 30 ? "destructive" : "gold"}
+                              size="sm"
+                              className="font-mono"
+                            >
+                              -{item.gapPercent}% Gap
+                            </Badge>
+                          </td>
+                          <td className="py-3 px-3">
+                            <span className="text-emerald-500 font-bold font-mono">+{item.yoyGrowthPercent}%</span>
+                            <span className="text-[10px] text-muted-foreground block">YoY Demand</span>
+                          </td>
+                          <td className="py-3 px-3">
+                            <div className="space-y-1">
+                              <p className="text-xs text-foreground font-medium">
+                                {item.recommendedInstitutionalAction}
+                              </p>
+                              <button
+                                onClick={() => setShowWorkshopModal(true)}
+                                className="text-[11px] font-bold text-accent hover:underline flex items-center gap-1"
+                              >
+                                <span>Schedule {item.interventionType}</span>
+                                <span>→</span>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </Card>
 
               {/* 3. The Academia ↔ Industry Feedback Loop Visualization */}
               <AcademiaIndustryFeedbackLoop stages={feedbackStages} />
@@ -596,7 +686,7 @@ export default function InstitutionPortalPage() {
     <React.Suspense
       fallback={
         <div className="min-h-screen flex items-center justify-center bg-background text-muted-foreground text-xs">
-          Loading Vaidya Setu Institution Dashboard...
+          Loading Ayu-Setu Institution Dashboard...
         </div>
       }
     >

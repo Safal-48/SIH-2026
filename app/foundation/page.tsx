@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Sparkles,
   ShieldCheck,
@@ -76,8 +77,17 @@ export default function FoundationExplorerPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground pb-24">
-      <div className="bg-primary/10 border-b border-primary/20 py-3 px-4 text-xs font-semibold flex items-center justify-between">
-        <Link href="/" className="inline-flex items-center gap-1.5 text-primary hover:text-herbal-800">
+      <div className="bg-primary/10 border-b border-primary/20 py-2.5 px-4 text-xs font-semibold flex items-center justify-between">
+        <Link href="/" className="inline-flex items-center gap-2.5 text-primary hover:text-herbal-800">
+          <div className="relative w-6 h-6 rounded-full overflow-hidden ring-1 ring-amber-400/60 bg-[#efe1c8] shrink-0">
+            <Image
+              src="/images/ayu-setu-emblem.png"
+              alt="Ayu-Setu"
+              width={24}
+              height={24}
+              className="w-full h-full object-cover"
+            />
+          </div>
           <ArrowLeft className="h-4 w-4" /> Back to Official Landing Page
         </Link>
         <span className="text-muted-foreground">Step 01 Architecture Archive</span>
@@ -92,7 +102,7 @@ export default function FoundationExplorerPage() {
             </div>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground font-sans max-w-4xl leading-tight">
-              <AnimatedText text="Vaidya Setu Foundation Explorer" />
+              <AnimatedText text="Ayu-Setu Foundation Explorer" />
             </h1>
 
             <p className="mt-4 text-base sm:text-xl text-muted-foreground max-w-3xl leading-relaxed">

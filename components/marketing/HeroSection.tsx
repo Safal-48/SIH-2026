@@ -1,22 +1,21 @@
 "use client";
 
 import * as React from "react";
-import dynamic from "next/dynamic";
 import gsap from "gsap";
-import { ArrowRight, Sparkles, ShieldCheck, Compass, CheckCircle2 } from "lucide-react";
+import {
+  ArrowRight,
+  Compass,
+  Brain,
+  GraduationCap,
+  ShieldCheck,
+  Handshake,
+  Building2,
+  ClipboardCheck,
+  Landmark,
+} from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { MagneticButton } from "@/components/animations/MagneticButton";
-import { siteConfig } from "@/config/site";
-import { CanvasFallback } from "../three/CanvasFallback";
-
-// Dynamically import 3D Hero scene with SSR disabled
-const HeroThreeScene = dynamic(
-  () => import("../three/HeroThreeScene").then((mod) => mod.HeroThreeScene),
-  {
-    ssr: false,
-    loading: () => <CanvasFallback title="Loading Ayurveda Knowledge Core..." />,
-  }
-);
+import { StaggeredLetters } from "@/components/animations/StaggeredLetters";
 
 interface HeroSectionProps {
   onStartJourney: () => void;
@@ -42,17 +41,8 @@ export function HeroSection({
         tl.from(".hero-pill", {
           opacity: 0,
           y: -16,
-          duration: 0.6,
+          duration: 0.5,
         })
-          .from(
-            ".hero-headline",
-            {
-              opacity: 0,
-              y: 28,
-              duration: 0.8,
-            },
-            "-=0.3"
-          )
           .from(
             ".hero-subtext",
             {
@@ -60,7 +50,7 @@ export function HeroSection({
               y: 20,
               duration: 0.6,
             },
-            "-=0.4"
+            "+=0.45"
           )
           .from(
             ".hero-ctas",
@@ -69,26 +59,17 @@ export function HeroSection({
               y: 16,
               duration: 0.5,
             },
-            "-=0.3"
-          )
-          .from(
-            ".hero-trust",
-            {
-              opacity: 0,
-              y: 12,
-              duration: 0.5,
-            },
             "-=0.2"
           )
           .from(
-            ".hero-3d-wrapper",
+            ".hero-feature-pill",
             {
               opacity: 0,
-              scale: 0.94,
-              duration: 1.0,
-              ease: "power2.out",
+              y: 16,
+              stagger: 0.08,
+              duration: 0.5,
             },
-            "-=0.8"
+            "-=0.2"
           )
           .from(
             ".hero-stat-card",
@@ -98,7 +79,7 @@ export function HeroSection({
               stagger: 0.08,
               duration: 0.6,
             },
-            "-=0.5"
+            "-=0.3"
           );
       }, heroRef);
     } catch (err) {
@@ -114,164 +95,194 @@ export function HeroSection({
     <section
       id="hero"
       ref={heroRef}
-      className="relative min-h-[92vh] flex flex-col justify-between pt-28 pb-12 overflow-hidden bg-gradient-to-b from-background via-herbal-950/5 to-background border-b border-border/60"
+      className="relative min-h-[calc(100vh-5rem)] flex flex-col justify-center items-center pt-28 pb-16 sm:pt-32 sm:pb-20 overflow-hidden bg-transparent border-b border-border/40 w-full"
     >
-      {/* Ambient background glow elements */}
-      <div className="absolute top-1/4 -left-48 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/3 -right-48 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col items-center justify-center text-center my-auto">
+        <div className="space-y-6 sm:space-y-8 max-w-5xl mx-auto">
+          {/* 1. Category Pill with Official Ayu-Setu Emblem & Motto */}
+          <div className="hero-pill inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-emerald-950/60 border border-amber-500/40 backdrop-blur-md shadow-lg shadow-emerald-950/40 hover:border-amber-400/60 transition-all">
+            <img
+              src="/images/ayu-setu-emblem.png"
+              alt="Ayu-Setu Emblem"
+              className="h-6 w-6 object-cover rounded-full ring-1 ring-amber-400/60 bg-[#efe1c8] shadow-sm shrink-0"
+            />
+            <span className="text-xs sm:text-[13px] font-bold tracking-[0.18em] text-amber-300 uppercase">
+              AYU-SETU <span className="text-amber-400/60 mx-1.5">•</span> LEARN • GROW • HEAL • BUILD
+            </span>
+          </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1 flex items-center">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center w-full py-8">
-          {/* Left Hero Column */}
-          <div className="lg:col-span-7 space-y-6 text-left z-10">
-            {/* Category Pill */}
-            <div className="hero-pill inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/15 border border-accent/30 text-accent-foreground text-xs font-semibold uppercase tracking-wider shadow-sm">
-              <Sparkles className="h-3.5 w-3.5 text-accent animate-pulse" />
-              <span>National Ayush Mission • Ministry of Ayush</span>
-            </div>
+          {/* 2. Bold Editorial Headline with Kinetic Stagger Text Rise (Originkit) */}
+          <div className="w-full max-w-5xl mx-auto">
+            <StaggeredLetters
+              text="Empowering Ayurveda"
+              font={{
+                fontSize: "clamp(34px, 6.2vw, 76px)",
+                fontWeight: 900,
+                lineHeight: 1.1,
+                textAlign: "center",
+                fontFamily: "var(--font-sans, 'Plus Jakarta Sans', sans-serif)",
+                letterSpacing: "-0.03em",
+              }}
+              color="#FFFFFF"
+              y={45}
+              startOpacity={0}
+              staggerMs={20}
+              delay={0.1}
+              tag="h1"
+            />
 
-            {/* Editorial Headline */}
-            <h1 className="hero-headline text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground font-sans leading-[1.12] mt-4">
-              Your Ayurveda Skills.
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-herbal-600 to-accent">
-                Your Career. Connected.
-              </span>
-            </h1>
-
-            {/* Supporting Text */}
-            <p className="hero-subtext mt-5 text-base sm:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-2xl font-normal">
-              Assess your clinical skills, discover your personalized career DNA, build attested competencies, and unlock verified fellowships and pharma roles across the Ayush ecosystem.
-            </p>
-
-            {/* Dual Action CTAs */}
-            <div className="hero-ctas mt-8 flex flex-wrap items-center gap-4">
-              <MagneticButton>
-                <Button
-                  variant="gold"
-                  size="lg"
-                  onClick={onStartJourney}
-                  rightIcon={<ArrowRight className="h-4 w-4" />}
-                  className="shadow-lg shadow-accent/20"
-                >
-                  Start Your Journey
-                </Button>
-              </MagneticButton>
-
-              <MagneticButton>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  onClick={onExploreOpportunities}
-                  leftIcon={<Compass className="h-4 w-4 text-accent" />}
-                >
-                  Explore Opportunities
-                </Button>
-              </MagneticButton>
-            </div>
-
-            {/* Dedicated Stakeholder Portals Quick Jump */}
-            <div className="pt-2 space-y-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-accent flex items-center gap-1.5">
-                <Sparkles className="h-3 w-3 text-accent animate-spin-slow" />
-                <span>Direct Stakeholder Portals (Live & Functional):</span>
-              </span>
-              <div className="flex flex-wrap gap-2">
-                <a
-                  href="/student"
-                  className="px-3.5 py-2 rounded-xl bg-card/90 hover:bg-card border border-primary/40 hover:border-primary text-xs font-semibold text-foreground flex items-center gap-2 shadow-sm hover:scale-105 hover:shadow-md transition-all ayur-3d-card"
-                >
-                  <span>🎓</span>
-                  <span>For Students</span>
-                </a>
-                <a
-                  href="/industry"
-                  className="px-3.5 py-2 rounded-xl bg-card/90 hover:bg-card border border-accent/40 hover:border-accent text-xs font-semibold text-foreground flex items-center gap-2 shadow-sm hover:scale-105 hover:shadow-md transition-all ayur-3d-card"
-                >
-                  <span>🏥</span>
-                  <span>For Industry & Pharma</span>
-                </a>
-                <a
-                  href="/institution"
-                  className="px-3.5 py-2 rounded-xl bg-card/90 hover:bg-card border border-emerald-500/40 hover:border-emerald-500 text-xs font-semibold text-foreground flex items-center gap-2 shadow-sm hover:scale-105 hover:shadow-md transition-all ayur-3d-card"
-                >
-                  <span>🏫</span>
-                  <span>For Institutions</span>
-                </a>
-                <a
-                  href="/academician"
-                  className="px-3.5 py-2 rounded-xl bg-card/90 hover:bg-card border border-secondary/40 hover:border-secondary text-xs font-semibold text-foreground flex items-center gap-2 shadow-sm hover:scale-105 hover:shadow-md transition-all ayur-3d-card"
-                >
-                  <span>👨‍🏫</span>
-                  <span>For Faculty</span>
-                </a>
-              </div>
-            </div>
-
-            {/* Trust Indicators */}
-            <div className="hero-trust pt-8 flex flex-wrap items-center gap-y-2 gap-x-6 text-xs text-muted-foreground border-t border-border/50">
-              <span className="inline-flex items-center gap-1.5">
-                <ShieldCheck className="h-4 w-4 text-primary" />
-                All India Institute of Ayurveda Verified
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <CheckCircle2 className="h-4 w-4 text-accent" />
-                NCISM Curriculum Standards
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <CheckCircle2 className="h-4 w-4 text-secondary" />
-                Tamper-Evident Passport
-              </span>
+            <div className="mt-1 sm:mt-2">
+              <StaggeredLetters
+                text="Through Skills & Opportunity."
+                font={{
+                  fontSize: "clamp(34px, 6.2vw, 76px)",
+                  fontWeight: 900,
+                  lineHeight: 1.1,
+                  textAlign: "center",
+                  fontFamily: "var(--font-sans, 'Plus Jakarta Sans', sans-serif)",
+                  letterSpacing: "-0.03em",
+                }}
+                color="#34D399"
+                highlightWords={["Opportunity."]}
+                highlightColor="#F59E0B"
+                y={45}
+                startOpacity={0}
+                staggerMs={20}
+                delay={0.42}
+                tag="h2"
+              />
             </div>
           </div>
 
-          {/* Right Hero Column: 3D Scene */}
-          <div className="lg:col-span-5 relative flex items-center justify-center">
-            <div className="hero-3d-wrapper relative w-full h-[480px] sm:h-[520px] lg:h-[580px] max-w-[540px] mx-auto flex items-center justify-center">
-              {/* 3D Radiant Ambient Aura */}
-              <div className="absolute inset-4 bg-gradient-to-tr from-accent/25 via-primary/20 to-transparent rounded-full blur-3xl -z-10 animate-pulse-subtle" />
+          {/* 3. Subtext matching 1st image */}
+          <p className="hero-subtext text-base sm:text-lg md:text-xl text-emerald-100/80 leading-relaxed max-w-3xl mx-auto font-normal">
+            Assess your clinical competencies, identify skill gaps, earn verified credentials, and discover personalized learning and career opportunities across the AYUSH ecosystem.
+          </p>
 
-              <HeroThreeScene className="w-full h-full" />
+          {/* 4. Dual Action CTAs matching 1st image */}
+          <div className="hero-ctas pt-2 flex flex-wrap items-center justify-center gap-4 sm:gap-5">
+            <MagneticButton>
+              <Button
+                variant="gold"
+                size="lg"
+                onClick={onStartJourney}
+                rightIcon={<ArrowRight className="h-5 w-5" />}
+                className="rounded-full shadow-xl shadow-amber-500/25 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 hover:from-amber-300 hover:to-amber-500 text-slate-950 font-bold px-8 sm:px-10 py-4 text-sm sm:text-base tracking-wide hover:scale-105 transition-all"
+              >
+                Explore Your Career Path
+              </Button>
+            </MagneticButton>
 
-              {/* Floating Accent Badge 1 */}
-              <div className="ayur-3d-card ayur-glow absolute top-4 -right-1 sm:right-2 p-3 rounded-2xl bg-card/90 backdrop-blur-md border border-accent/40 shadow-xl text-xs font-semibold flex items-center gap-2.5 z-20">
-                <div className="w-8 h-8 rounded-xl bg-accent/20 text-accent flex items-center justify-center font-bold">
-                  🌿
-                </div>
-                <div>
-                  <span className="text-[10px] text-muted-foreground uppercase tracking-wider block">Pulse & Logbook</span>
-                  <span className="text-foreground font-bold">Nadi Pariksha Endorsed</span>
-                </div>
+            <MagneticButton>
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={onExploreOpportunities}
+                leftIcon={<Compass className="h-5 w-5 text-amber-400" />}
+                className="rounded-full font-semibold px-7 sm:px-9 py-4 text-sm sm:text-base border-amber-500/50 hover:border-amber-400 bg-black/40 hover:bg-white/5 text-amber-200 hover:text-white backdrop-blur-md hover:scale-105 transition-all"
+              >
+                Explore Opportunities
+              </Button>
+            </MagneticButton>
+          </div>
+
+          {/* 5. 4 Circular Feature / Trust Badges matching 1st image */}
+          <div className="pt-6 sm:pt-8 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto">
+            {/* Badge 1 */}
+            <div className="hero-feature-pill flex items-center gap-3 text-left">
+              <div className="w-12 h-12 rounded-full border border-emerald-500/40 bg-emerald-950/70 flex items-center justify-center text-emerald-300 shadow-sm shrink-0">
+                <Brain className="h-6 w-6 text-emerald-300" />
               </div>
+              <div>
+                <p className="text-xs sm:text-sm font-bold text-white leading-tight">AI-Powered</p>
+                <p className="text-[11px] sm:text-xs font-medium text-emerald-200/80 leading-tight">Skill Assessment</p>
+              </div>
+            </div>
 
-              {/* Floating Accent Badge 2 */}
-              <div className="ayur-3d-card emerald-glow absolute bottom-4 -left-1 sm:left-2 p-3 rounded-2xl bg-card/90 backdrop-blur-md border border-primary/40 shadow-xl text-xs font-semibold flex items-center gap-2.5 z-20">
-                <div className="w-8 h-8 rounded-xl bg-primary/20 text-primary flex items-center justify-center font-bold">
-                  ✦
-                </div>
-                <div>
-                  <span className="text-[10px] text-muted-foreground uppercase tracking-wider block">Smart Matching</span>
-                  <span className="text-foreground font-bold">86% Skill Match with AIIA</span>
-                </div>
+            {/* Badge 2 */}
+            <div className="hero-feature-pill flex items-center gap-3 text-left">
+              <div className="w-12 h-12 rounded-full border border-emerald-500/40 bg-emerald-950/70 flex items-center justify-center text-emerald-300 shadow-sm shrink-0">
+                <GraduationCap className="h-6 w-6 text-emerald-300" />
+              </div>
+              <div>
+                <p className="text-xs sm:text-sm font-bold text-white leading-tight">Personalized</p>
+                <p className="text-[11px] sm:text-xs font-medium text-emerald-200/80 leading-tight">Learning Paths</p>
+              </div>
+            </div>
+
+            {/* Badge 3 */}
+            <div className="hero-feature-pill flex items-center gap-3 text-left">
+              <div className="w-12 h-12 rounded-full border border-emerald-500/40 bg-emerald-950/70 flex items-center justify-center text-emerald-300 shadow-sm shrink-0">
+                <ShieldCheck className="h-6 w-6 text-emerald-300" />
+              </div>
+              <div>
+                <p className="text-xs sm:text-sm font-bold text-white leading-tight">Verified</p>
+                <p className="text-[11px] sm:text-xs font-medium text-emerald-200/80 leading-tight">Credentials</p>
+              </div>
+            </div>
+
+            {/* Badge 4 */}
+            <div className="hero-feature-pill flex items-center gap-3 text-left">
+              <div className="w-12 h-12 rounded-full border border-emerald-500/40 bg-emerald-950/70 flex items-center justify-center text-emerald-300 shadow-sm shrink-0">
+                <Handshake className="h-6 w-6 text-emerald-300" />
+              </div>
+              <div>
+                <p className="text-xs sm:text-sm font-bold text-white leading-tight">Industry &amp; Institution</p>
+                <p className="text-[11px] sm:text-xs font-medium text-emerald-200/80 leading-tight">Connect</p>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Bottom KPI Stat Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 sm:p-6 rounded-2xl bg-card/70 backdrop-blur-md border border-border shadow-sm">
-          {siteConfig.stats.map((stat, i) => (
-            <div key={i} className="hero-stat-card text-center sm:text-left sm:px-4 border-r last:border-0 border-border/60">
-              <p className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
-                {stat.value}
-              </p>
-              <p className="text-xs font-medium text-muted-foreground mt-0.5">
-                {stat.label}
-              </p>
+        {/* 6. Bottom KPI Stat Bar matching 1st image: Rounded emerald container with circular icon badges */}
+        <div className="w-full max-w-6xl mx-auto mt-12 sm:mt-16">
+          <div className="rounded-3xl bg-[#041e14]/90 backdrop-blur-xl border border-emerald-500/30 p-6 sm:p-7 shadow-2xl">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+              {/* Stat 1: Active AYUSH Students */}
+              <div className="hero-stat-card flex items-center gap-4 text-left">
+                <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-full border border-emerald-500/40 bg-emerald-950/80 flex items-center justify-center text-emerald-300 shrink-0 shadow-inner">
+                  <GraduationCap className="h-6 w-6 sm:h-7 sm:w-7 text-emerald-300" />
+                </div>
+                <div>
+                  <p className="text-2xl sm:text-3xl font-black text-white tracking-tight">12,400+</p>
+                  <p className="text-xs sm:text-[13px] font-medium text-emerald-300/85 mt-0.5">Active AYUSH Students</p>
+                </div>
+              </div>
+
+              {/* Stat 2: Verified Industry Partners */}
+              <div className="hero-stat-card flex items-center gap-4 text-left">
+                <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-full border border-emerald-500/40 bg-emerald-950/80 flex items-center justify-center text-emerald-300 shrink-0 shadow-inner">
+                  <Building2 className="h-6 w-6 sm:h-7 sm:w-7 text-emerald-300" />
+                </div>
+                <div>
+                  <p className="text-2xl sm:text-3xl font-black text-white tracking-tight">350+</p>
+                  <p className="text-xs sm:text-[13px] font-medium text-emerald-300/85 mt-0.5">Verified Industry Partners</p>
+                </div>
+              </div>
+
+              {/* Stat 3: Clinical Skills Assessed */}
+              <div className="hero-stat-card flex items-center gap-4 text-left">
+                <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-full border border-emerald-500/40 bg-emerald-950/80 flex items-center justify-center text-emerald-300 shrink-0 shadow-inner">
+                  <ClipboardCheck className="h-6 w-6 sm:h-7 sm:w-7 text-emerald-300" />
+                </div>
+                <div>
+                  <p className="text-2xl sm:text-3xl font-black text-white tracking-tight">48,000+</p>
+                  <p className="text-xs sm:text-[13px] font-medium text-emerald-300/85 mt-0.5">Clinical Skills Assessed</p>
+                </div>
+              </div>
+
+              {/* Stat 4: AYUSH Institutions */}
+              <div className="hero-stat-card flex items-center gap-4 text-left">
+                <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-full border border-emerald-500/40 bg-emerald-950/80 flex items-center justify-center text-emerald-300 shrink-0 shadow-inner">
+                  <Landmark className="h-6 w-6 sm:h-7 sm:w-7 text-emerald-300" />
+                </div>
+                <div>
+                  <p className="text-2xl sm:text-3xl font-black text-white tracking-tight">85+</p>
+                  <p className="text-xs sm:text-[13px] font-medium text-emerald-300/85 mt-0.5">AYUSH Institutions</p>
+                </div>
+              </div>
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </section>

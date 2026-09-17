@@ -123,7 +123,7 @@ export function StudentJourneySection() {
       : stages.filter((s) => s.category === activeCategory);
 
   return (
-    <section id="student-journey" className="py-24 border-b border-border/60 bg-muted/15">
+    <section id="student-journey" className="py-24 border-b border-border/40 bg-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           badge="Complete Student Lifecycle"

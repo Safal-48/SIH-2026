@@ -74,7 +74,7 @@ export function WorkshopsTab({
 
     setShowModal(false);
     setTitle("");
-    showToast(`✓ Workshop "${title}" announced on Vaidya Setu!`);
+    showToast(`✓ Workshop "${title}" announced on Ayu-Setu!`);
   };
 
   return (

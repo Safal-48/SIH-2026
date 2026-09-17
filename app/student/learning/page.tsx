@@ -111,7 +111,7 @@ export default function GuidedLearningHubPage() {
               </h1>
 
               <p className="text-xs sm:text-sm text-muted-foreground max-w-3xl leading-relaxed">
-                Vaidya Setu does not provide generic libraries of 100 random videos. Every learning
+                Ayu-Setu does not provide generic libraries of 100 random videos. Every learning
                 journey is directly engineered to resolve your specific diagnostic skill gaps
                 through applied clinical micro-tasks and verified faculty review.
               </p>

@@ -9,16 +9,28 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12 mb-12">
           {/* Column 1: Organization & Vision */}
           <div className="md:col-span-2 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-accent text-herbal-950 font-serif font-bold text-lg flex items-center justify-center">
-                वै
+            <Link href="/" className="flex items-center gap-3">
+              <img
+                src="/images/ayu-setu-emblem.png"
+                alt="Ayu-Setu Logo"
+                className="h-12 w-12 object-cover rounded-full ring-2 ring-amber-500/50 bg-[#efe1c8] drop-shadow-md shrink-0"
+              />
+              <div>
+                <div className="flex items-baseline">
+                  <span className="text-2xl font-serif font-bold tracking-tight text-white">
+                    Ayu-
+                  </span>
+                  <span className="text-2xl font-serif font-bold tracking-tight text-amber-400">
+                    Setu
+                  </span>
+                </div>
+                <p className="text-[9px] tracking-widest text-amber-300 uppercase font-semibold">
+                  Learn • Grow • Heal • Build
+                </p>
               </div>
-              <span className="text-xl font-bold tracking-tight text-white">
-                Vaidya Setu
-              </span>
-            </div>
+            </Link>
             <p className="text-xs sm:text-sm text-herbal-200/80 leading-relaxed max-w-md">
-              A smart automation portal engineered for the Ministry of Ayush and All India Institute of Ayurveda (AIIA). Facilitating authentic skill mapping, clinical competency passports, supervisor endorsements, and industry internship placements.
+              An Academia–Industry Skill Intelligence and Career Ecosystem for Ayurveda engineered for the Ministry of Ayush and All India Institute of Ayurveda (AIIA). Facilitating authentic skill mapping, clinical competency passports, supervisor endorsements, and industry internship placements.
             </p>
             <div className="text-[11px] text-herbal-400 space-y-1">
               <p>Problem Statement: Portal for Academia - Industry collaboration for Skill Mapping, Internships and Placement</p>
@@ -108,7 +120,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-herbal-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-herbal-300">
           <p>
-            © {new Date().getFullYear()} Vaidya Setu • Ministry of Ayush Government of India Initiative.
+            © {new Date().getFullYear()} Ayu-Setu • Ministry of Ayush Government of India Initiative.
           </p>
           <div className="flex items-center gap-4">
             <span className="hover:text-white cursor-pointer transition-colors">

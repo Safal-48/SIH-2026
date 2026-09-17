@@ -27,6 +27,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/cards/Card";
 import { useAuth } from "@/hooks/useAuth";
 import { ROLE_DEFINITIONS } from "@/types/roles";
+import { EcosystemRoleSwitcher } from "@/components/layout/EcosystemRoleSwitcher";
 
 import {
   AcademicianPortalService,
@@ -282,9 +283,14 @@ function AcademicianPortalContent() {
           <div className="flex items-center gap-3">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors"
+              className="inline-flex items-center gap-2 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors group"
             >
-              <Home className="h-4 w-4" /> Vaidya Setu Hub
+              <img
+                src="/images/ayu-setu-emblem.png"
+                alt="Ayu-Setu"
+                className="h-5 w-5 rounded-full object-cover bg-[#efe1c8] ring-1 ring-amber-400/50 group-hover:scale-105 transition-transform shrink-0"
+              />
+              <span>Ayu-Setu Hub</span>
             </Link>
             <span className="text-muted-foreground text-xs">/</span>
             <span className="text-xs font-bold text-foreground">Academician Portal</span>
@@ -294,6 +300,7 @@ function AcademicianPortalContent() {
           </div>
 
           <div className="flex items-center gap-3">
+            <EcosystemRoleSwitcher />
             <span className="text-xs text-muted-foreground hidden md:inline">
               Guide ID: <strong className="font-mono text-foreground">{profile.ncismGuideId}</strong>
             </span>
@@ -477,7 +484,7 @@ export default function AcademicianPortalPage() {
     <React.Suspense
       fallback={
         <div className="min-h-screen flex items-center justify-center bg-background text-muted-foreground text-xs">
-          Loading Vaidya Setu Academician Portal...
+          Loading Ayu-Setu Academician Portal...
         </div>
       }
     >

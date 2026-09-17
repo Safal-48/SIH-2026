@@ -40,6 +40,7 @@ import {
   UserCheck,
 } from "lucide-react";
 import { ROLE_DEFINITIONS } from "@/types/roles";
+import { EcosystemRoleSwitcher } from "@/components/layout/EcosystemRoleSwitcher";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/cards/Card";
@@ -103,6 +104,22 @@ export default function IndustryPortalPage() {
   const [newMentorSpecialty, setNewMentorSpecialty] = React.useState("");
   const [newMentorDate, setNewMentorDate] = React.useState("");
   const [newMentorTime, setNewMentorTime] = React.useState("");
+
+  // Structured Feedback Modal State
+  const [feedbackApp, setFeedbackApp] = React.useState<IndustryApplicationItem | null>(null);
+  const [feedbackForm, setFeedbackForm] = React.useState({
+    technicalCompetency: 5,
+    communication: 4,
+    professionalism: 5,
+    problemSolving: 4,
+    teamwork: 5,
+    domainCompetency: 5,
+    overallImpression: "READY" as "OUTSTANDING" | "READY" | "NEEDS_DEVELOPMENT",
+    strengths: "Diligent clinical documentation and high diagnostic reasoning under GCP-Ayush standards.",
+    improvementAreas: "Continue practicing bio-statistical sample analysis in classical trials.",
+    recommendationNote: "Demonstrated strong clinical aptitude and readiness for inpatient care.",
+  });
+  const [feedbackSuccess, setFeedbackSuccess] = React.useState<string | null>(null);
 
   // Notification Toast
   const [toastMessage, setToastMessage] = React.useState<string | null>(null);
@@ -169,7 +186,7 @@ export default function IndustryPortalPage() {
     });
 
     refreshData();
-    setPostSuccessMessage(`✓ Successfully published "${created.title}" to Vaidya Setu Network!`);
+    setPostSuccessMessage(`✓ Successfully published "${created.title}" to Ayu-Setu Network!`);
     setPostTitle("");
     setPostDescription("");
     showToast(`Published ${created.type}: ${created.title}`);
@@ -210,6 +227,40 @@ export default function IndustryPortalPage() {
     showToast("✓ Clinical mentorship session scheduled!");
   };
 
+  // Handle Feedback Submission
+  const handleSubmitFeedback = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!feedbackApp) return;
+
+    service.submitFeedback({
+      applicationId: feedbackApp.id,
+      candidateId: feedbackApp.candidateId,
+      candidateName: feedbackApp.candidateName,
+      organization: "Dabur Research Foundation",
+      reviewerName: displayName,
+      categories: {
+        technicalCompetency: Number(feedbackForm.technicalCompetency),
+        communication: Number(feedbackForm.communication),
+        professionalism: Number(feedbackForm.professionalism),
+        problemSolving: Number(feedbackForm.problemSolving),
+        teamwork: Number(feedbackForm.teamwork),
+        domainCompetency: Number(feedbackForm.domainCompetency),
+      },
+      overallImpression: feedbackForm.overallImpression,
+      strengths: feedbackForm.strengths.split(",").map((s) => s.trim()).filter(Boolean),
+      improvementAreas: feedbackForm.improvementAreas.split(",").map((s) => s.trim()).filter(Boolean),
+      recommendationNote: feedbackForm.recommendationNote,
+    });
+
+    setFeedbackSuccess(`✓ Structured evaluation recorded for ${feedbackApp.candidateName}! Dispatched to student portfolio.`);
+    showToast(`✓ Evaluation dispatched for ${feedbackApp.candidateName}`);
+
+    setTimeout(() => {
+      setFeedbackSuccess(null);
+      setFeedbackApp(null);
+    }, 2000);
+  };
+
   // Filtered Candidates
   const filteredCandidates = candidates.filter((c) => {
     const matchesSearch =
@@ -243,9 +294,14 @@ export default function IndustryPortalPage() {
           <div className="flex items-center gap-3">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors"
+              className="inline-flex items-center gap-2 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors group"
             >
-              <Home className="h-4 w-4" /> Vaidya Setu Hub
+              <img
+                src="/images/ayu-setu-emblem.png"
+                alt="Ayu-Setu"
+                className="h-5 w-5 rounded-full object-cover bg-[#efe1c8] ring-1 ring-amber-400/50 group-hover:scale-105 transition-transform shrink-0"
+              />
+              <span>Ayu-Setu Hub</span>
             </Link>
             <span className="text-muted-foreground text-xs">/</span>
             <span className="text-xs font-semibold text-accent flex items-center gap-1.5">
@@ -254,6 +310,7 @@ export default function IndustryPortalPage() {
           </div>
 
           <div className="flex items-center gap-3">
+            <EcosystemRoleSwitcher />
             <Link href="/student/opportunities">
               <Button variant="ghost" size="sm" className="text-xs hidden sm:inline-flex" leftIcon={<Eye className="h-3.5 w-3.5" />}>
                 View Student Board
@@ -871,7 +928,7 @@ export default function IndustryPortalPage() {
                       className="w-full px-4 py-2.5 rounded-xl bg-background border border-border text-foreground text-sm focus:outline-none focus:border-accent"
                     />
                     <p className="text-[11px] text-muted-foreground">
-                      Vaidya Setu will automatically match scholars whose Competency Passports verify these skills.
+                      Ayu-Setu will automatically match scholars whose Competency Passports verify these skills.
                     </p>
                   </div>
 
@@ -1287,6 +1344,16 @@ export default function IndustryPortalPage() {
                         </Button>
                       )}
 
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="text-xs text-accent border-accent/40 hover:bg-accent/10"
+                        onClick={() => setFeedbackApp(app)}
+                        leftIcon={<Sparkles className="h-3.5 w-3.5" />}
+                      >
+                        Preceptor Feedback
+                      </Button>
+
                       <Link href={`/student/applications/app-aiia-clinical-01`}>
                         <Button variant="ghost" size="sm" className="text-xs" rightIcon={<ExternalLink className="h-3 w-3" />}>
                           Full Verification Audit
@@ -1641,6 +1708,35 @@ export default function IndustryPortalPage() {
                 </div>
               </div>
 
+              {/* Explainable Rationale: WHY THIS CANDIDATE MATCHES */}
+              <div className="space-y-3 p-4 rounded-xl bg-accent/5 border border-accent/20">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-accent flex items-center gap-1.5">
+                    <Sparkles className="h-3.5 w-3.5 text-accent" /> Why This Candidate Matches ({selectedCandidate.overallMatchScore}%)
+                  </h4>
+                  <Badge variant="gold" size="sm">Deterministic Compatibility</Badge>
+                </div>
+
+                <div className="space-y-2 text-xs">
+                  <div className="flex items-start gap-2 text-foreground/90">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
+                    <span><strong>Direct Skill Verification:</strong> Exceeds minimum benchmarks in {selectedCandidate.verifiedCompetencies.map(c => c.name).join(", ")}.</span>
+                  </div>
+                  <div className="flex items-start gap-2 text-foreground/90">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
+                    <span><strong>Clinical Rigor:</strong> {selectedCandidate.clinicalHoursVerified} verified hospital posting hours counter-signed by institutional faculty preceptors.</span>
+                  </div>
+                  <div className="flex items-start gap-2 text-foreground/90">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
+                    <span><strong>Academic Trajectory:</strong> Standing in {selectedCandidate.degree} at {selectedCandidate.institution} matches high-priority industry criteria.</span>
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-background/60 border border-border text-[11px] text-muted-foreground flex items-center gap-2 mt-2">
+                    <AlertCircle className="h-3.5 w-3.5 text-accent shrink-0" />
+                    <span><strong>Recommended Onboarding Focus:</strong> Provide orientation on corporate standard operating procedures (SOPs) and clinical trial documentation templates.</span>
+                  </div>
+                </div>
+              </div>
+
               {/* Bottom Actions */}
               <div className="flex items-center justify-between pt-4 border-t border-border">
                 <Button
@@ -1665,6 +1761,212 @@ export default function IndustryPortalPage() {
                   Shortlist {selectedCandidate.name}
                 </Button>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* ========================================================================= */}
+        {/* STRUCTURED PRECEPTOR FEEDBACK MODAL */}
+        {/* ========================================================================= */}
+        {feedbackApp && (
+          <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm flex items-center justify-center p-4">
+            <div className="bg-card border border-border max-w-xl w-full rounded-2xl shadow-2xl p-6 space-y-5 max-h-[90vh] overflow-y-auto">
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
+                    <Sparkles className="h-5 w-5 text-accent" />
+                    Preceptor Structured Evaluation & Feedback
+                  </h3>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    For candidate: <strong>{feedbackApp.candidateName}</strong> ({feedbackApp.candidateDegree}) • Role: {feedbackApp.opportunityTitle}
+                  </p>
+                </div>
+                <button
+                  onClick={() => setFeedbackApp(null)}
+                  className="p-1 rounded-lg text-muted-foreground hover:text-foreground"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              {feedbackSuccess && (
+                <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-medium flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 shrink-0" />
+                  <span>{feedbackSuccess}</span>
+                </div>
+              )}
+
+              <form onSubmit={handleSubmitFeedback} className="space-y-4">
+                {/* 6 Structured Competency Categories (1-5 scale) */}
+                <div className="space-y-3">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                    Competency Dimensions (Rating 1-5)
+                  </h4>
+                  <div className="grid grid-cols-2 gap-3 text-xs">
+                    <div className="space-y-1">
+                      <label className="text-[11px] font-medium text-foreground">Technical Competency</label>
+                      <select
+                        value={feedbackForm.technicalCompetency}
+                        onChange={(e) => setFeedbackForm({ ...feedbackForm, technicalCompetency: Number(e.target.value) })}
+                        className="w-full px-3 py-1.5 rounded-lg bg-background border border-border text-foreground text-xs"
+                      >
+                        <option value={5}>5 - Mastery / Exceptional</option>
+                        <option value={4}>4 - Proficient / Above Average</option>
+                        <option value={3}>3 - Competent / Standard</option>
+                        <option value={2}>2 - Developing / Needs Guidance</option>
+                        <option value={1}>1 - Deficient / Unprepared</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-[11px] font-medium text-foreground">Domain Competency</label>
+                      <select
+                        value={feedbackForm.domainCompetency}
+                        onChange={(e) => setFeedbackForm({ ...feedbackForm, domainCompetency: Number(e.target.value) })}
+                        className="w-full px-3 py-1.5 rounded-lg bg-background border border-border text-foreground text-xs"
+                      >
+                        <option value={5}>5 - Mastery / Exceptional</option>
+                        <option value={4}>4 - Proficient / Above Average</option>
+                        <option value={3}>3 - Competent / Standard</option>
+                        <option value={2}>2 - Developing / Needs Guidance</option>
+                        <option value={1}>1 - Deficient / Unprepared</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-[11px] font-medium text-foreground">Clinical Communication</label>
+                      <select
+                        value={feedbackForm.communication}
+                        onChange={(e) => setFeedbackForm({ ...feedbackForm, communication: Number(e.target.value) })}
+                        className="w-full px-3 py-1.5 rounded-lg bg-background border border-border text-foreground text-xs"
+                      >
+                        <option value={5}>5 - Clear, Articulate, Empathic</option>
+                        <option value={4}>4 - Effective Clinical Dialogue</option>
+                        <option value={3}>3 - Adequate Patient Communication</option>
+                        <option value={2}>2 - Needs Confidence / Clarity</option>
+                        <option value={1}>1 - Hesitant / Unclear</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-[11px] font-medium text-foreground">Professionalism & Ethics</label>
+                      <select
+                        value={feedbackForm.professionalism}
+                        onChange={(e) => setFeedbackForm({ ...feedbackForm, professionalism: Number(e.target.value) })}
+                        className="w-full px-3 py-1.5 rounded-lg bg-background border border-border text-foreground text-xs"
+                      >
+                        <option value={5}>5 - Exemplary Punctuality & Ethics</option>
+                        <option value={4}>4 - Highly Professional</option>
+                        <option value={3}>3 - Meets Workplace Standards</option>
+                        <option value={2}>2 - Occasional Delays / Lapses</option>
+                        <option value={1}>1 - Needs Ethics Remediation</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-[11px] font-medium text-foreground">Problem Solving</label>
+                      <select
+                        value={feedbackForm.problemSolving}
+                        onChange={(e) => setFeedbackForm({ ...feedbackForm, problemSolving: Number(e.target.value) })}
+                        className="w-full px-3 py-1.5 rounded-lg bg-background border border-border text-foreground text-xs"
+                      >
+                        <option value={5}>5 - Exceptional Analytical Reasoning</option>
+                        <option value={4}>4 - Independent Solution Formulation</option>
+                        <option value={3}>3 - Standard Protocol Execution</option>
+                        <option value={2}>2 - Requires Continuous Direction</option>
+                        <option value={1}>1 - Unable to Synthesize Evidence</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-[11px] font-medium text-foreground">Teamwork & Hospital Rounds</label>
+                      <select
+                        value={feedbackForm.teamwork}
+                        onChange={(e) => setFeedbackForm({ ...feedbackForm, teamwork: Number(e.target.value) })}
+                        className="w-full px-3 py-1.5 rounded-lg bg-background border border-border text-foreground text-xs"
+                      >
+                        <option value={5}>5 - Outstanding Collaboration</option>
+                        <option value={4}>4 - Reliable Team Contributor</option>
+                        <option value={3}>3 - Participates in Ward Rounds</option>
+                        <option value={2}>2 - Isolated / Minimal Sharing</option>
+                        <option value={1}>1 - Disruptive / Non-collaborative</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Overall Impression */}
+                <div className="space-y-1">
+                  <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                    Overall Preceptor Recommendation
+                  </label>
+                  <select
+                    value={feedbackForm.overallImpression}
+                    onChange={(e) => setFeedbackForm({ ...feedbackForm, overallImpression: e.target.value as any })}
+                    className="w-full px-3 py-2 rounded-xl bg-background border border-border text-foreground text-xs"
+                  >
+                    <option value="OUTSTANDING">Outstanding - Fast-Track for Corporate Placement / Fellowship</option>
+                    <option value="READY">Ready - Verified Clinical Competence for Direct Inpatient Practice</option>
+                    <option value="NEEDS_DEVELOPMENT">Needs Development - Recommend Supplementary Academic Remediation</option>
+                  </select>
+                </div>
+
+                {/* Strengths & Improvement Areas */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="space-y-1">
+                    <label className="text-xs font-semibold text-foreground">Key Strengths Demonstrated</label>
+                    <input
+                      type="text"
+                      value={feedbackForm.strengths}
+                      onChange={(e) => setFeedbackForm({ ...feedbackForm, strengths: e.target.value })}
+                      placeholder="e.g. Nadi Pariksha, Aseptic technique"
+                      className="w-full px-3 py-2 rounded-xl bg-background border border-border text-foreground text-xs"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-semibold text-foreground">Specific Improvement Areas</label>
+                    <input
+                      type="text"
+                      value={feedbackForm.improvementAreas}
+                      onChange={(e) => setFeedbackForm({ ...feedbackForm, improvementAreas: e.target.value })}
+                      placeholder="e.g. Statistical analysis, NAMASTE EHR coding"
+                      className="w-full px-3 py-2 rounded-xl bg-background border border-border text-foreground text-xs"
+                    />
+                  </div>
+                </div>
+
+                {/* Recommendation Note */}
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-foreground">Detailed Preceptor Remarks</label>
+                  <textarea
+                    rows={3}
+                    value={feedbackForm.recommendationNote}
+                    onChange={(e) => setFeedbackForm({ ...feedbackForm, recommendationNote: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl bg-background border border-border text-foreground text-xs"
+                  />
+                </div>
+
+                <div className="flex items-center justify-between pt-3 border-t border-border">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setFeedbackApp(null)}
+                    className="text-xs"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    variant="gold"
+                    size="sm"
+                    className="text-xs"
+                    leftIcon={<Send className="h-3.5 w-3.5" />}
+                  >
+                    Dispatch Feedback to Student Portfolio
+                  </Button>
+                </div>
+              </form>
             </div>
           </div>
         )}

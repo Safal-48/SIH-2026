@@ -94,7 +94,7 @@ function AutomationPageContent() {
               href="/"
               className="inline-flex items-center gap-2 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors"
             >
-              <Home className="h-4 w-4" /> Vaidya Setu Hub
+              <Home className="h-4 w-4" /> Ayu-Setu Hub
             </Link>
             <span className="text-muted-foreground text-xs">/</span>
             <span className="text-xs font-bold text-foreground">Smart Automation Engine</span>
@@ -117,7 +117,7 @@ function AutomationPageContent() {
               <Cpu className="h-3.5 w-3.5" /> End-to-End Predictive Intelligence & Closed-Loop Remediation
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-              Vaidya Setu Smart Automation Engine
+              Ayu-Setu Smart Automation Engine
             </h1>
             <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
               Connecting raw student assessments to cryptographic competency passports, 1-click recruiter shortlisting, faculty supervisor verifications, institutional curriculum remediation, and national healthcare workforce analytics.
@@ -198,7 +198,7 @@ function AutomationPageContent() {
                   Smart Automation Architecture & Ecosystem Feedback Loops
                 </h3>
                 <p className="text-xs text-muted-foreground">
-                  How Vaidya Setu connects Scholars, Institutions, Industry, and the Ministry of Ayush
+                  How Ayu-Setu connects Scholars, Institutions, Industry, and the Ministry of Ayush
                 </p>
               </div>
 
@@ -256,7 +256,7 @@ export default function AutomationPage() {
     <React.Suspense
       fallback={
         <div className="min-h-screen flex items-center justify-center bg-background text-muted-foreground text-xs">
-          Loading Vaidya Setu Smart Automation Engine...
+          Loading Ayu-Setu Smart Automation Engine...
         </div>
       }
     >

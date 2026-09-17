@@ -10,16 +10,28 @@ export function MarketingFooter() {
           {/* Column 1: Brand & Ministry Attribution (2 cols) */}
           <div className="lg:col-span-2 space-y-4">
             <Link href="#hero" className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-accent text-herbal-950 font-serif font-bold text-xl flex items-center justify-center shadow-md">
-                वै
+              <img
+                src="/images/ayu-setu-emblem.png"
+                alt="Ayu-Setu Logo"
+                className="h-12 w-12 object-cover rounded-full ring-2 ring-amber-500/50 bg-[#efe1c8] drop-shadow-md shrink-0"
+              />
+              <div>
+                <div className="flex items-baseline">
+                  <span className="text-2xl font-heading font-black tracking-tight text-white">
+                    Ayu-
+                  </span>
+                  <span className="text-2xl font-heading font-black tracking-tight text-amber-400">
+                    Setu
+                  </span>
+                </div>
+                <p className="text-[9px] tracking-widest text-amber-300 uppercase font-semibold">
+                  Learn • Grow • Heal • Build
+                </p>
               </div>
-              <span className="text-xl font-bold tracking-tight text-white font-sans">
-                Vaidya Setu
-              </span>
             </Link>
 
             <p className="text-xs sm:text-sm text-herbal-200/80 leading-relaxed max-w-sm">
-              An AI-powered smart automation platform engineered for the Ministry of Ayush and All India Institute of Ayurveda (AIIA). Connecting students, academicians, and herbal pharma for skill mapping and accredited placements.
+              An Academia–Industry Skill Intelligence and Career Ecosystem for Ayurveda engineered for the Ministry of Ayush and All India Institute of Ayurveda (AIIA). Connecting students, academicians, and herbal pharma for skill mapping and accredited placements.
             </p>
 
             <div className="text-[11px] text-herbal-400 space-y-1 pt-2">
@@ -175,7 +187,7 @@ export function MarketingFooter() {
         {/* Bottom Attribution Bar */}
         <div className="pt-8 border-t border-herbal-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-herbal-300">
           <p>
-            © {new Date().getFullYear()} Vaidya Setu • Ministry of Ayush Government of India Initiative.
+            © {new Date().getFullYear()} Ayu-Setu • Ministry of Ayush Government of India Initiative.
           </p>
           <div className="flex items-center gap-4">
             <span>National Ayush Grid • Ministry of Ayush</span>

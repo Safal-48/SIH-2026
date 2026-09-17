@@ -1,7 +1,3 @@
-/**
- * Vaidya Setu - Student Onboarding Service & Constants
- * Ministry of Ayush | All India Institute of Ayurveda
- */
 
 import {
   StudentOnboardingData,

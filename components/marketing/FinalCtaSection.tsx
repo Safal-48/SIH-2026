@@ -17,7 +17,7 @@ export function FinalCtaSection({
   onExploreOpportunities,
 }: FinalCtaSectionProps) {
   return (
-    <section className="py-28 relative overflow-hidden bg-gradient-to-b from-background via-herbal-950/10 to-background border-b border-border/60">
+    <section className="py-28 relative overflow-hidden bg-transparent border-b border-border/40">
       {/* Ambient background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-primary/10 rounded-full blur-3xl pointer-events-none" />
 

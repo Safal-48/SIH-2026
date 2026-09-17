@@ -81,16 +81,16 @@ function AssessmentPrepContent() {
               <div className="flex items-center gap-2 text-xs text-muted-foreground font-semibold">
                 <BookOpen className="h-4 w-4 text-primary" /> Questions
               </div>
-              <p className="text-2xl font-bold text-foreground">120 Vignettes</p>
-              <p className="text-[11px] text-muted-foreground">Scenario-based clinical & pharmacological puzzles</p>
+              <p className="text-2xl font-bold text-foreground">15 Questions</p>
+              <p className="text-[11px] text-muted-foreground">Scenario-based clinical &amp; NCISM calibrated puzzles</p>
             </div>
 
             <div className="p-4 rounded-xl bg-card border border-border/80 space-y-1">
               <div className="flex items-center gap-2 text-xs text-muted-foreground font-semibold">
                 <Clock className="h-4 w-4 text-accent" /> Pacing
               </div>
-              <p className="text-2xl font-bold text-foreground">35–45 Mins</p>
-              <p className="text-[11px] text-muted-foreground">Untimed adaptive pace; pause & resume supported</p>
+              <p className="text-2xl font-bold text-foreground">10 Mins</p>
+              <p className="text-[11px] text-muted-foreground">Timed section pacing; 10 minutes for 15 questions</p>
             </div>
 
             <div className="p-4 rounded-xl bg-card border border-border/80 space-y-1">

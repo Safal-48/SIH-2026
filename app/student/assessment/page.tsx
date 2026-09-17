@@ -40,6 +40,7 @@ function SkillAssessmentContent() {
   const [answers, setAnswers] = React.useState<Record<string, string>>({});
   const [bookmarkedIds, setBookmarkedIds] = React.useState<string[]>([]);
   const [timeElapsedSeconds, setTimeElapsedSeconds] = React.useState<number>(0);
+  const [timeRemainingSeconds, setTimeRemainingSeconds] = React.useState<number>(600); // 10 minutes (600s)
 
   // Flow states
   const [isCompleted, setIsCompleted] = React.useState<boolean>(false);
@@ -48,6 +49,7 @@ function SkillAssessmentContent() {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
   const [showExitModal, setShowExitModal] = React.useState<boolean>(false);
+  const [showTimeExpiredModal, setShowTimeExpiredModal] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
   // Initialize questions
@@ -65,10 +67,18 @@ function SkillAssessmentContent() {
     setIsLoading(false);
   }, []);
 
-  // Timer interval
+  // 10-Minute Countdown Timer interval
   React.useEffect(() => {
     if (isCompleted || isLoading) return;
     const interval = setInterval(() => {
+      setTimeRemainingSeconds((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          handleSubmitAssessment(true);
+          return 0;
+        }
+        return prev - 1;
+      });
       setTimeElapsedSeconds((prev) => prev + 1);
     }, 1000);
     return () => clearInterval(interval);
@@ -113,7 +123,7 @@ function SkillAssessmentContent() {
     setIsDrawerOpen(false);
   };
 
-  const handleSubmitAssessment = async () => {
+  const handleSubmitAssessment = async (isAutoTimeout = false) => {
     if (questions.length === 0) return;
     setIsSubmitting(true);
 
@@ -127,6 +137,9 @@ function SkillAssessmentContent() {
 
       setEvaluationResult(result);
       setIsCompleted(true);
+      if (isAutoTimeout) {
+        setShowTimeExpiredModal(true);
+      }
     } catch (err) {
       console.error("Failed to finalize assessment:", err);
     } finally {
@@ -142,6 +155,8 @@ function SkillAssessmentContent() {
     setBookmarkedIds([]);
     setCurrentIndex(0);
     setTimeElapsedSeconds(0);
+    setTimeRemainingSeconds(600);
+    setShowTimeExpiredModal(false);
     setEvaluationResult(null);
     setIsCompleted(false);
   };
@@ -185,7 +200,30 @@ function SkillAssessmentContent() {
               onExit={() => setShowExitModal(true)}
               answeredCount={answeredCount}
               timeElapsedSeconds={timeElapsedSeconds}
+              timeRemainingSeconds={timeRemainingSeconds}
             />
+
+            {/* 1-Minute Warning Banner */}
+            {timeRemainingSeconds <= 60 && (
+              <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 pt-4">
+                <div className="p-3 rounded-xl bg-rose-950/80 border border-rose-500/60 text-rose-200 text-xs flex items-center justify-between animate-pulse">
+                  <div className="flex items-center gap-2">
+                    <AlertCircle className="h-4 w-4 text-rose-400 shrink-0" />
+                    <span>
+                      <strong>Warning:</strong> Only <strong>{timeRemainingSeconds} seconds</strong> left in this 10-minute section! Your answers will be automatically submitted at 00:00.
+                    </span>
+                  </div>
+                  <Button
+                    variant="gold"
+                    size="sm"
+                    onClick={() => handleSubmitAssessment()}
+                    className="h-7 text-[11px] px-2.5 font-bold"
+                  >
+                    Submit Now
+                  </Button>
+                </div>
+              </div>
+            )}
 
             {/* Assessment Question Chamber */}
             <main className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-8 flex items-center justify-center">
@@ -353,9 +391,45 @@ function SkillAssessmentContent() {
         </div>
       )}
 
+      {/* 10-MINUTE TIME EXPIRED MODAL */}
+      {showTimeExpiredModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fadeIn">
+          <div className="bg-[#0B1510] border border-rose-500/50 rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 shrink-0">
+                <AlertCircle className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-white">10-Minute Time Expired!</h3>
+                <p className="text-xs text-white/60">
+                  Section time limit has concluded.
+                </p>
+              </div>
+            </div>
+
+            <p className="text-xs text-white/70 leading-relaxed bg-white/5 p-3.5 rounded-xl border border-white/5">
+              Your 10-minute section limit has ended. All your recorded answers (
+              <strong className="text-emerald-400">{answeredCount} of {totalQuestions}</strong>) have been
+              automatically evaluated and synced to your permanent Skill DNA.
+            </p>
+
+            <div className="flex justify-end pt-2">
+              <Button
+                variant="gold"
+                size="sm"
+                onClick={() => setShowTimeExpiredModal(false)}
+                className="text-xs font-bold px-5"
+              >
+                View Diagnostic Report
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Compact Minimal Footer */}
       <footer className="relative z-10 py-4 px-6 border-t border-white/5 text-center text-xs text-white/40">
-        <p>Vaidya Setu • Ministry of Ayush • All India Institute of Ayurveda</p>
+        <p>Ayu-Setu • Ministry of Ayush • All India Institute of Ayurveda</p>
       </footer>
     </div>
   );

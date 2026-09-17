@@ -3,13 +3,17 @@
  */
 
 export const siteConfig = {
-  name: "Vaidya Setu",
-  title: "Vaidya Setu | Ayurveda Academia–Industry Skill & Placement Portal",
+  name: "Ayu-Setu",
+  title: "Ayu-Setu | Academia–Industry Skill Intelligence & Career Ecosystem for Ayurveda",
   description:
-    "An AI-enabled Smart Automation Portal connecting Ayurveda Students, Academicians, Industry Leaders, and Institutions for Competency Mapping, Logbook Verification, and Smart Internship Placements.",
+    "An Academia–Industry Skill Intelligence and Career Ecosystem for Ayurveda connecting Students, Academicians, Industry Leaders, and Institutions for Competency Mapping, Logbook Verification, and Smart Internship Placements.",
+  tagline: "Learn • Grow • Heal • Build",
+  subtitle: "An Academia–Industry Skill Intelligence and Career Ecosystem for Ayurveda",
   ministry: "Ministry of Ayush",
   department: "All India Institute of Ayurveda (AIIA)",
   slogan: "Bridging Ancient Wisdom with Intelligent Healthcare Automation",
+  logo: "/images/ayu-setu-logo.jpg",
+  emblem: "/images/ayu-setu-emblem.png",
   links: {
     ministry: "https://ayush.gov.in",
     aiia: "https://aiia.gov.in",

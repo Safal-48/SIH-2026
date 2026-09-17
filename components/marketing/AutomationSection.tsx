@@ -60,7 +60,7 @@ export function AutomationSection() {
   ];
 
   return (
-    <section id="automation" className="py-24 border-b border-border/60 bg-muted/15 relative overflow-hidden">
+    <section id="automation" className="py-24 border-b border-border/40 bg-transparent relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           badge="Smart Automation Engine"
@@ -111,7 +111,7 @@ export function AutomationSection() {
                   <div>
                     <div className="flex items-center gap-2 justify-center sm:justify-start">
                       <h4 className="text-xl font-bold text-foreground">
-                        Vaidya Setu Smart Automation Engine
+                        Ayu-Setu Smart Automation Engine
                       </h4>
                       <Badge variant="gold" size="sm">Ayush Core</Badge>
                     </div>

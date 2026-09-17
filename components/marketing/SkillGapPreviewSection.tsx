@@ -98,7 +98,7 @@ export function SkillGapPreviewSection() {
   ];
 
   return (
-    <section id="skill-gap" className="py-24 border-b border-border/60 bg-muted/20">
+    <section id="skill-gap" className="py-24 border-b border-border/40 bg-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           badge="Product Intelligence Preview"

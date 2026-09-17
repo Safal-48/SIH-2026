@@ -15,6 +15,9 @@
  * 10. Live Projects (Supervised Student Real-World Research & Industry Teams)
  */
 
+import { NotificationService } from "./notificationService";
+import { attestSkillByFaculty } from "./skillIntelligenceService";
+
 export interface FacultyProfile {
   id: string;
   fullName: string;
@@ -1270,6 +1273,31 @@ export class AcademicianPortalService {
       if (mentee) {
         mentee.pendingVerificationsCount = Math.max(0, mentee.pendingVerificationsCount - 1);
         this.save("mentees", mentees);
+      }
+
+      // Closed-Loop: Update Student Skill DNA to "Institution Verified"
+      try {
+        attestSkillByFaculty(
+          item.competencyDomain || item.evidenceTitle,
+          prof.fullName || "Dr. Anand Kulkarni",
+          `Institutionally attested and verified under ${item.type} documentation: ${item.evidenceTitle}`
+        );
+      } catch (err) {
+        console.error("Failed to attest student skill DNA:", err);
+      }
+
+      // Closed-Loop: Dispatch high-priority smart notification
+      try {
+        NotificationService.addNotification({
+          title: "Institution Verification Attested ✓",
+          message: `${prof.fullName || "Dr. Anand Kulkarni"} attested competency: "${item.competencyDomain}" for ${item.menteeName}. Portfolio updated to Institution Verified!`,
+          category: "VERIFICATION",
+          priority: "HIGH",
+          actionUrl: "/portfolio",
+          actionLabel: "View Verified Portfolio",
+        });
+      } catch (err) {
+        console.error("Failed to push verification notification:", err);
       }
     }
     return true;

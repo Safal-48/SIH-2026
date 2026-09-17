@@ -3,6 +3,7 @@
 import * as React from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import {
   ShieldCheck,
   Award,
@@ -65,13 +66,19 @@ export default function PublicVerifyPassportPage() {
         {/* Verification Banner */}
         <div className="p-6 rounded-3xl bg-gradient-to-r from-emerald-500/15 via-emerald-500/5 to-transparent border border-emerald-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-sm">
           <div className="flex items-start sm:items-center gap-4">
-            <div className="p-3.5 rounded-2xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 shrink-0">
-              <ShieldCheck className="h-8 w-8" />
+            <div className="relative w-14 h-14 rounded-2xl overflow-hidden ring-2 ring-amber-400/60 bg-[#efe1c8] shadow-lg shrink-0 flex items-center justify-center">
+              <Image
+                src="/images/ayu-setu-emblem.png"
+                alt="Ayu-Setu Seal"
+                width={56}
+                height={56}
+                className="w-full h-full object-cover"
+              />
             </div>
             <div>
               <div className="flex items-center gap-2.5 flex-wrap">
-                <h1 className="text-xl font-extrabold tracking-tight text-foreground">
-                  Official Competency Verification Stamp
+                <h1 className="text-xl font-extrabold tracking-tight text-foreground font-heading">
+                  Ayu-Setu Competency Verification Stamp
                 </h1>
                 <Badge variant="verified" size="sm" icon={<Check className="h-3.5 w-3.5" />}>
                   Authentic & Valid
@@ -138,7 +145,7 @@ export default function PublicVerifyPassportPage() {
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground font-mono">
-                  VAIDYA SETU • COMPETENCY PASSPORT
+                  AYU-SETU • COMPETENCY PASSPORT
                 </h3>
                 <p className="text-xs text-muted-foreground">
                   Official clinical competencies verified by institutional supervisors & clinical directors

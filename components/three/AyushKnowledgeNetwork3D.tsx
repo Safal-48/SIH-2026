@@ -23,7 +23,7 @@ const NODES_DATA: NodeData[] = [
   // Core
   {
     id: "core",
-    name: "Vaidya Setu Core",
+    name: "Ayu-Setu Core",
     sanskrit: "आयुर्वेद प्रज्ञा केंद्र",
     category: "CORE",
     pos: [0, 0, 0],

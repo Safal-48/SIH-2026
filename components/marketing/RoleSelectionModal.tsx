@@ -31,7 +31,7 @@ export function RoleSelectionModal({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title={initialAction === "login" ? "Select Your Portal" : "Join the Vaidya Setu Ecosystem"}
+      title={initialAction === "login" ? "Select Your Portal" : "Join the Ayu-Setu Ecosystem"}
       description="Choose your stakeholder gateway to explore role-specific features and opportunities."
       size="lg"
     >

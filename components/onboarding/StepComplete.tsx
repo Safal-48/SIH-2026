@@ -37,7 +37,7 @@ export function StepComplete({
   ) || CAREER_GOAL_OPTIONS[0];
 
   return (
-    <div className="space-y-8 animate-fade-in text-center max-w-2xl mx-auto">
+    <div className="space-y-8 animate-fade-in te cvxt-center max-w-2xl mx-auto">
       {/* Celebration Icon */}
       <div className="relative inline-flex items-center justify-center">
         <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-primary via-herbal-700 to-accent text-white flex items-center justify-center shadow-xl shadow-accent/20 animate-pulse-glow">

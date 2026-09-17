@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils/cn";
 import { SkillAssessmentDomain } from "@/lib/services/questionEngine";
 import { Badge } from "@/components/ui/Badge";
@@ -30,6 +31,7 @@ interface AssessmentHeaderProps {
   onExit: () => void;
   answeredCount: number;
   timeElapsedSeconds: number;
+  timeRemainingSeconds?: number;
 }
 
 const DOMAIN_METADATA: Record<
@@ -79,14 +81,17 @@ export function AssessmentHeader({
   onExit,
   answeredCount,
   timeElapsedSeconds,
+  timeRemainingSeconds,
 }: AssessmentHeaderProps) {
   const currentDomain = DOMAIN_METADATA[domain] || DOMAIN_METADATA.DIAGNOSTICS;
   const DomainIcon = currentDomain.icon;
   const progressPercent = Math.round(((currentIndex + 1) / totalQuestions) * 100);
 
-  // Format timer
-  const minutes = Math.floor(timeElapsedSeconds / 60);
-  const seconds = timeElapsedSeconds % 60;
+  // Format timer (Countdown if timeRemainingSeconds provided, else elapsed)
+  const isCountdown = timeRemainingSeconds !== undefined;
+  const targetSeconds = isCountdown ? Math.max(0, timeRemainingSeconds) : timeElapsedSeconds;
+  const minutes = Math.floor(targetSeconds / 60);
+  const seconds = targetSeconds % 60;
   const formattedTime = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 
   return (
@@ -106,10 +111,18 @@ export function AssessmentHeader({
               <span className="hidden sm:inline font-medium text-xs">Exit Diagnostic</span>
             </Button>
 
-            <div className="hidden md:flex items-center gap-2 border-l border-white/10 pl-3">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <div className="hidden md:flex items-center gap-2.5 border-l border-white/10 pl-3">
+              <div className="relative w-6 h-6 rounded-full overflow-hidden ring-1 ring-amber-400/60 bg-[#efe1c8] shrink-0">
+                <Image
+                  src="/images/ayu-setu-emblem.png"
+                  alt="Ayu-Setu"
+                  width={24}
+                  height={24}
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <span className="text-xs font-semibold tracking-wider text-emerald-300 uppercase">
-                Skill DNA Diagnostic
+                Ayu-Setu Diagnostic
               </span>
             </div>
           </div>
@@ -137,9 +150,22 @@ export function AssessmentHeader({
           {/* Right: Actions (Timer, Bookmark, Grid Drawer) */}
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Timer */}
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-white/80">
-              <Clock className="w-3.5 h-3.5 text-amber-400" />
+            <div
+              className={cn(
+                "flex items-center gap-1.5 px-2.5 py-1 rounded-lg border text-xs font-mono transition-all",
+                isCountdown && targetSeconds <= 60
+                  ? "bg-rose-950/80 border-rose-500/70 text-rose-300 animate-pulse font-bold"
+                  : isCountdown && targetSeconds <= 180
+                  ? "bg-amber-950/80 border-amber-500/50 text-amber-300"
+                  : "bg-white/5 border-white/10 text-white/80"
+              )}
+              title={isCountdown ? `${targetSeconds}s remaining in 10-min section` : undefined}
+            >
+              <Clock className={cn("w-3.5 h-3.5", isCountdown && targetSeconds <= 60 ? "text-rose-400" : "text-amber-400")} />
               <span>{formattedTime}</span>
+              {isCountdown && targetSeconds <= 60 && (
+                <span className="text-[10px] text-rose-400 font-bold ml-0.5">!</span>
+              )}
             </div>
 
             {/* Bookmark button */}

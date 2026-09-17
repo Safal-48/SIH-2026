@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -168,10 +169,20 @@ function StudentOnboardingContent() {
       <header className="max-w-3xl mx-auto w-full flex items-center justify-between pb-6 border-b border-border/70 z-10">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors"
+          className="inline-flex items-center gap-2.5 text-xs font-semibold text-foreground hover:text-primary transition-colors group"
         >
-          <Home className="h-4 w-4" />
-          <span>Vaidya Setu</span>
+          <div className="relative w-7 h-7 rounded-full overflow-hidden ring-1 ring-amber-400/60 bg-[#efe1c8] shadow-sm shrink-0">
+            <Image
+              src="/images/ayu-setu-emblem.png"
+              alt="Ayu-Setu"
+              width={28}
+              height={28}
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <span className="font-heading font-black tracking-tight text-sm">
+            AYU<span className="text-amber-400">-SETU</span>
+          </span>
         </Link>
 
         <div className="flex items-center gap-3">

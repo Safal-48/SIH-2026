@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Award,
   ShieldCheck,
@@ -173,9 +174,15 @@ export default function CompetencyPassportPage() {
 
         {/* National Ayush Crest Banner */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-border/70">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-2xl bg-secondary/15 text-secondary border border-secondary/30 flex items-center justify-center shrink-0">
-              <Award className="h-5 w-5" />
+          <div className="flex items-center gap-3.5">
+            <div className="relative h-11 w-11 rounded-2xl overflow-hidden ring-2 ring-amber-400/60 bg-[#efe1c8] flex items-center justify-center shrink-0 shadow-md">
+              <Image
+                src="/images/ayu-setu-emblem.png"
+                alt="Ayu-Setu Emblem"
+                width={44}
+                height={44}
+                className="w-full h-full object-cover"
+              />
             </div>
             <div>
               <div className="flex items-center gap-2 flex-wrap">
@@ -186,7 +193,7 @@ export default function CompetencyPassportPage() {
                 <span className="text-[10px] font-mono text-muted-foreground">NCISM SEC. 18 COMPLIANT</span>
               </div>
               <h2 className="text-lg sm:text-xl font-extrabold tracking-tight text-foreground font-serif">
-                VAIDYA SETU COMPETENCY PASSPORT
+                AYU-SETU COMPETENCY PASSPORT
               </h2>
             </div>
           </div>
@@ -299,9 +306,20 @@ export default function CompetencyPassportPage() {
           className="p-6 sm:p-8 rounded-3xl border-2 border-secondary/40 bg-gradient-to-b from-card via-card to-secondary/5 shadow-lg relative overflow-hidden"
         >
           {/* Header Title inside Passport Box */}
-          <div className="text-center pb-6 border-b border-border/80 space-y-1">
+          <div className="text-center pb-6 border-b border-border/80 space-y-2">
+            <div className="flex justify-center mb-1">
+              <div className="relative w-16 h-16 rounded-full overflow-hidden ring-2 ring-amber-400/60 shadow-xl bg-[#efe1c8] flex items-center justify-center">
+                <Image
+                  src="/images/ayu-setu-emblem.png"
+                  alt="Ayu-Setu Emblem"
+                  width={64}
+                  height={64}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
             <p className="text-xs sm:text-sm font-mono tracking-widest text-muted-foreground font-bold uppercase">
-              VAIDYA SETU
+              AYU-SETU
             </p>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight font-serif">
               COMPETENCY PASSPORT
@@ -1072,13 +1090,19 @@ export default function CompetencyPassportPage() {
                   ))}
                 </div>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="p-2 rounded-lg bg-white border border-slate-300 shadow-md">
-                    <Award className="h-6 w-6 text-primary" />
+                  <div className="p-0.5 rounded-full bg-[#efe1c8] border border-amber-400/60 shadow-lg flex items-center justify-center overflow-hidden">
+                    <Image
+                      src="/images/ayu-setu-emblem.png"
+                      alt="Ayu-Setu"
+                      width={28}
+                      height={28}
+                      className="h-7 w-7 rounded-full object-cover"
+                    />
                   </div>
                 </div>
               </div>
               <p className="text-[11px] font-mono font-bold text-slate-700">
-                VAIDYA SETU • {passport.ncismRegistrationNumber}
+                AYU-SETU • {passport.ncismRegistrationNumber}
               </p>
             </div>
 

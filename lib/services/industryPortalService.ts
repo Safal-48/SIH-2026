@@ -11,6 +11,7 @@
  */
 
 import { InternshipLifecycleService } from "./internshipLifecycleService";
+import { NotificationService } from "./notificationService";
 
 export type IndustryOpportunityType = "INTERNSHIP" | "JOB" | "RESEARCH_PROJECT" | "TRAINING";
 
@@ -117,6 +118,58 @@ export interface IndustryAnalyticsSummary {
     percentage: number;
   }[];
 }
+
+export interface IndustryStructuredFeedback {
+  id: string;
+  applicationId: string;
+  candidateId: string;
+  candidateName: string;
+  organization: string;
+  reviewerName: string;
+  submittedAt: string;
+  categories: {
+    technicalCompetency: number; // 1-5
+    communication: number; // 1-5
+    professionalism: number; // 1-5
+    problemSolving: number; // 1-5
+    teamwork: number; // 1-5
+    domainCompetency: number; // 1-5
+  };
+  overallImpression: "OUTSTANDING" | "READY" | "NEEDS_DEVELOPMENT";
+  strengths: string[];
+  improvementAreas: string[];
+  recommendationNote: string;
+}
+
+export const DEFAULT_FEEDBACKS: IndustryStructuredFeedback[] = [
+  {
+    id: "fb-dabur-01",
+    applicationId: "ind-app-01",
+    candidateId: "can-01",
+    candidateName: "Dr. Aarav Sharma",
+    organization: "Dabur Research Foundation",
+    reviewerName: "Dr. Rajesh Varma, Lead Preceptor",
+    submittedAt: "2026-09-10",
+    categories: {
+      technicalCompetency: 5,
+      communication: 4,
+      professionalism: 5,
+      problemSolving: 4,
+      teamwork: 5,
+      domainCompetency: 5,
+    },
+    overallImpression: "READY",
+    strengths: [
+      "Exceptional mastery of HPTLC marker profiling for Guduchi satva",
+      "Diligent clinical logbook record maintenance adhering to AYUSH GCP",
+    ],
+    improvementAreas: [
+      "Recommend deepening statistical analysis in bio-equivalence reporting",
+    ],
+    recommendationNote:
+      "Dr. Aarav demonstrated exemplary rigor during his industrial sabbatical module. Ready for independent research residency.",
+  },
+];
 
 // ==========================================
 // DEFAULT MOCK REPOSITORY
@@ -507,6 +560,7 @@ const STORAGE_KEYS = {
   CANDIDATES: "vaidya_setu_industry_candidates",
   MENTORSHIPS: "vaidya_setu_industry_mentorships",
   APPLICATIONS: "vaidya_setu_industry_applications",
+  FEEDBACKS: "vaidya_setu_industry_feedbacks",
 };
 
 export class IndustryPortalService {
@@ -754,5 +808,57 @@ export class IndustryPortalService {
         { domain: "Herbal Formulations & Pharma", count: candidates.filter((c) => c.primaryDomain === "Herbal Pharma").length, percentage: 20 },
       ],
     };
+  }
+
+  // ----------------------------------------
+  // STRUCTURED FEEDBACK
+  // ----------------------------------------
+  getFeedbacks(): IndustryStructuredFeedback[] {
+    if (typeof window === "undefined") return DEFAULT_FEEDBACKS;
+    try {
+      const raw = localStorage.getItem(STORAGE_KEYS.FEEDBACKS);
+      if (!raw) {
+        localStorage.setItem(STORAGE_KEYS.FEEDBACKS, JSON.stringify(DEFAULT_FEEDBACKS));
+        return DEFAULT_FEEDBACKS;
+      }
+      return JSON.parse(raw);
+    } catch {
+      return DEFAULT_FEEDBACKS;
+    }
+  }
+
+  submitFeedback(
+    feedbackData: Omit<IndustryStructuredFeedback, "id" | "submittedAt">
+  ): IndustryStructuredFeedback {
+    const feedbacks = this.getFeedbacks();
+    const newFeedback: IndustryStructuredFeedback = {
+      ...feedbackData,
+      id: `fb-${Date.now().toString(36)}`,
+      submittedAt: new Date().toISOString().split("T")[0],
+    };
+    const updated = [newFeedback, ...feedbacks];
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem(STORAGE_KEYS.FEEDBACKS, JSON.stringify(updated));
+      } catch (err) {
+        console.error("Failed to save feedback", err);
+      }
+    }
+
+    // Closed-Loop: Smart notification dispatched to student
+    try {
+      NotificationService.addNotification({
+        title: "Industry Preceptor Evaluation Received",
+        message: `${feedbackData.organization} submitted structured evaluation for ${feedbackData.candidateName}. Overall Impression: ${feedbackData.overallImpression}. Competency profile calibrated.`,
+        category: "APPLICATION",
+        priority: "HIGH",
+        actionUrl: "/portfolio",
+        actionLabel: "View Portfolio Impact",
+      });
+    } catch (err) {
+      console.error("Failed to push feedback notification:", err);
+    }
+
+    return newFeedback;
   }
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import {
   ShieldCheck,
   Award,
@@ -25,7 +26,7 @@ export function PassportShowcaseSection() {
   ];
 
   return (
-    <section id="passport" className="py-24 border-b border-border/60 bg-background relative overflow-hidden">
+    <section id="passport" className="py-24 border-b border-border/40 bg-transparent relative overflow-hidden">
       {/* Background decorative glows */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -51,9 +52,15 @@ export function PassportShowcaseSection() {
                 <div className="rounded-[22px] bg-gradient-to-b from-card via-card to-background p-6 sm:p-10 border border-border space-y-8 relative overflow-hidden">
                 {/* Passport Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border/80">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-herbal-800 text-white font-serif text-2xl font-bold flex items-center justify-center shadow-md">
-                      वै
+                  <div className="flex items-center gap-3.5">
+                    <div className="relative w-12 h-12 rounded-2xl overflow-hidden ring-2 ring-amber-400/60 bg-[#efe1c8] flex items-center justify-center shadow-md shrink-0">
+                      <Image
+                        src="/images/ayu-setu-emblem.png"
+                        alt="Ayu-Setu Seal"
+                        width={48}
+                        height={48}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">

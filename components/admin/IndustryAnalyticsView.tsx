@@ -126,7 +126,7 @@ export function IndustryAnalyticsView({ analytics, showToast }: IndustryAnalytic
                   <Building2 className="h-4 w-4 text-secondary" /> Top Ayush Recruiter Roster
                 </h4>
                 <p className="text-xs text-muted-foreground">
-                  Leading enterprises actively hiring via Vaidya Setu Competency Passports
+                  Leading enterprises actively hiring via Ayu-Setu Competency Passports
                 </p>
               </div>
             </div>

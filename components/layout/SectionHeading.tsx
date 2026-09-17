@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils/cn";
 
 export interface SectionHeadingProps {
   badge?: string;
-  title: string;
+  title: React.ReactNode;
   subtitle?: string;
   align?: "center" | "left";
   className?: string;

@@ -102,7 +102,7 @@ export function QuestionCard({
 
         {/* Title */}
         <div className="mt-5 mb-4">
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight leading-snug">
+          <h2 className="text-xl sm:text-2xl font-heading font-extrabold text-white tracking-tight leading-snug">
             {question.title}
           </h2>
         </div>
@@ -153,7 +153,7 @@ export function QuestionCard({
 
         {/* Narrative / Scenario text */}
         {question.caseScenario && (
-          <div className="my-5 p-4 rounded-xl bg-gradient-to-r from-emerald-950/20 via-black/30 to-amber-950/10 border-l-4 border-emerald-500 border-y border-r border-white/5 text-sm sm:text-base text-white/80 leading-relaxed italic font-serif">
+          <div className="my-5 p-4 rounded-xl bg-gradient-to-r from-emerald-950/20 via-black/30 to-amber-950/10 border-l-4 border-emerald-500 border-y border-r border-white/5 text-sm sm:text-base text-white/85 leading-relaxed font-sans">
             &ldquo;{question.caseScenario}&rdquo;
           </div>
         )}

@@ -4,19 +4,20 @@ import * as React from "react";
 import { useRouter } from "next/navigation";
 import { MarketingNavbar } from "@/components/marketing/MarketingNavbar";
 import { HeroSection } from "@/components/marketing/HeroSection";
+import { ScrollTextRevealThought } from "@/components/marketing/ScrollTextRevealThought";
 import { EcosystemSection } from "@/components/marketing/EcosystemSection";
-import { HowItWorksSection } from "@/components/marketing/HowItWorksSection";
-import { PinnedJourneyStorytelling } from "@/components/marketing/PinnedJourneyStorytelling";
-import { StudentJourneySection } from "@/components/marketing/StudentJourneySection";
-import { CareerPathsSection } from "@/components/marketing/CareerPathsSection";
-import { SkillGapPreviewSection } from "@/components/marketing/SkillGapPreviewSection";
-import { PassportShowcaseSection } from "@/components/marketing/PassportShowcaseSection";
-import { OpportunitiesPreviewSection } from "@/components/marketing/OpportunitiesPreviewSection";
 import { NetworkSection } from "@/components/marketing/NetworkSection";
-import { AutomationSection } from "@/components/marketing/AutomationSection";
+import { PassportShowcaseSection } from "@/components/marketing/PassportShowcaseSection";
+import { LivePassportVerifierSection } from "@/components/marketing/LivePassportVerifierSection";
+import { IndustryPlacementRadar } from "@/components/marketing/IndustryPlacementRadar";
+import { StudentJourneySection } from "@/components/marketing/StudentJourneySection";
+import { TestimonialsWallSection } from "@/components/marketing/TestimonialsWallSection";
+import { FaqSection } from "@/components/marketing/FaqSection";
 import { FinalCtaSection } from "@/components/marketing/FinalCtaSection";
 import { MarketingFooter } from "@/components/marketing/MarketingFooter";
 import { RoleSelectionModal } from "@/components/marketing/RoleSelectionModal";
+import { QuickActionDock } from "@/components/marketing/QuickActionDock";
+import { InteractiveCursorGlow } from "@/components/animations/InteractiveCursorGlow";
 
 export default function LandingPage() {
   const router = useRouter();
@@ -28,66 +29,69 @@ export default function LandingPage() {
     setRoleModalOpen(true);
   };
 
-  const handleScrollToSection = (sectionId: string) => {
-    const el = document.getElementById(sectionId);
+  const handleScrollToOpportunities = () => {
+    const el = document.getElementById("opportunities");
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      router.push("/opportunities");
     }
   };
 
   return (
-    <div className="relative min-h-screen bg-background text-foreground flex flex-col">
+    <div className="relative min-h-screen bg-transparent text-foreground flex flex-col w-full max-w-full overflow-x-hidden">
+      {/* Dynamic Desktop Cursor Follower Aura */}
+      <InteractiveCursorGlow />
+
       {/* 1. Sticky Navigation Header */}
       <MarketingNavbar onOpenRoleModal={handleOpenRoleModal} />
 
-      {/* Main Content Sections */}
-      <main className="flex-1">
-        {/* 2. Full-Screen 3D Hero Section */}
+      {/* Main Content Sections — Rich, Authoritative, Enterprise & Long-Scroll */}
+      <main className="flex-1 w-full max-w-full overflow-x-hidden">
+        {/* 2. Official Ayu-Setu Hero Section */}
         <HeroSection
           onStartJourney={() => router.push("/role-selection")}
-          onExploreOpportunities={() => handleScrollToSection("opportunities")}
+          onExploreOpportunities={handleScrollToOpportunities}
         />
 
-        {/* 3. Trust / Ecosystem Introduction */}
+        {/* 3. Thought Transition Section */}
+        <ScrollTextRevealThought />
+
+        {/* 4. Integrated Ayush Ecosystem (Scholars, Faculty Guides, Hospitals & Pharma, Institutions) */}
         <EcosystemSection />
 
-        {/* 4. Cinematic Scroll 'How It Works' */}
-        <HowItWorksSection />
-
-        {/* 5. Pinned Career Journey Storytelling (GSAP ScrollTrigger) */}
-        <PinnedJourneyStorytelling />
-
-        {/* 6. Complete Student Journey Grid */}
-        <StudentJourneySection />
-
-        {/* 6. 7 High-Growth Ayurveda Career Pathways */}
-        <CareerPathsSection />
-
-        {/* 7. Skill Gap Dashboard Mockup */}
-        <SkillGapPreviewSection />
-
-        {/* 8. Digital Competency Passport Showcase */}
-        <PassportShowcaseSection />
-
-        {/* 9. Direct Opportunity Matches */}
-        <OpportunitiesPreviewSection
-          onApply={() => router.push("/role-selection")}
-        />
-
-        {/* 10. Industry + Academia Synergy Network */}
+        {/* 5. National Academia–Industry Exchange & Collaborative Research Synergy */}
         <NetworkSection />
 
-        {/* 11. Smart Automation Flow */}
-        <AutomationSection />
+        {/* 6. The Ayurveda Competency Passport — 3D Holographic Credential Showcase */}
+        <PassportShowcaseSection />
 
-        {/* 12. Final High-Impact CTA */}
+        {/* 7. Public Credential Verification Sandbox (Merkle Cryptographic Hash Verifier) */}
+        <LivePassportVerifierSection />
+
+        {/* 8. National Ayush Placement & Fellowship Radar (Opportunities & Fellowships) */}
+        <IndustryPlacementRadar />
+
+        {/* 9. Complete 9-Stage Ayurveda Scholar Transformation Lifecycle */}
+        <StudentJourneySection />
+
+        {/* 10. Voices of Trust — Testimonials from Scholars, Hospital Directors & Pharma Leaders */}
+        <TestimonialsWallSection />
+
+        {/* 11. Comprehensive Ayush & NCISM Regulatory FAQ Accordion */}
+        <FaqSection />
+
+        {/* 12. Official Ministry of Ayush Call to Action */}
         <FinalCtaSection
           onStartJourney={() => router.push("/role-selection")}
-          onExploreOpportunities={() => handleScrollToSection("opportunities")}
+          onExploreOpportunities={handleScrollToOpportunities}
         />
       </main>
 
-      {/* 13. Marketing Footer */}
+      {/* Floating Interactive Quick Action Dock */}
+      <QuickActionDock />
+
+      {/* Official Government Footer */}
       <MarketingFooter />
 
       {/* Stakeholder Portal Launcher Modal */}
@@ -99,3 +103,4 @@ export default function LandingPage() {
     </div>
   );
 }
+

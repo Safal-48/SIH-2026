@@ -13,10 +13,7 @@ import {
   CheckCircle2,
   ArrowRight,
   ShieldCheck,
-  UserCheck,
 } from "lucide-react";
-import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils/cn";
 
 if (typeof window !== "undefined") {
@@ -52,8 +49,8 @@ const CHAPTERS: StoryChapter[] = [
     narrative:
       "Dr. Aarav Sharma completes 120 NCISM-benchmarked clinical vignettes, diagnosing metabolic imbalances and interpreting classical Samhita sutras under clinical time limits.",
     deliverable: "Diagnostic Proficiency Score: 84.5%",
-    icon: <ClipboardCheck className="h-6 w-6 text-primary" />,
-    accentColor: "#4FA87D",
+    icon: <ClipboardCheck className="h-6 w-6 text-emerald-300" />,
+    accentColor: "#34D399",
     visualData: {
       title: "Diagnostic Radar Assessment",
       metricLabel: "Benchmark Score",
@@ -71,8 +68,8 @@ const CHAPTERS: StoryChapter[] = [
     narrative:
       "The engine correlates Aarav's clinical assessment with his Dosha Prakriti and personality attributes, identifying a 92% affinity for Panchakarma Clinical Practice and 78% for Phytomedicine R&D.",
     deliverable: "Primary DNA: Panchakarma Clinical Specialist",
-    icon: <Dna className="h-6 w-6 text-secondary" />,
-    accentColor: "#C26D30",
+    icon: <Dna className="h-6 w-6 text-amber-400" />,
+    accentColor: "#F59E0B",
     visualData: {
       title: "Career DNA Vector Spectrum",
       metricLabel: "Top Specialty Fit",
@@ -88,10 +85,10 @@ const CHAPTERS: StoryChapter[] = [
     sanskrit: "कौशल अंतर एवं अध्ययन",
     headline: "Bridging the Skill Gap via Micro-Modules",
     narrative:
-      "Vaidya Setu detects a -18% deficit in Research Documentation. The Learning Engine immediately assigns NCISM-accredited GCP-Ayush modules and an institutional research workshop.",
+      "Ayu-Setu detects a -18% deficit in Research Documentation. The Learning Engine immediately assigns NCISM-accredited GCP-Ayush modules and an institutional research workshop.",
     deliverable: "GCP-Ayush Micro-Credential Attained",
-    icon: <BookOpen className="h-6 w-6 text-accent" />,
-    accentColor: "#E5A93B",
+    icon: <BookOpen className="h-6 w-6 text-emerald-300" />,
+    accentColor: "#10B981",
     visualData: {
       title: "Automated Competency Remediation",
       metricLabel: "Deficit Bridged",
@@ -109,8 +106,8 @@ const CHAPTERS: StoryChapter[] = [
     narrative:
       "Every attested inpatient round, pulse palpation log, and procedural milestone is sealed cryptographically by Dr. Sharma's supervising faculty and NCISM institutional nodes.",
     deliverable: "Ayush Grid Tamper-Evident Passport ID #AY-2026-8812",
-    icon: <Award className="h-6 w-6 text-primary" />,
-    accentColor: "#216849",
+    icon: <Award className="h-6 w-6 text-emerald-300" />,
+    accentColor: "#059669",
     visualData: {
       title: "Verified Competency Passport",
       metricLabel: "Attested Hours",
@@ -128,8 +125,8 @@ const CHAPTERS: StoryChapter[] = [
     narrative:
       "The Opportunity Engine matches Aarav's verified passport directly with All India Institute of Ayurveda (AIIA). Recruiter pre-screening is bypassed with a 94.8% fit score.",
     deliverable: "Clinical Fellow Appointment at AIIA New Delhi",
-    icon: <TrendingUp className="h-6 w-6 text-accent" />,
-    accentColor: "#E5A93B",
+    icon: <TrendingUp className="h-6 w-6 text-amber-400" />,
+    accentColor: "#F59E0B",
     visualData: {
       title: "Automated Residency Match",
       metricLabel: "Recruiter Match",
@@ -153,7 +150,7 @@ export function PinnedJourneyStorytelling() {
     let ctx: gsap.Context | null = null;
     try {
       ctx = gsap.context(() => {
-        // Pin the visual card only on desktop where pinTargetRef is visible
+        // Pin the visual card on desktop
         if (pinTargetRef.current && window.innerWidth >= 1024) {
           ScrollTrigger.create({
             trigger: containerRef.current,
@@ -179,7 +176,7 @@ export function PinnedJourneyStorytelling() {
         }
       }, containerRef);
     } catch (err) {
-      console.warn("PinnedJourneyStorytelling animation safe fallback:", err);
+      console.warn("PinnedJourneyStorytelling GSAP fallback:", err);
     }
 
     return () => {
@@ -193,73 +190,86 @@ export function PinnedJourneyStorytelling() {
     <section
       id="career-story"
       ref={containerRef}
-      className="py-24 border-b border-border/60 bg-muted/10 relative overflow-hidden"
+      className="py-24 border-b border-border/40 bg-transparent relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Editorial Heading */}
+        {/* 1. Dignified Editorial Section Heading */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-primary/10 border border-primary/25 text-primary text-xs font-semibold uppercase tracking-wider mb-3">
-            <Sparkles className="h-3.5 w-3.5 text-accent" />
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-emerald-950/50 border border-emerald-500/30 text-emerald-300 text-xs font-bold uppercase tracking-[0.18em] mb-4 backdrop-blur-md">
+            <Sparkles className="h-3.5 w-3.5 text-amber-400" />
             <span>Pinned Scroll Storytelling</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-white tracking-tight leading-[1.15]">
             How a Scholar Becomes a Verified Clinician
           </h2>
-          <p className="mt-4 text-base text-muted-foreground leading-relaxed">
-            Follow the journey of a student navigating Vaidya Setu&apos;s autonomous lifecycle — from first diagnostic assessment to institutional signing and clinical appointment.
+          <p className="mt-4 text-base sm:text-lg text-gray-300/85 leading-relaxed font-normal">
+            Follow the journey of a student navigating{" "}
+            <span className="font-serif font-bold text-white">Ayu-</span>
+            <span className="font-serif font-bold text-amber-400">Setu</span>&apos;s autonomous lifecycle — from first diagnostic assessment to institutional signing and clinical appointment.
           </p>
         </div>
 
-        {/* Story Grid: Left Narrative Stream, Right Pinned Interactive Visualizer */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative min-h-[160vh]">
+        {/* 2. Story Grid: Left Narrative Stream, Right Pinned Interactive Visualizer */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start relative min-h-[160vh]">
           {/* Left Column: Narrative Milestones (7 Cols) */}
-          <div className="lg:col-span-7 space-y-28 py-6">
+          <div className="lg:col-span-7 space-y-16 sm:space-y-24 py-4">
             {CHAPTERS.map((chap, idx) => {
               const isCurrent = activeChapterIndex === idx;
               return (
                 <div
                   key={chap.id}
                   className={cn(
-                    "story-chapter-marker p-6 sm:p-8 rounded-3xl border transition-all duration-300",
+                    "story-chapter-marker p-7 sm:p-9 rounded-3xl bg-[#041d13]/90 backdrop-blur-xl border transition-all duration-300 shadow-2xl text-left",
                     isCurrent
-                      ? "bg-card border-primary/40 shadow-xl ring-1 ring-primary/20 scale-[1.01]"
-                      : "bg-card/50 border-border/60 opacity-60"
+                      ? "border-emerald-500/55 shadow-[0_12px_40px_rgba(4,30,20,0.85)] ring-1 ring-emerald-500/30 scale-[1.01]"
+                      : "border-emerald-500/20 opacity-70 hover:opacity-100 hover:border-emerald-500/35"
                   )}
                 >
-                  <div className="flex items-center justify-between gap-2 mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-2xl bg-muted border border-border flex items-center justify-center font-bold text-xs text-primary shadow-sm">
+                  {/* Card Header Row */}
+                  <div className="flex items-center justify-between gap-3 mb-5">
+                    <div className="flex items-center gap-3.5">
+                      <div className="w-10 h-10 rounded-2xl bg-emerald-950/80 border border-emerald-500/40 flex items-center justify-center font-black text-xs text-emerald-300 shadow-inner">
                         {chap.stageNum}
                       </div>
                       <div>
-                        <span className="text-xs font-bold uppercase tracking-wider text-accent block">
+                        <span className="text-xs font-bold uppercase tracking-[0.16em] text-amber-400 block">
                           {chap.tag}
                         </span>
-                        <span className="text-[11px] text-primary/80 font-serif">
+                        <span className="text-xs text-emerald-300/80 font-serif italic block mt-0.5">
                           {chap.sanskrit}
                         </span>
                       </div>
                     </div>
-                    <Badge variant={isCurrent ? "gold" : "outline"} size="sm">
+                    <div
+                      className={cn(
+                        "px-3.5 py-1 rounded-full text-xs font-semibold transition-colors",
+                        isCurrent
+                          ? "border border-amber-500/40 bg-amber-950/50 text-amber-300"
+                          : "border border-emerald-500/30 bg-emerald-950/60 text-emerald-200"
+                      )}
+                    >
                       Phase {chap.id} of 5
-                    </Badge>
+                    </div>
                   </div>
 
-                  <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-3">
+                  {/* Headline in Serif */}
+                  <h3 className="text-xl sm:text-2xl font-serif font-bold text-white mb-3 tracking-tight">
                     {chap.headline}
                   </h3>
 
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                  {/* Narrative Body */}
+                  <p className="text-sm sm:text-base text-gray-300/85 leading-relaxed mb-6 font-normal">
                     {chap.narrative}
                   </p>
 
-                  <div className="pt-4 border-t border-border/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-                    <span className="text-muted-foreground flex items-center gap-1.5">
-                      <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                      <strong className="text-foreground">Artifact:</strong> {chap.deliverable}
+                  {/* Artifact Deliverable Footer */}
+                  <div className="pt-4 border-t border-emerald-500/15 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                    <span className="inline-flex items-center gap-2 text-emerald-200">
+                      <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+                      <strong className="text-white font-bold">Artifact:</strong> {chap.deliverable}
                     </span>
                     {isCurrent && (
-                      <span className="text-primary font-bold flex items-center gap-1">
+                      <span className="text-amber-400 font-bold flex items-center gap-1.5 text-xs tracking-wide shrink-0">
                         Active Stage <ArrowRight className="h-3.5 w-3.5 animate-pulse" />
                       </span>
                     )}
@@ -274,34 +284,35 @@ export function PinnedJourneyStorytelling() {
             ref={pinTargetRef}
             className="lg:col-span-5 hidden lg:block sticky top-28 space-y-4"
           >
-            <div className="p-7 rounded-3xl bg-gradient-to-br from-card via-background to-muted/30 border-2 border-border shadow-2xl relative overflow-hidden transition-all duration-300">
+            <div className="p-7 sm:p-8 rounded-3xl bg-[#041d13]/95 backdrop-blur-2xl border border-emerald-500/30 shadow-2xl relative overflow-hidden transition-all duration-300 text-left">
               {/* Subtle background ambient glow */}
               <div
-                className="absolute -top-16 -right-16 w-48 h-48 rounded-full blur-3xl opacity-20 pointer-events-none"
+                className="absolute -top-16 -right-16 w-52 h-52 rounded-full blur-3xl opacity-20 pointer-events-none"
                 style={{ backgroundColor: activeChapter.accentColor }}
               />
 
-              <div className="flex items-center justify-between mb-5">
-                <div className="flex items-center gap-2">
-                  <div className="p-2.5 rounded-2xl bg-card border border-border shadow-sm">
+              {/* Header: Telemetry Node & Metric Badge */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3.5">
+                  <div className="w-12 h-12 rounded-2xl border border-emerald-500/40 bg-emerald-950/80 flex items-center justify-center text-emerald-300 shadow-inner shrink-0">
                     {activeChapter.icon}
                   </div>
                   <div>
-                    <span className="text-[10px] uppercase font-mono tracking-wider text-muted-foreground block font-bold">
+                    <span className="text-[10px] uppercase font-mono tracking-[0.2em] text-amber-400 font-bold block mb-0.5">
                       Telemetry Node
                     </span>
-                    <h4 className="text-sm font-bold text-foreground">
+                    <h4 className="text-base sm:text-lg font-serif font-bold text-white tracking-tight">
                       {activeChapter.visualData.title}
                     </h4>
                   </div>
                 </div>
 
-                <div className="text-right">
-                  <span className="text-xs font-mono font-bold text-muted-foreground block">
+                <div className="rounded-xl bg-[#02140d]/90 border border-emerald-500/30 p-2.5 px-3.5 text-right shrink-0 shadow-sm">
+                  <span className="text-[10px] font-mono font-bold text-emerald-400/80 uppercase tracking-wider block">
                     {activeChapter.visualData.metricLabel}
                   </span>
                   <span
-                    className="text-2xl font-black tracking-tight"
+                    className="text-xl sm:text-2xl font-black tracking-tight"
                     style={{ color: activeChapter.accentColor }}
                   >
                     {activeChapter.visualData.metricValue}
@@ -310,14 +321,14 @@ export function PinnedJourneyStorytelling() {
               </div>
 
               {/* Progress Bar Timeline */}
-              <div className="space-y-1.5 mb-6">
-                <div className="flex justify-between text-[11px] text-muted-foreground font-medium">
+              <div className="space-y-2 mb-6">
+                <div className="flex justify-between text-xs text-gray-300/80 font-medium">
                   <span>Transformation Progress</span>
-                  <span>{activeChapterIndex * 25}% Completed</span>
+                  <span className="font-mono text-emerald-300 font-bold">{activeChapterIndex * 25}% Completed</span>
                 </div>
-                <div className="w-full h-2 rounded-full bg-muted overflow-hidden">
+                <div className="w-full h-2.5 rounded-full bg-emerald-950/80 border border-emerald-500/20 overflow-hidden">
                   <div
-                    className="h-full rounded-full transition-all duration-500 ease-out"
+                    className="h-full rounded-full transition-all duration-500 ease-out shadow-[0_0_10px_rgba(16,185,129,0.5)]"
                     style={{
                       width: `${(activeChapterIndex + 1) * 20}%`,
                       backgroundColor: activeChapter.accentColor,
@@ -327,26 +338,29 @@ export function PinnedJourneyStorytelling() {
               </div>
 
               {/* Dynamic Candidate State Card */}
-              <div className="p-4 rounded-2xl bg-muted/40 border border-border/70 space-y-3 mb-5">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-muted-foreground font-medium">Candidate Profile</span>
-                  <span className="font-bold text-foreground">Dr. Aarav Sharma (BAMS)</span>
+              <div className="p-4 sm:p-5 rounded-2xl bg-[#02140d]/90 border border-emerald-500/25 space-y-3 mb-5 shadow-inner">
+                <div className="flex items-center justify-between text-xs sm:text-[13px]">
+                  <span className="text-gray-400 font-medium">Candidate Profile</span>
+                  <span className="font-bold text-white">Dr. Aarav Sharma (BAMS)</span>
                 </div>
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-muted-foreground font-medium">Institute Node</span>
-                  <span className="font-semibold text-primary">All India Institute of Ayurveda</span>
+                <div className="flex items-center justify-between text-xs sm:text-[13px]">
+                  <span className="text-gray-400 font-medium">Institute Node</span>
+                  <span className="font-semibold text-emerald-300 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                    All India Institute of Ayurveda
+                  </span>
                 </div>
-                <div className="pt-2 border-t border-border/50 text-[11px] text-muted-foreground leading-relaxed">
+                <div className="pt-2.5 border-t border-emerald-500/15 text-xs text-gray-300/80 leading-relaxed font-mono">
                   {activeChapter.visualData.subtext}
                 </div>
               </div>
 
-              {/* Live Tags */}
-              <div className="flex flex-wrap gap-1.5 pt-2">
+              {/* Live Badges */}
+              <div className="flex flex-wrap gap-2 pt-1">
                 {activeChapter.visualData.badges.map((b, i) => (
                   <span
                     key={i}
-                    className="text-[11px] px-2.5 py-1 rounded-lg bg-card border border-border text-foreground/90 font-medium shadow-sm"
+                    className="text-xs px-3.5 py-1.5 rounded-full bg-[#06291a] border border-emerald-500/30 text-emerald-200 font-medium shadow-xs"
                   >
                     {b}
                   </span>
@@ -354,12 +368,15 @@ export function PinnedJourneyStorytelling() {
               </div>
 
               {/* Bottom Cryptographic Stamp */}
-              <div className="mt-6 pt-4 border-t border-border/60 flex items-center justify-between text-[11px] text-muted-foreground">
-                <span className="inline-flex items-center gap-1 text-primary">
-                  <ShieldCheck className="h-3.5 w-3.5" />
+              <div className="mt-6 pt-4 border-t border-emerald-500/15 flex items-center justify-between text-xs text-gray-400">
+                <span className="inline-flex items-center gap-1.5 text-emerald-300 font-medium">
+                  <ShieldCheck className="h-4 w-4 text-emerald-400" />
                   NCISM Standard Attested
                 </span>
-                <span className="font-mono text-[10px]">SYNC: LIVE</span>
+                <span className="font-mono text-[11px] text-amber-400 font-bold flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                  SYNC: LIVE
+                </span>
               </div>
             </div>
           </div>

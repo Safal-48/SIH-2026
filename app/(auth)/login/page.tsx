@@ -131,7 +131,7 @@ function LoginFormContent() {
           <ArrowLeft className="h-4 w-4" /> Portal Home
         </Link>
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <span>New to Vaidya Setu?</span>
+          <span>New to Ayu-Setu?</span>
           <Link href="/role-selection" className="font-bold text-accent hover:underline">
             Register
           </Link>
@@ -143,11 +143,13 @@ function LoginFormContent() {
         <div className="rounded-3xl border border-border bg-card p-7 sm:p-9 shadow-2xl space-y-6">
           {/* Logo & Headline */}
           <div className="text-center space-y-2">
-            <div className="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-br from-primary to-herbal-800 text-white font-serif text-2xl font-bold flex items-center justify-center shadow-md">
-              वै
-            </div>
+            <img
+              src="/images/ayu-setu-emblem.png"
+              alt="Ayu-Setu Emblem"
+              className="w-14 h-14 mx-auto rounded-full object-cover bg-[#efe1c8] ring-2 ring-amber-500/50 shadow-lg shrink-0"
+            />
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground font-sans">
-              Sign In to Vaidya Setu
+              Sign In to Ayu-Setu
             </h1>
             <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
               Access your verified skill logs, assessments, and collaboration portal.
