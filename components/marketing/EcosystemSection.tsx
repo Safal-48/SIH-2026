@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   GraduationCap,
@@ -25,76 +24,7 @@ interface EcosystemCardData {
   icon: React.ReactNode;
 }
 
-// Official National Emblem of India + Ministry of AYUSH Typography
-function MinistryAyushLogo() {
-  return (
-    <div className="flex items-center gap-3.5">
-      {/* Official Ayu-Setu Emblem */}
-      <div className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-amber-400/60 bg-[#efe1c8] shrink-0 shadow-lg">
-        <Image
-          src="/images/ayu-setu-emblem.png"
-          alt="Ayu-Setu Emblem"
-          width={48}
-          height={48}
-          className="w-full h-full object-cover"
-        />
-      </div>
 
-      {/* State Emblem of India (Ashoka Lion Capital) Vector */}
-      <svg
-        viewBox="0 0 100 120"
-        className="h-12 w-auto fill-current text-white/95 shrink-0 drop-shadow-md"
-        aria-label="State Emblem of India"
-      >
-        <g fill="currentColor">
-          {/* Central Lion Head */}
-          <path d="M43 22c0-5 3-10 7-10s7 5 7 10c0 3-1 6-3 8h-8c-2-2-3-5-3-8z" />
-          <path d="M38 30c-1-5 2-9 6-11 1 3 3 5 6 5s5-2 6-5c4 2 7 6 6 11-1 4-4 7-9 7s-8-3-9-7z" />
-          {/* Left Lion Profile */}
-          <path d="M28 26c-3 1-6 4-6 8 0 5 4 8 8 8 2 0 4-1 5-2-2-4-2-9-1-12-2-1-4-2-6-2z" />
-          <path d="M22 34c-2 2-3 5-2 8 2 3 5 4 8 3 0-3 1-6 3-8-4 0-7-1-9-3z" />
-          {/* Right Lion Profile */}
-          <path d="M72 26c3 1 6 4 6 8 0 5-4 8-8 8-2 0-4-1-5-2 2-4 2-9 1-12 2-1 4-2 6-2z" />
-          <path d="M78 34c2 2 3 5 2 8-2 3-5 4-8 3 0-3-1-6-3-8 4 0 7-1 9-3z" />
-          {/* Torso & Mane */}
-          <path d="M35 38c-3 4-5 9-4 15 2 7 7 12 14 13h10c7-1 12-6 14-13 1-6-1-11-4-15h-30z" />
-          <path d="M40 54c-1 5 1 10 5 13h10c4-3 6-8 5-13H40z" />
-          {/* Abacus / Pedestal */}
-          <path d="M25 70h50v5H25z" />
-          {/* Ashoka Chakra */}
-          <circle cx="50" cy="79" r="6" fill="none" stroke="currentColor" strokeWidth="1.5" />
-          <circle cx="50" cy="79" r="1.5" fill="currentColor" />
-          {/* Base Platform */}
-          <path d="M20 87h60v4H20z" />
-          {/* Bell Base */}
-          <path d="M28 93c4 5 12 8 22 8s18-3 22-8H28z" />
-          {/* Satyameva Jayate Banner */}
-          <text
-            x="50"
-            y="114"
-            textAnchor="middle"
-            fontSize="10"
-            fontWeight="bold"
-            fontFamily="sans-serif"
-            letterSpacing="0.5"
-            fill="currentColor"
-          >
-            सत्यमेव जयते
-          </text>
-        </g>
-      </svg>
-
-      <div className="text-left border-l border-emerald-500/40 pl-3">
-        <div className="text-sm font-serif font-bold text-white tracking-tight leading-tight">
-          Ministry of AYUSH
-        </div>
-        <div className="text-[11px] text-emerald-200/80 font-medium tracking-wide">
-          Government of India
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export function EcosystemSection() {
   const ecosystemRoles: EcosystemCardData[] = [
@@ -163,46 +93,38 @@ export function EcosystemSection() {
   return (
     <section id="ecosystem" className="py-24 border-b border-border/40 bg-transparent relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Top Header Grid: Center Titles + Right Official Emblem Logo */}
-        <div className="relative flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-12">
-          {/* Center Main Headings */}
-          <div className="flex-1 text-center lg:text-center space-y-2">
-            {/* Top Pill / Subtitle Line */}
-            <div className="flex items-center justify-center gap-3 mb-3">
-              <div className="h-px w-10 sm:w-16 bg-gradient-to-r from-transparent to-emerald-400/60" />
-              <span className="text-xs sm:text-[13px] font-bold tracking-[0.2em] text-emerald-300 uppercase flex items-center gap-2">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                A UNIFIED DIGITAL ECOSYSTEM
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              </span>
-              <div className="h-px w-10 sm:w-16 bg-gradient-to-l from-transparent to-emerald-400/60" />
-            </div>
-
-            {/* Serif Editorial Headline */}
-            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-bold text-white tracking-tight leading-[1.15]">
-              Explore Our Integrated{" "}
-              <span className="text-emerald-400 font-serif font-bold">AYUSH</span>{" "}
-              Ecosystem
-            </h2>
-
-            {/* Subtitle */}
-            <p className="text-sm sm:text-base text-emerald-100/75 leading-relaxed max-w-2xl mx-auto font-normal">
-              Bridging institutions, experts and opportunities to build a stronger future for Ayurveda.
-            </p>
-
-            {/* Keywords Meta */}
-            <div className="flex items-center justify-center gap-2 pt-1 text-xs sm:text-[13px] text-emerald-300 font-medium">
-              <span>Collaborate</span>
-              <span className="text-emerald-500">•</span>
-              <span>Learn</span>
-              <span className="text-emerald-500">•</span>
-              <span>Grow</span>
-            </div>
+        {/* Top Header: Center Titles */}
+        <div className="text-center space-y-2 mb-12 max-w-4xl mx-auto">
+          {/* Top Pill / Subtitle Line */}
+          <div className="flex items-center justify-center gap-3 mb-3">
+            <div className="h-px w-10 sm:w-16 bg-gradient-to-r from-transparent to-emerald-400/60" />
+            <span className="text-xs sm:text-[13px] font-bold tracking-[0.2em] text-emerald-300 uppercase flex items-center gap-2">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              A UNIFIED DIGITAL ECOSYSTEM
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            </span>
+            <div className="h-px w-10 sm:w-16 bg-gradient-to-l from-transparent to-emerald-400/60" />
           </div>
 
-          {/* Top-Right Government Logo (Absolute on Desktop to preserve exact center alignment) */}
-          <div className="flex justify-center lg:absolute lg:right-0 lg:top-2">
-            <MinistryAyushLogo />
+          {/* Serif Editorial Headline */}
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-bold text-white tracking-tight leading-[1.15]">
+            Explore Our Integrated{" "}
+            <span className="text-emerald-400 font-serif font-bold">AYUSH</span>{" "}
+            Ecosystem
+          </h2>
+
+          {/* Subtitle */}
+          <p className="text-sm sm:text-base text-emerald-100/75 leading-relaxed max-w-2xl mx-auto font-normal">
+            Bridging institutions, experts and opportunities to build a stronger future for Ayurveda.
+          </p>
+
+          {/* Keywords Meta */}
+          <div className="flex items-center justify-center gap-2 pt-1 text-xs sm:text-[13px] text-emerald-300 font-medium">
+            <span>Collaborate</span>
+            <span className="text-emerald-500">•</span>
+            <span>Learn</span>
+            <span className="text-emerald-500">•</span>
+            <span>Grow</span>
           </div>
         </div>
 
