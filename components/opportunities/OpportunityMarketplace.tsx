@@ -650,8 +650,8 @@ export function OpportunityMarketplace() {
                     {/* Top Metas */}
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex items-center gap-3 min-w-0">
-                        <div className="w-12 h-12 rounded-2xl bg-black/60 border border-emerald-500/30 flex items-center justify-center font-serif font-extrabold text-amber-400 text-sm flex-shrink-0 shadow-md">
-                          {opp.organizationLogoText}
+                        <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200/90 dark:border-white/10 flex items-center justify-center shadow-sm flex-shrink-0">
+                          <i className="ri-user-fill text-2xl text-[#1e293b]"></i>
                         </div>
                         <div className="space-y-0.5 min-w-0">
                           <h4 className="text-base font-serif font-bold text-white truncate leading-snug">

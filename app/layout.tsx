@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, Outfit, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import "remixicon/fonts/remixicon.css";
 import dynamic from "next/dynamic";
 import { siteConfig } from "@/config/site";
 import { AuthProvider } from "@/lib/auth/AuthContext";

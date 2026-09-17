@@ -211,8 +211,8 @@ export function IndustryPlacementRadar() {
                 {/* Header: Company Logo & Match Badge */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 border border-border/80 flex items-center justify-center font-bold text-xs text-foreground tracking-tight shadow-sm">
-                      {job.logoText}
+                    <div className="w-11 h-11 rounded-2xl bg-white border border-slate-200/90 dark:border-white/10 flex items-center justify-center shadow-sm shrink-0">
+                      <i className="ri-user-fill text-2xl text-[#1e293b]"></i>
                     </div>
                     <div>
                       <p className="text-xs font-bold text-foreground line-clamp-1">{job.company}</p>
@@ -311,8 +311,8 @@ export function IndustryPlacementRadar() {
             </button>
 
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-accent/20 text-accent font-extrabold flex items-center justify-center text-sm border border-accent/40">
-                {activeJobModal.logoText}
+              <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200/90 dark:border-white/10 flex items-center justify-center shadow-sm shrink-0">
+                <i className="ri-user-fill text-2xl text-[#1e293b]"></i>
               </div>
               <div>
                 <h3 className="text-lg font-bold text-foreground">{activeJobModal.title}</h3>
