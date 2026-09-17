@@ -7,7 +7,6 @@ import { HeroSection } from "@/components/marketing/HeroSection";
 import { ScrollTextRevealThought } from "@/components/marketing/ScrollTextRevealThought";
 import { EcosystemSection } from "@/components/marketing/EcosystemSection";
 import { NetworkSection } from "@/components/marketing/NetworkSection";
-import { PassportShowcaseSection } from "@/components/marketing/PassportShowcaseSection";
 import { LivePassportVerifierSection } from "@/components/marketing/LivePassportVerifierSection";
 import { IndustryPlacementRadar } from "@/components/marketing/IndustryPlacementRadar";
 import { StudentJourneySection } from "@/components/marketing/StudentJourneySection";
@@ -62,9 +61,6 @@ export default function LandingPage() {
 
         {/* 5. National Academia–Industry Exchange & Collaborative Research Synergy */}
         <NetworkSection />
-
-        {/* 6. The Ayurveda Competency Passport — 3D Holographic Credential Showcase */}
-        <PassportShowcaseSection />
 
         {/* 7. Public Credential Verification Sandbox (Merkle Cryptographic Hash Verifier) */}
         <LivePassportVerifierSection />

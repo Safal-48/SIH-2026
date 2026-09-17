@@ -34,7 +34,6 @@ import {
   passportService,
   StudentPassportData,
 } from "@/lib/services/passportService";
-import { PassportShowcaseSection } from "@/components/marketing/PassportShowcaseSection";
 import { LivePassportVerifierSection } from "@/components/marketing/LivePassportVerifierSection";
 
 export function DigitalCompetencyPortfolio() {
@@ -172,9 +171,6 @@ export function DigitalCompetencyPortfolio() {
       {/* SECTION 1: COMPETENCY PASSPORT & 3D SHOWCASE */}
       {activeSection === "passport" && (
         <div className="space-y-8 animate-in fade-in">
-          {/* 3D Holographic Passport Showcase Component */}
-          <PassportShowcaseSection />
-
           {/* Live Public Verifier Sandbox */}
           <LivePassportVerifierSection />
         </div>
