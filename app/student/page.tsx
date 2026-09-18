@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import {
   Sparkles,
@@ -37,7 +37,6 @@ import { cn } from "@/lib/utils/cn";
 
 export default function StudentDecisionDashboard() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { user } = useAuth();
 
   const [selectedGoal, setSelectedGoal] = React.useState<string>("Clinical Practice (Kayachikitsa)");

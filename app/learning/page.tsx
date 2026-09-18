@@ -60,7 +60,7 @@ interface ChatMessage {
   };
 }
 
-export default function LearningHubPage() {
+function LearningHubContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -749,3 +749,12 @@ export default function LearningHubPage() {
     </div>
   );
 }
+
+export default function LearningHubPage() {
+  return (
+    <React.Suspense fallback={<div className="min-h-screen bg-background flex items-center justify-center text-muted-foreground">Loading Learning Hub...</div>}>
+      <LearningHubContent />
+    </React.Suspense>
+  );
+}
+

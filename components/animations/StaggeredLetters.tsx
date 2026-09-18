@@ -37,7 +37,7 @@ export type StaggeredLettersProps = {
   highlightColor?: string;
 };
 
-export function __OriginkitBase_StaggeredLetters({
+export function OriginkitBaseStaggeredLetters({
   text = "Staggered Letters",
   font = {
     fontFamily: "Inter",
@@ -180,7 +180,7 @@ const __originkitPresetProps = {
 
 export default function StaggeredLetters(props: StaggeredLettersProps) {
   return (
-    <__OriginkitBase_StaggeredLetters
+    <OriginkitBaseStaggeredLetters
       {...(__originkitPresetProps as StaggeredLettersProps)}
       {...props}
     />

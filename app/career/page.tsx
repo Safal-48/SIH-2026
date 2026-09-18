@@ -26,7 +26,7 @@ import { ResumeProfileTab } from "@/components/career/ResumeProfileTab";
 import { AiMockInterviewTab } from "@/components/career/AiMockInterviewTab";
 import { PlacementReadinessTab } from "@/components/career/PlacementReadinessTab";
 
-export default function CareerHubPage() {
+function CareerHubContent() {
   const searchParams = useSearchParams();
   const tabParam = searchParams?.get("tab") || "goals";
   const [activeTab, setActiveTab] = React.useState<string>(tabParam);
@@ -114,3 +114,12 @@ export default function CareerHubPage() {
     </div>
   );
 }
+
+export default function CareerHubPage() {
+  return (
+    <React.Suspense fallback={<div className="min-h-screen bg-background flex items-center justify-center text-muted-foreground">Loading Career Hub...</div>}>
+      <CareerHubContent />
+    </React.Suspense>
+  );
+}
+
