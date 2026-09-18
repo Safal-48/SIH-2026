@@ -44,12 +44,14 @@ import {
   updateSkillDnaFromAssessment,
   AssessmentRecord,
   AssessmentIntegrityEvent,
+  QuestionReviewItem,
   SkillDnaItem,
 } from "@/lib/services/skillIntelligenceService";
 import {
   AssessmentIntegrityMonitor,
   HeadDirection,
 } from "@/components/assessment/AssessmentIntegrityMonitor";
+import { AssessmentQuestionReview } from "@/components/assessment/AssessmentQuestionReview";
 import {
   QUESTIONS_BANK,
   QuestionItem,
@@ -245,10 +247,14 @@ function AssessHubContent() {
     const topicScores: Record<string, { total: number; correct: number }> = {};
     const strengths: string[] = [];
     const weakAreas: string[] = [];
+    const questionReviews: QuestionReviewItem[] = [];
 
-    activeQuestions.forEach((q) => {
-      const selected = q.options.find((o) => o.id === userAnswers[q.id]);
+    activeQuestions.forEach((q, idx) => {
+      const selectedOptId = userAnswers[q.id];
+      const selected = q.options.find((o) => o.id === selectedOptId);
       const isCorrect = selected?.isCorrect ?? false;
+      const isUnanswered = !selectedOptId;
+      const correctOpt = q.options.find((o) => o.isCorrect) || q.options[0];
 
       if (!topicScores[q.topic]) {
         topicScores[q.topic] = { total: 0, correct: 0 };
@@ -262,6 +268,30 @@ function AssessHubContent() {
       } else {
         weakAreas.push(`${q.topic} Protocol Deficit`);
       }
+
+      questionReviews.push({
+        questionId: q.id,
+        questionNumber: idx + 1,
+        topic: q.topic,
+        category: q.category,
+        questionType: q.questionType,
+        prompt: q.prompt,
+        vignette: q.vignette,
+        userSelectedOptionId: selected?.id,
+        userSelectedText: selected?.text,
+        userSelectedRationale: selected?.clinicalRationale,
+        isCorrect,
+        isUnanswered,
+        correctOptionId: correctOpt.id,
+        correctOptionText: correctOpt.text,
+        correctOptionRationale: correctOpt.clinicalRationale,
+        allOptions: q.options.map((o) => ({
+          id: o.id,
+          text: o.text,
+          isCorrect: o.isCorrect,
+          clinicalRationale: o.clinicalRationale,
+        })),
+      });
     });
 
     const calculatedPercentage = Math.round((correctCount / totalQ) * 100);
@@ -296,6 +326,7 @@ function AssessHubContent() {
       integrityWarningsCount: warningCount,
       timeUsedSeconds: Math.min(SECTION_TIME_LIMIT_SECONDS, timeElapsedSeconds),
       integrityEvents: integrityEvents,
+      questionReviews,
     };
 
     // Save locally and update Skill DNA
@@ -545,6 +576,21 @@ function AssessHubContent() {
                           </>
                         )}
                       </div>
+
+                      {/* Review Questions Button for this attempt */}
+                      {item.questionReviews && item.questionReviews.length > 0 && (
+                        <div className="pt-2 flex justify-end border-t border-emerald-950/60">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setEvaluationResult(item)}
+                            className="text-xs border-amber-500/40 text-amber-300 hover:bg-amber-500/10 font-medium"
+                            leftIcon={<BookOpen className="h-3.5 w-3.5 text-amber-400" />}
+                          >
+                            Review Questions &amp; Explanations
+                          </Button>
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -738,6 +784,13 @@ function AssessHubContent() {
                   ))}
                 </div>
               </div>
+
+              {/* 🏛️ DETAILED QUESTION DIAGNOSTICS, WRONG ANSWERS & CLINICAL EXPLANATIONS */}
+              {evaluationResult.questionReviews && evaluationResult.questionReviews.length > 0 && (
+                <div className="pt-6 border-t border-white/10">
+                  <AssessmentQuestionReview reviews={evaluationResult.questionReviews} />
+                </div>
+              )}
 
               {/* Action Buttons: Next steps */}
               <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">

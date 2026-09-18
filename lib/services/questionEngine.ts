@@ -13,6 +13,7 @@ import {
   StudentYearOption,
 } from "@/types/entities";
 import { createClient } from "@/lib/supabase/client";
+import { QuestionReviewItem } from "@/lib/services/skillIntelligenceService";
 
 export type QuestionArchetype = "MCQ" | "SCENARIO" | "CASE_VIGNETTE";
 
@@ -105,6 +106,7 @@ export interface AssessmentDiagnosticResult {
     href: string;
     description?: string;
   }[];
+  questionReviews?: QuestionReviewItem[];
 }
 
 export const ASSESSMENT_RESULT_STORAGE_KEY = "vaidya_student_assessment_result";
@@ -906,11 +908,46 @@ export function evaluateAssessmentAttempt(
     clinicalImpact: string;
     recommendedCourse: string;
   }[] = [];
+  const questionReviews: QuestionReviewItem[] = [];
 
-  questions.forEach((q) => {
+  questions.forEach((q, idx) => {
     const selectedOptId = answers[q.id];
     const selectedOption = q.options.find((o) => o.id === selectedOptId);
     const scoreEarned = selectedOption ? selectedOption.scoreContribution : 0;
+    const isCorrect = selectedOption?.isCorrect ?? false;
+    const isUnanswered = !selectedOptId;
+    const correctOpt = q.options.find((o) => o.isCorrect) || q.options[0];
+
+    questionReviews.push({
+      questionId: q.id,
+      questionNumber: idx + 1,
+      topic: q.relatedSkillName || q.title,
+      category: q.domain,
+      questionType: q.archetype,
+      prompt: q.questionPrompt,
+      vignette: q.patientVitals
+        ? {
+            patientProfile: `${q.patientVitals.ageGender}, Prakriti: ${q.patientVitals.prakriti}`,
+            chiefComplaint: q.patientVitals.chiefComplaint,
+            nadiPulse: q.patientVitals.nadiPulse,
+            agniStatus: q.patientVitals.agniDigestiveState,
+          }
+        : undefined,
+      userSelectedOptionId: selectedOption?.id,
+      userSelectedText: selectedOption?.text,
+      userSelectedRationale: selectedOption?.clinicalRationale,
+      isCorrect,
+      isUnanswered,
+      correctOptionId: correctOpt.id,
+      correctOptionText: correctOpt.text,
+      correctOptionRationale: correctOpt.clinicalRationale,
+      allOptions: q.options.map((o) => ({
+        id: o.id,
+        text: o.text,
+        isCorrect: o.isCorrect,
+        clinicalRationale: o.clinicalRationale,
+      })),
+    });
 
     totalScoreEarned += scoreEarned;
 
@@ -1067,6 +1104,7 @@ export function evaluateAssessmentAttempt(
         description: "Connect high 84% Clinical DNA with matched hospital postings",
       },
     ],
+    questionReviews,
   };
 }
 

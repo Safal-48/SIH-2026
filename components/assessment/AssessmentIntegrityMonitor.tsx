@@ -46,8 +46,8 @@ interface AssessmentIntegrityMonitorProps {
 }
 
 const STORAGE_KEY_EVENTS = "vaidya_setu_assessment_integrity_events";
-const SUSTAINED_TARGET_MS = 1200; // 1.2s sustained deviation triggers violation (fast & responsive)
-const VIOLATION_PAUSE_MS = 1800; // 1.8s pause between consecutive warnings if deviation continues
+const SUSTAINED_TARGET_MS = 2500; // 2.5s sustained physical head deviation triggers violation (filters out eye glances & reading)
+const VIOLATION_PAUSE_MS = 3500; // 3.5s cooldown pause between consecutive warnings
 
 // Web Audio synthesizer for audible alert beeps
 function playTone(type: "warning" | "freeze") {
@@ -100,7 +100,7 @@ export function AssessmentIntegrityMonitor({
   const [cameraActive, setCameraActive] = React.useState<boolean>(false);
   const [cameraError, setCameraError] = React.useState<string | null>(null);
   const [soundEnabled, setSoundEnabled] = React.useState<boolean>(true);
-  const [sensitivity, setSensitivity] = React.useState<"high" | "normal">("high");
+  const [sensitivity, setSensitivity] = React.useState<"high" | "normal">("normal");
 
   // Detection Live Feedback States
   const [currentDirection, setCurrentDirection] = React.useState<HeadDirection>("FACE_CENTERED");
@@ -118,7 +118,9 @@ export function AssessmentIntegrityMonitor({
   // Calibration Baselines
   const baselineXRef = React.useRef<number>(0.50);
   const baselineYRef = React.useRef<number>(0.48);
-  const baselineAsymmetryRef = React.useRef<number>(0.0);
+  const smoothedXRef = React.useRef<number>(0.50);
+  const smoothedYRef = React.useRef<number>(0.48);
+  const centeredFramesCountRef = React.useRef<number>(0);
   const calibrationFramesCountRef = React.useRef<number>(0);
 
   // Tracking Accumulator Refs (Prevents stale interval closures)
@@ -129,7 +131,7 @@ export function AssessmentIntegrityMonitor({
   const onWarningRef = React.useRef(onWarning);
   const onFreezeRef = React.useRef(onFreeze);
   const assessmentIdRef = React.useRef(assessmentId);
-  const sensitivityRef = React.useRef<"high" | "normal">("high");
+  const sensitivityRef = React.useRef<"high" | "normal">("normal");
 
   React.useEffect(() => {
     warningCountRef.current = warningCount;
@@ -253,14 +255,14 @@ export function AssessmentIntegrityMonitor({
       if (nextCount === 1) {
         setActiveWarningBanner({
           title: "Assessment Integrity Warning 1 of 3",
-          message: "Sustained head deviation detected. Please keep your face centered on the screen.",
+          message: "Sustained head movement away from screen detected. Please keep your head facing the screen. (Reading questions with eye movement is permitted).",
           warningNum: 1,
         });
         onWarningRef.current(1, dir, event);
       } else if (nextCount === 2) {
         setActiveWarningBanner({
           title: "Assessment Integrity Warning 2 of 3",
-          message: "Multiple head deviations detected. One final warning remains before assessment freezes.",
+          message: "Multiple sustained head deviations detected. One final warning remains before assessment freezes.",
           warningNum: 2,
         });
         onWarningRef.current(2, dir, event);
@@ -284,6 +286,9 @@ export function AssessmentIntegrityMonitor({
   const handleCalibrateCenter = React.useCallback(() => {
     calibrationFramesCountRef.current = 0;
     deviationAccumulatorRef.current = 0;
+    centeredFramesCountRef.current = 0;
+    baselineXRef.current = smoothedXRef.current;
+    baselineYRef.current = smoothedYRef.current;
     setDeviationProgress(0);
     setCurrentDirection("FACE_CENTERED");
     setHorizontalOffsetPercent(50);
@@ -317,35 +322,27 @@ export function AssessmentIntegrityMonitor({
       if (!canvas) return;
 
       let detectedDir: HeadDirection = "FACE_CENTERED";
-      let liveCentroidX = 0.50;
+      let rawCentroidX = 0.50;
+      let rawCentroidY = 0.48;
+      let faceFound = false;
 
       // Method A: Native FaceDetector API (if available)
       if (detector) {
         try {
           const faces = await detector.detect(video);
-          if (!faces || faces.length === 0) {
-            detectedDir = "FACE_NOT_VISIBLE";
-          } else {
+          if (faces && faces.length > 0) {
+            faceFound = true;
             const box = faces[0].boundingBox;
-            const cx = (box.x + box.width / 2) / video.videoWidth;
-            const cy = (box.y + box.height / 2) / video.videoHeight;
-            liveCentroidX = cx;
-
-            const diffX = cx - baselineXRef.current;
-            const diffY = cy - baselineYRef.current;
-            const thresh = sensitivityRef.current === "high" ? 0.05 : 0.08;
-
-            if (diffX < -thresh) detectedDir = "RIGHT";
-            else if (diffX > thresh) detectedDir = "LEFT";
-            else if (diffY < -0.09) detectedDir = "UP";
-            else if (diffY > 0.10) detectedDir = "DOWN";
-            else detectedDir = "FACE_CENTERED";
+            rawCentroidX = (box.x + box.width / 2) / video.videoWidth;
+            rawCentroidY = (box.y + box.height / 2) / video.videoHeight;
           }
         } catch {
-          detectedDir = "FACE_CENTERED";
+          faceFound = false;
         }
-      } else {
-        // Method B: High-Sensitivity Canvas Chrominance & Lateral Asymmetry Engine
+      }
+
+      // Method B: High-Sensitivity Canvas Chrominance & Spatial Face Mass Centroid (Primary or Fallback)
+      if (!faceFound) {
         const ctx = canvas.getContext("2d", { willReadFrequently: true });
         if (ctx) {
           ctx.drawImage(video, 0, 0, 160, 120);
@@ -355,10 +352,8 @@ export function AssessmentIntegrityMonitor({
           let sumX = 0;
           let sumY = 0;
           let skinCount = 0;
-          let leftSkinCount = 0;
-          let rightSkinCount = 0;
 
-          // Step of 2 pixels (4800 samples) across the face region (y: 10 to 100, x: 20 to 140)
+          // Step of 2 pixels across the face region (y: 10 to 100, x: 20 to 140)
           for (let y = 10; y < 100; y += 2) {
             for (let x = 20; x < 140; x += 2) {
               const idx = (y * 160 + x) * 4;
@@ -377,69 +372,80 @@ export function AssessmentIntegrityMonitor({
                 sumX += x;
                 sumY += y;
                 skinCount += 1;
-
-                if (x < 80) {
-                  leftSkinCount += 1;
-                } else {
-                  rightSkinCount += 1;
-                }
               }
             }
           }
 
-          if (skinCount < 40) {
-            detectedDir = "FACE_NOT_VISIBLE";
-          } else {
-            const rawAvgX = sumX / skinCount / 160;
-            const rawAvgY = sumY / skinCount / 120;
-            liveCentroidX = rawAvgX;
-
-            // Auto-calibration during initial 10 frames
-            if (calibrationFramesCountRef.current < 10) {
-              baselineXRef.current = baselineXRef.current * 0.7 + rawAvgX * 0.3;
-              baselineYRef.current = baselineYRef.current * 0.7 + rawAvgY * 0.3;
-              const rawAsym = (leftSkinCount - rightSkinCount) / (skinCount + 1);
-              baselineAsymmetryRef.current = baselineAsymmetryRef.current * 0.7 + rawAsym * 0.3;
-              calibrationFramesCountRef.current += 1;
-            }
-
-            // Lateral Face Asymmetry (Yaw: when turning head left, left cheek turns forward)
-            const rawAsymmetry = (leftSkinCount - rightSkinCount) / (skinCount + 1);
-            const deltaAsymmetry = rawAsymmetry - baselineAsymmetryRef.current;
-
-            // In mirrored display (-scale-x-100), looking to user's left means
-            // on raw unmirrored canvas, the user's left cheek moves to canvas right (rawAvgX increases, deltaAsymmetry becomes negative)
-            const userYawDelta = (rawAvgX - baselineXRef.current) * 1.5 - deltaAsymmetry * 0.28;
-            const deltaY = rawAvgY - baselineYRef.current;
-
-            // Sensitivity threshold
-            const yawThreshold = sensitivityRef.current === "high" ? 0.035 : 0.065;
-            const pitchThreshold = sensitivityRef.current === "high" ? 0.065 : 0.095;
-
-            if (userYawDelta > yawThreshold) {
-              detectedDir = "LEFT";
-            } else if (userYawDelta < -yawThreshold) {
-              detectedDir = "RIGHT";
-            } else if (deltaY < -pitchThreshold) {
-              detectedDir = "UP";
-            } else if (deltaY > pitchThreshold) {
-              detectedDir = "DOWN";
-            } else {
-              detectedDir = "FACE_CENTERED";
-            }
+          if (skinCount >= 40) {
+            faceFound = true;
+            rawCentroidX = sumX / skinCount / 160;
+            rawCentroidY = sumY / skinCount / 120;
           }
         }
       }
 
-      setCurrentDirection(detectedDir);
-      setHorizontalOffsetPercent(Math.round(liveCentroidX * 100));
+      if (!faceFound) {
+        detectedDir = "FACE_NOT_VISIBLE";
+      } else {
+        // Temporal EMA low-pass filter: eliminates eye movements, micro-saccades, and frame jitter
+        const alpha = 0.25;
+        smoothedXRef.current = smoothedXRef.current * (1 - alpha) + rawCentroidX * alpha;
+        smoothedYRef.current = smoothedYRef.current * (1 - alpha) + rawCentroidY * alpha;
 
-      // Continuous Leaky Accumulator for Sustained Violation
+        // Auto-calibration during initial 15 frames to set resting center baseline
+        if (calibrationFramesCountRef.current < 15) {
+          baselineXRef.current = baselineXRef.current * 0.7 + smoothedXRef.current * 0.3;
+          baselineYRef.current = baselineYRef.current * 0.7 + smoothedYRef.current * 0.3;
+          calibrationFramesCountRef.current += 1;
+        }
+
+        const deltaX = smoothedXRef.current - baselineXRef.current;
+        const deltaY = smoothedYRef.current - baselineYRef.current;
+
+        // Subtle adaptive drift when user is relaxed & centered
+        if (Math.abs(deltaX) < 0.04 && Math.abs(deltaY) < 0.04) {
+          baselineXRef.current = baselineXRef.current * 0.995 + smoothedXRef.current * 0.005;
+          baselineYRef.current = baselineYRef.current * 0.995 + smoothedYRef.current * 0.005;
+        }
+
+        // PHYSICAL HEAD MOVEMENT THRESHOLDS:
+        // Eye movements (reading across the screen) only produce |deltaX| <= 0.035 and |deltaY| <= 0.04.
+        // Head turn thresholds require genuine physical movement of the head:
+        const isHigh = sensitivityRef.current === "high";
+        const yawThreshold = isHigh ? 0.10 : 0.14; // Requires 10% - 14% frame deviation
+        const pitchUpThreshold = isHigh ? 0.12 : 0.16; // Head tilted up looking at ceiling
+        const pitchDownThreshold = isHigh ? 0.14 : 0.18; // Head tilted down looking away from screen
+
+        // In mirrored display (-scale-x-100), looking to user's left means
+        // on raw unmirrored canvas, the face moves to canvas right (positive deltaX)
+        if (deltaX > yawThreshold) {
+          detectedDir = "LEFT";
+        } else if (deltaX < -yawThreshold) {
+          detectedDir = "RIGHT";
+        } else if (deltaY < -pitchUpThreshold) {
+          detectedDir = "UP";
+        } else if (deltaY > pitchDownThreshold) {
+          detectedDir = "DOWN";
+        } else {
+          detectedDir = "FACE_CENTERED";
+        }
+      }
+
+      setCurrentDirection(detectedDir);
+
+      // Calibrated relative horizontal gauge position: 50% is centered with user's baseline
+      const relativeOffset = Math.round(
+        50 + (smoothedXRef.current - baselineXRef.current) * 160
+      );
+      setHorizontalOffsetPercent(Math.max(5, Math.min(95, relativeOffset)));
+
+      // Sustained Deviation Tracker
       const now = Date.now();
       const isSuspicious = detectedDir !== "FACE_CENTERED";
       const inCooldown = now - lastViolationTimeRef.current < VIOLATION_PAUSE_MS;
 
       if (isSuspicious && !inCooldown) {
+        centeredFramesCountRef.current = 0;
         // Accumulate deviation time
         deviationAccumulatorRef.current += 100;
         const progress = Math.min(
@@ -456,9 +462,14 @@ export function AssessmentIntegrityMonitor({
           handleConfirmedViolation(detectedDir);
         }
       } else {
-        // Leaky decay if returned to center (doesn't wipe on a single noisy frame)
-        if (deviationAccumulatorRef.current > 0) {
-          deviationAccumulatorRef.current = Math.max(0, deviationAccumulatorRef.current - 50);
+        // Fast pardon & decay when head is facing center
+        centeredFramesCountRef.current += 1;
+        if (centeredFramesCountRef.current >= 3) {
+          // When centered for >= 300ms, completely clear warning accumulator
+          deviationAccumulatorRef.current = 0;
+          setDeviationProgress(0);
+        } else if (deviationAccumulatorRef.current > 0) {
+          deviationAccumulatorRef.current = Math.max(0, deviationAccumulatorRef.current - 250);
           const progress = Math.min(
             100,
             Math.round((deviationAccumulatorRef.current / SUSTAINED_TARGET_MS) * 100)
@@ -485,7 +496,7 @@ export function AssessmentIntegrityMonitor({
           </div>
           <span className="font-semibold text-emerald-300 flex items-center gap-1.5 text-xs">
             <ShieldCheck className="h-4 w-4 text-emerald-400" />
-            NCISM AI Proctoring: <strong className="text-white font-mono">Active (1.2s Detection)</strong>
+            NCISM AI Proctoring: <strong className="text-white font-mono">Active (2.5s Head Pose)</strong>
           </span>
         </div>
 
@@ -622,9 +633,13 @@ export function AssessmentIntegrityMonitor({
                 <span className="text-[10px] text-emerald-400/90 font-mono tracking-widest bg-black/60 px-2 py-0.5 rounded backdrop-blur-sm">
                   HEAD ALIGNED ✓
                 </span>
+              ) : currentDirection === "FACE_NOT_VISIBLE" ? (
+                <span className="text-[10px] text-rose-300 font-mono font-bold tracking-wider bg-black/70 px-2.5 py-0.5 rounded backdrop-blur-sm animate-bounce">
+                  ⚠️ FACE LOST
+                </span>
               ) : (
                 <span className="text-[10px] text-amber-300 font-mono font-bold tracking-wider bg-black/70 px-2.5 py-0.5 rounded backdrop-blur-sm animate-bounce">
-                  ⚠️ DEVIATION DETECTED
+                  ⚠️ HEAD DEVIATION DETECTED
                 </span>
               )}
             </div>
@@ -646,13 +661,13 @@ export function AssessmentIntegrityMonitor({
                     <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" /> Centered ✓
                   </>
                 ) : currentDirection === "LEFT" ? (
-                  "◄ Looking Left"
+                  "◄ Head Turned Left"
                 ) : currentDirection === "RIGHT" ? (
-                  "Looking Right ►"
+                  "Head Turned Right ►"
                 ) : currentDirection === "UP" ? (
-                  "▲ Looking Up"
+                  "▲ Head Tilted Up"
                 ) : currentDirection === "DOWN" ? (
-                  "▼ Looking Down"
+                  "▼ Head Tilted Down"
                 ) : currentDirection === "FACE_NOT_VISIBLE" ? (
                   "✖ Face Lost"
                 ) : (
@@ -706,9 +721,9 @@ export function AssessmentIntegrityMonitor({
                 <div className="flex items-center justify-between text-[11px] text-amber-300 font-semibold font-mono">
                   <span className="flex items-center gap-1.5">
                     <AlertTriangle className="h-3.5 w-3.5 text-amber-400 animate-bounce" />
-                    Sustained Deviation:
+                    Sustained Head Deviation:
                   </span>
-                  <span>{((deviationProgress * 1.2) / 100).toFixed(1)}s / 1.2s</span>
+                  <span>{((deviationProgress * 2.5) / 100).toFixed(1)}s / 2.5s</span>
                 </div>
                 <div className="h-2 w-full bg-black/70 rounded-full overflow-hidden border border-amber-500/40">
                   <div
@@ -756,8 +771,8 @@ export function AssessmentIntegrityMonitor({
             </div>
 
             <div className="text-[10px] text-gray-400 flex items-center justify-between border-t border-white/5 pt-2">
-              <span>Proctor Algorithm: <strong>YCbCr Optical Yaw</strong></span>
-              <span className="text-emerald-400">Zero Server Streaming • 100% Local</span>
+              <span>Proctor Algorithm: <strong>Optical Head Pose (Eye Safe)</strong></span>
+              <span className="text-emerald-400">Eye Movement Allowed • 100% Local</span>
             </div>
           </div>
         </div>

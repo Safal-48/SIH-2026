@@ -27,6 +27,7 @@ import {
   ChevronRight,
   Check,
 } from "lucide-react";
+import { AssessmentQuestionReview } from "@/components/assessment/AssessmentQuestionReview";
 
 interface AssessmentResultsViewProps {
   result: AssessmentDiagnosticResult;
@@ -377,6 +378,13 @@ export function AssessmentResultsView({
           ))}
         </div>
       </div>
+
+      {/* 5.5 DETAILED QUESTION REVIEWS, WRONG ANSWERS & CLINICAL EXPLANATIONS */}
+      {result.questionReviews && result.questionReviews.length > 0 && (
+        <div className="rounded-3xl border border-white/10 bg-[#0B1510]/80 p-6 sm:p-8 backdrop-blur-md shadow-xl">
+          <AssessmentQuestionReview reviews={result.questionReviews} />
+        </div>
+      )}
 
       {/* 6. BOTTOM ACTION BAR */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-5 rounded-2xl bg-black/60 border border-white/10 backdrop-blur-xl">

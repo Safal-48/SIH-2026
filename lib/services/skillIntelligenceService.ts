@@ -81,6 +81,35 @@ export interface AssessmentIntegrityEvent {
   eventType: "HEAD_DEVIATION" | "FACE_LOST" | "FREEZE";
 }
 
+export interface QuestionReviewItem {
+  questionId: string;
+  questionNumber: number;
+  topic: string;
+  category: string;
+  questionType: string;
+  prompt: string;
+  vignette?: {
+    patientProfile: string;
+    chiefComplaint: string;
+    nadiPulse: string;
+    agniStatus: string;
+  };
+  userSelectedOptionId?: string;
+  userSelectedText?: string;
+  userSelectedRationale?: string;
+  isCorrect: boolean;
+  isUnanswered: boolean;
+  correctOptionId: string;
+  correctOptionText: string;
+  correctOptionRationale: string;
+  allOptions: {
+    id: string;
+    text: string;
+    isCorrect: boolean;
+    clinicalRationale: string;
+  }[];
+}
+
 export interface AssessmentRecord {
   id: string;
   type: "SKILL" | "CLINICAL" | "RESEARCH" | "PANCHAKARMA" | "PHARMA";
@@ -97,6 +126,7 @@ export interface AssessmentRecord {
   integrityWarningsCount?: number;
   timeUsedSeconds?: number;
   integrityEvents?: AssessmentIntegrityEvent[];
+  questionReviews?: QuestionReviewItem[];
 }
 
 const STORAGE_KEY_SKILL_DNA = "vaidya_setu_skill_dna_v2";
